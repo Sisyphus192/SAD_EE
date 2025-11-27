@@ -52,7 +52,7 @@ DefineClass.Rage_Fueled_Scissorhand_Duelist = {
 		"DraftableAnimal",
 	},
 	attack_weapon = "Scissorhands_duelist_rage",
-	DailyPregnancyChance = 75,
+	DailyPregnancyChance = 80,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
 	NewbornClass = "Rage_Focused_Scissorhands",

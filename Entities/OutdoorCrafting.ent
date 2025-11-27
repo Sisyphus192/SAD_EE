@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity path="" name="OutdoorCrafting">
+	<state id="idle">
+		<mesh_ref ref="OutdoorCrafting"/>
+	</state>
+	<mesh_description id="OutdoorCrafting">
+		<lod idx="0" distance="0">
+			<mesh file="Meshes/OutdoorCrafting_OutdoorCrafting.m.hgm"/>
+			<material file="Materials/OutdoorCrafting_OutdoorCrafting.mtl"/>
+			<bsphere value="0.000,-8.712,33.313,177.962"/>
+			<box min="-134.676,-108.712,-73.029" max="134.676,91.288,139.655"/>
+			<src file="C:/Users/User/AppData/Roaming/Stranded - Alien Dawn/ModAssets/FBX/husbandry_station.fbx"/>
+		</lod>
+		<surf type="collision" name="PVS" points="-113.750,87.543,-35.000;-113.750,-87.543,35.000;-113.750,-87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="113.750,-87.543,-35.000;-113.750,87.543,-35.000;-113.750,-87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="113.750,-87.543,35.000;-113.750,-87.543,-35.000;-113.750,-87.543,35.000"/>
+		<surf type="collision" name="PVS" points="113.750,87.543,-35.000;-113.750,87.543,35.000;-113.750,87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="-113.750,-87.543,35.000;-113.750,87.543,-35.000;-113.750,87.543,35.000"/>
+		<surf type="collision" name="PVS" points="-113.750,87.543,35.000;113.750,87.543,35.000;-113.750,-87.543,35.000"/>
+		<surf type="collision" name="PVS" points="-113.750,-87.543,-35.000;113.750,-87.543,35.000;113.750,-87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="-113.750,-87.543,35.000;113.750,87.543,35.000;113.750,-87.543,35.000"/>
+		<surf type="collision" name="PVS" points="113.750,87.543,35.000;113.750,-87.543,-35.000;113.750,-87.543,35.000"/>
+		<surf type="collision" name="PVS" points="113.750,-87.543,-35.000;113.750,87.543,-35.000;-113.750,87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="113.750,-87.543,-35.000;113.750,87.543,35.000;113.750,87.543,-35.000"/>
+		<surf type="collision" name="PVS" points="-113.750,87.543,35.000;113.750,87.543,-35.000;113.750,87.543,35.000"/>
+		<surf_hash type="collision" value="2847560865"/>
+	</mesh_description>
+</entity>

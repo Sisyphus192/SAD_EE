@@ -1,6 +1,6 @@
 UndefineClass('HeavyHostileRobot_LVL3')
 DefineClass.HeavyHostileRobot_LVL3 = {
-	__parents = { "HeavyCombatRobot" },
+	__parents = { "UnitNesting", "HeavyCombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -48,5 +48,6 @@ DefineClass.HeavyHostileRobot_LVL3 = {
 			},
 		}),
 	},
+	UnitNesting = true,
 }
 

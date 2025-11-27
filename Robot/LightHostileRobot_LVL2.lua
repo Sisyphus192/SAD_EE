@@ -1,6 +1,6 @@
 UndefineClass('LightHostileRobot_LVL2')
 DefineClass.LightHostileRobot_LVL2 = {
-	__parents = { "CombatRobot" },
+	__parents = { "UnitNesting", "CombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -66,6 +66,7 @@ DefineClass.LightHostileRobot_LVL2 = {
 			},
 		}),
 	},
+	UnitNesting = true,
 	FrenzyChance = 50,
 	FrenzyDuration = 40000,
 	FrenzyCooldown = 80000,

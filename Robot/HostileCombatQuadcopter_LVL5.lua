@@ -1,6 +1,6 @@
 UndefineClass('HostileCombatQuadcopter_LVL5')
 DefineClass.HostileCombatQuadcopter_LVL5 = {
-	__parents = { "CombatQuadcopter", "UnitConsumer" },
+	__parents = { "CombatQuadcopter" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -25,7 +25,6 @@ DefineClass.HostileCombatQuadcopter_LVL5 = {
 	SpawnDefWeight = 50,
 	SpawnTags = set( "Boss" ),
 	FlightEscapeInside = true,
-	UnitConsumer = true,
 	res_consumed = "LiquidFuel",
 	res_max_stored = 30000,
 	res_used = 1000,

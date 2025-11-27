@@ -25,6 +25,16 @@ function SavegameFixups.ILU_fixes()
 end
 
 
+--[[
+Obligatory I'm just a modder; but this is a planned expansion / extension in both the "Nests Awaken" and "Project-X Repaired" mods
+
+Nests awaken has a planned extention to enable "basic" diplomacy with nests/species if certain actions are taken, allowing an entire species to be semi-passified / domesticated
+
+PXR will have explicit other settlements to interact with (Either via radio or expeditions); some of which are directly controlled by the Empire/Rebels or more "we are just trying to survive"
+
+These are all on my to-do list; 
+]]
+
 --------------- TABLE SECTION --------------------
 
 local lookup_table = {}
@@ -298,10 +308,11 @@ function get_preg_quota(stop)
 			return v['quota']
 		end
 	end
-	return nil
+	return 30 -- default in case things fail
 end
 
 -------------------------- Mini FUNCTIONS ----------------------------------
+
 
 local function lookupEP(name)
 	DebugPrint("Checking a species EP cost to spawn")
@@ -310,6 +321,19 @@ local function lookupEP(name)
 	local classdef = g_Classes[name or false]
 	local ep = classdef.EventProgressValue
 	return ep
+end
+
+local tamed_pregnancy = {}
+
+function flag_if_max_tier(class_id)
+local tier = get_tier(class_id)
+	if tier >= 5 then
+		tamed_pregnancy[class_id] = true
+	end
+end
+
+function has_birthed_max_tier(class_id)
+	return tamed_pregnancy[class_id] or false
 end
 
 
@@ -446,11 +470,18 @@ function new_preg_rate(species_class,rate)
 	if tame_check + (2 * day_duration) < GameTime() then -- refresh every other day
 		refresh_tame_counts()
 	end
-	local base_rate = rate or 0
+	local base_rate = rate or species_class.DailyPregnancyChance or 60 -- default to 60 instead of 0
 	local stop = get_stop(species_class)
 	local no = MapVarValues[stop] or 0
 	local cc = carrying_capacity(species_class)
 	local fin_mod = 100*(cc - no) / cc
+	if cc - no <= 0 and not MapVarValues.HasCappedTamed then
+		if table.find(MapVars, 'HasCappedTames') then
+			MapVar('HasCappedTamed',true)
+		else
+			MapVarValues.HasCappedTamed = true
+		end
+	end
 	local to_return = fin_mod * base_rate / 100
 	local override = false
 	if override then
@@ -660,8 +691,8 @@ function ILU_set_mod_options(id)
 	DebugPrint('Override tame cap found? ')
 	DebugPrint(options.O_Man_Cap)
 	DebugPrint("\n")
+	if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap",options.O_Man_Cap) end
 	if options.O_Man_Cap then
-		if not MapVarValues.O_Man_Cap then MapVar("O_Man_Cap",true) end
 		upsert_preg_quota('Ulfen',options.UlfenQuota or 20)
 		upsert_preg_quota('Draka',options.DrakaQuota or 20)
 		upsert_preg_quota('Noth',options.NothQuota or 20)
@@ -672,7 +703,9 @@ function ILU_set_mod_options(id)
 		upsert_preg_quota('Dog',options.DogQuota or 10)
 		upsert_preg_quota('Tecatli',options.TecatliQuota or 10)
 		upsert_preg_quota('Juno',options.JunoQuota or 10)
-		--print_preg_quota_table()
+		MapVarValues.O_Man_Cap = true
+	else
+		MapVarValues.O_Man_Cap = false
 	end
 	if MapVarValues.ILU_max then
 		MapVarValues.ILU_max = options.O_ILU_max or 150
@@ -735,3 +768,117 @@ OnMsg.GameStarted = ILU_set_and_test
 --function OnMsg.NewGame(game)
 --	ILU_reset_vars()
 --end
+
+function mass_pet_vr_train(bio_level)
+	bio_level = bio_level or 1
+	local pets = UIPlayer.labels.TamedAnimals
+	for _,pet in ipairs(pets or empty_table) do
+		if pet:CanBeTrained() and not pet:IsMaxTrainingLevelReached() then
+			local xp_give = bio_level * 100
+			pet.combat_xp = pet.combat_xp + xp_give
+			local previous_combat_skill = pet.CombatSkill
+			pet.CombatSkill = SkillExperienceToLevel(pet.combat_xp)
+			if previous_combat_skill ~= pet.CombatSkill then
+				Msg("AnimalChangeSkillLevel", pet, pet.CombatSkill, previous_combat_skill)
+				if pet:IsMaxTrainingLevelReached() then
+					pet.training_allowed = false
+				end
+			end
+
+		end
+	end
+end
+
+--[[('ModifyObject', {
+					Id = "IncreasedConsumptionSolarFlareShielded",
+					ModProperty = "PowerConsumption",
+					Mul = 1500,
+					ObjectClass = "PowerComponent",
+				})
+			]]
+
+function enhancing_species(effect_case)
+	local label = "TamedAnimals"
+	local player = UIPlayer --unit.player or UIPlayer
+	local permanent = true
+	local effects
+	if effect_case == 'Shrieker_Range' then
+		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura1")
+		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura2")
+		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura3")
+		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura4")
+		effects = PlaceObj('ModifyObject', {
+				Add = 60,
+				DisplayText = T(722733588715, --[[ModItemTech ee_fake_shrieker_range DisplayText]] "Enhanced Eyesight"),
+				Id = "ShriekerEnhancement",
+				ModProperty = "SightRange",
+				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
+			})
+		player:AttachEffectToLabel(label, effects, permanent)
+		return
+	elseif effect_case == 'Shrieker_Durability' then
+		player:DetachEffectFromLabel("TamedAnimals", "ShriekerRange")
+		effects = {
+			PlaceObj('ModifyObject', {
+				id="ShriekerDura1",
+				ModProperty = "HitNegationChance_blunt",
+				Add=20,
+				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
+				param_bindings = false,
+			}),
+			PlaceObj('ModifyObject', {
+				id="ShriekerDura2ShriekerDura2",
+				ModProperty = "HitNegationChance_blunt",
+				Add=20,
+				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
+				param_bindings = false,
+			}),
+			PlaceObj('ModifyObject', {
+				id="ShriekerDura3",
+				ModProperty = "HitNegationChance_blunt",
+				Add=20,
+				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
+				param_bindings = false,
+			}),
+			PlaceObj('ModifyObject', {
+				id="ShriekerDura4",
+				ModProperty = "HitNegationChance_blunt",
+				Add=20,
+				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
+				param_bindings = false,
+			}),
+		}
+	end
+	if not effects then return end
+	--
+end
+
+function UnitAnimal:GetRealPregRate()
+	local pct = new_preg_rate(self.class, self.DailyPregnancyChance)
+	return Clamp(pct, 0, 100)
+end
+
+function UnitInvader:GiveResearchCreditIfMissing(reason)
+	local rc = UIPlayer.research_center
+	local field_tech = self.FieldResearchTech
+	local started = rc.tech_status[field_tech].started
+	if not started then
+		rc:StartResearch(field_tech)
+	end
+	local full_cost = rc.tech_status[field_tech].initial_points
+	rc:AddTechResearchPoints(field_tech, DivRound(full_cost,10), 'Killed an invader')
+end
+
+
+local origOnDead = UnitInvaderAutoResolve.OnDead or empty_func
+function UnitInvaderAutoResolve:OnDead(reason)
+	origOnDead(self, reason)
+	local attacker = self:GetValidAttacker()
+	if not attacker or attacker.CombatGroup ~= Human.CombatGroup or not attacker.player then
+		return
+	end
+	local rc = UIPlayer.research_center
+	if rc:IsTechResearched('EE_observe_killing_t2') and rc:IsTechResearched(self.FieldResearchTech) then
+		self:GiveResearchCredit(reason)
+	end
+end

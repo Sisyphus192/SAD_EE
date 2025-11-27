@@ -28,9 +28,6 @@ DefineClass.Crawl_Cannon_T2 = {
 	display_name = T(682786164697, --[[ModItemRobotCompositeDef Crawl_Cannon_T2 display_name]] "MG Siege machine"),
 	display_name_pl = T(607322897856, --[[ModItemRobotCompositeDef Crawl_Cannon_T2 display_name_pl]] "MG Siege machines"),
 	siege_time = 10000,
-	FieldResearchTech = "FieldCrawler",
-	ObservationDistanceMin = 2000,
-	ObservationDistanceMax = 5000,
 	WalkSpeed = 2000,
 	attack_weapon = "Crawler_cannon",
 }

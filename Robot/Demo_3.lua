@@ -1,6 +1,6 @@
 UndefineClass('Demo_3')
 DefineClass.Demo_3 = {
-	__parents = { "HeavyCombatRobot", "UnitConsumer" },
+	__parents = { "HeavyCombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -61,7 +61,6 @@ DefineClass.Demo_3 = {
 			},
 		}),
 	},
-	UnitConsumer = true,
 	res_consumed = "LiquidFuel",
 	res_max_stored = 30000,
 	res_used = 1000,

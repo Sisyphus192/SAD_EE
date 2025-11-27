@@ -54,7 +54,7 @@ DefineClass.Angry_Juno = {
 		"DraftableAnimal",
 	},
 	attack_weapon = "JunoMelee_Brute",
-	DailyPregnancyChance = 85,
+	DailyPregnancyChance = 90,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
 	NewbornClass = "Hulk_Juno",

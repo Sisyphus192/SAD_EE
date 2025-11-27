@@ -57,7 +57,7 @@ DefineClass.Hulk_Juno = {
 	},
 	attack_weapon = "Juno_Hulk",
 	TamingChance = 40,
-	DailyPregnancyChance = 75,
+	DailyPregnancyChance = 80,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
 	NewbornClass = "Too_Angry_Too_Die_Juno",

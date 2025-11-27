@@ -1,6 +1,6 @@
 UndefineClass('Crawl_APC_LVL1')
 DefineClass.Crawl_APC_LVL1 = {
-	__parents = { "CrawlerMachineGun", "UnitConsumer" },
+	__parents = { "UnitNesting", "CrawlerMachineGun" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -28,17 +28,15 @@ DefineClass.Crawl_APC_LVL1 = {
 	max_skinned_decals_low = -1,
 	display_name = T(427497091160, --[[ModItemRobotCompositeDef Crawl_APC_LVL1 display_name]] "MG Siege machine"),
 	display_name_pl = T(602286767228, --[[ModItemRobotCompositeDef Crawl_APC_LVL1 display_name_pl]] "MG Siege machines"),
-	FieldResearchTech = "FieldCrawler",
-	ObservationDistanceMin = 2000,
-	ObservationDistanceMax = 5000,
 	WalkSpeed = 4000,
 	attack_weapon = "APC_Gun",
-	UnitConsumer = true,
+	UnitNesting = true,
 	res_consumed = "ScrapMetal",
 	res_max_stored = 25000,
 	res_used = 5000,
 	ConsumeDescription = T(648999997146, --[[ModItemRobotCompositeDef Crawl_APC_LVL1 ConsumeDescription]] "This unit will try and improve the armor of nearby allies, using it's fallen allies!"),
 	ConsumeTitle = T(578747124766, --[[ModItemRobotCompositeDef Crawl_APC_LVL1 ConsumeTitle]] "Unstable Combat Forge"),
 	ConsumeUIDetail = T(140845075912, --[[ModItemRobotCompositeDef Crawl_APC_LVL1 ConsumeUIDetail]] "Pieces of Scrap"),
+	CanBeNestGuardian = true,
 }
 

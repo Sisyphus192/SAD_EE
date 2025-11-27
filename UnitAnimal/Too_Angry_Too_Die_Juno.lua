@@ -58,7 +58,7 @@ DefineClass.Too_Angry_Too_Die_Juno = {
 	},
 	attack_weapon = "Juno_Hulk",
 	TamingChance = 40,
-	DailyPregnancyChance = 85,
+	DailyPregnancyChance = 90,
 	PregnancyDuration = 1920000,
 	GrowDuration = 1920000,
 	NewbornClass = "Junoskar",

@@ -52,7 +52,7 @@ DefineClass.Brutal_Duelist_Scissorhands = {
 	},
 	attack_weapon = "ScissorhandsMelee_Brute",
 	TamingChance = 60,
-	DailyPregnancyChance = 65,
+	DailyPregnancyChance = 70,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
 	NewbornClass = "Rage_Fueled_Scissorhand_Duelist",
