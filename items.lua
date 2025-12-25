@@ -7002,7 +7002,7 @@ PlaceObj('ModItemFolder', {
 					Event = "OnObjUpdate",
 					Handler = function (self, target, time, update_interval)
 						if target.giveTime + 1000 < GameTime() then -- every 1 seconds
-							if target.stacks > 5 then
+							if target.fuel > 5 then
 								local ally = MapGetFirst(target,30*guim, "Robot", function(robot,target)
 									if not (robot.class == 'Crawl_APC_LVL1' or robot.class == 'Crawl_APC_LVL2' or robot.class == 'Crawl_APC_LVL3') 
 									and not robot:IsDead()
@@ -7011,7 +7011,7 @@ PlaceObj('ModItemFolder', {
 									end
 								end)
 								if ally then
-									target:ConsumeFuel(5)
+									target.fuel = target.fuel - 5
 									if target:Random(100,"miscast") > 25 then
 										ally:AddRobotCondition("SalvagedArmor")
 									else
@@ -7064,7 +7064,7 @@ PlaceObj('ModItemFolder', {
 					Event = "OnObjUpdate",
 					Handler = function (self, target, time, update_interval)
 						if target.giveTime + 1000 < GameTime() then
-							if target.stacks > 5 then -- every 1 seconds
+							if target.fuel > 5 then -- every 1 seconds
 								local ally = MapGetFirst(target,30*guim, "Robot", function(robot,target)
 									if not (robot.class == 'Crawl_APC_LVL1' or robot.class == 'Crawl_APC_LVL2' or robot.class == 'Crawl_APC_LVL3') 
 									and not robot:IsDead()
@@ -7073,7 +7073,7 @@ PlaceObj('ModItemFolder', {
 									end
 								end)
 								if ally then
-									target:ConsumeFuel(5)
+									target.fuel = target.fuel - 5
 									if target:Random(100,"miscast") > 60 then
 										ally:AddRobotCondition("SalvagedArmor")
 									else
@@ -7126,7 +7126,7 @@ PlaceObj('ModItemFolder', {
 					Event = "OnObjUpdate",
 					Handler = function (self, target, time, update_interval)
 						if target.giveTime + 1000 < GameTime() then
-							if target.stacks > 5 then -- every 1 seconds
+							if target.fuel > 5 then -- every 1 seconds
 								local ally = MapGetFirst(target,30*guim, "Robot", function(robot,target)
 									if not (robot.class == 'Crawl_APC_LVL1' or robot.class == 'Crawl_APC_LVL2' or robot.class == 'Crawl_APC_LVL3') 
 									and not robot:IsDead()
@@ -7135,7 +7135,7 @@ PlaceObj('ModItemFolder', {
 									end
 								end)
 								if ally then
-									target:ConsumeFuel(5)
+									target.fuel = target.fuel - 5
 									if target:Random(100,"miscast") > 75 then
 										ally:AddRobotCondition("SalvagedArmor")
 									else
