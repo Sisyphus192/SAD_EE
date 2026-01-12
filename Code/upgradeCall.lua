@@ -1,10 +1,16 @@
 AllSpeciesUpgrades = _G.Mods["rtw6tLg"] or false
 local title = "Insects Level up All Species"
 local separator = " :: "
-local debugMSG = {"New Game","Game Started"}
+local debugMSG = { "New Game", "Game Started" }
 local hour_duration = const.HourDuration
 local day_duration = const.DayDuration
 local resource_scale = const.ResourceScale
+
+function Bkob_Log(hard_string,var)
+	DebugPrint(hard_string)
+	DebugPrint(var)
+	DebugPrint("\n")
+end
 
 function SavegameFixups.ILU_fixes()
 	DebugPrint("Fixing up a save game due to older EE version present!\n")
@@ -23,331 +29,169 @@ function SavegameFixups.ILU_fixes()
 	end)
 	refresh_tame_counts()
 end
-
-
---[[
-Obligatory I'm just a modder; but this is a planned expansion / extension in both the "Nests Awaken" and "Project-X Repaired" mods
-
-Nests awaken has a planned extention to enable "basic" diplomacy with nests/species if certain actions are taken, allowing an entire species to be semi-passified / domesticated
-
-PXR will have explicit other settlements to interact with (Either via radio or expeditions); some of which are directly controlled by the Empire/Rebels or more "we are just trying to survive"
-
-These are all on my to-do list; 
-]]
-
---------------- TABLE SECTION --------------------
-
-local lookup_table = {}
--- Junos
-lookup_table["Juno"]="Juno_Brute"
-lookup_table["Juno_Brute"]="Angry_Juno"
-lookup_table["Angry_Juno"]="Hulk_Juno"
-lookup_table["Hulk_Juno"]="Too_Angry_Too_Die_Juno"
-lookup_table["Too_Angry_Too_Die_Juno"]="Junoskar"
-lookup_table["Junoskar"]=nil
--- Raptors
-lookup_table["Tecatli"]="Entombed_Tecatli"
-lookup_table["VenomousRaptors"]="Heat_Reinforced_Tecatli"
-lookup_table["Entombed_Tecatli"]="Heat_Reinforced_Tecatli"
-lookup_table["Heat_Reinforced_Tecatli"]="Intelligent_Tecatli"
-lookup_table["Intelligent_Tecatli"]="Spellsword_Tecatli"
-lookup_table["Spellsword_Tecatli"]=nil
--- Dragonfly
-lookup_table["Dragonfly"]="Frenzied_Dragonfly"
-lookup_table["Frenzied_Dragonfly"]="Frenzied_Bomber_Dragonfly"
-lookup_table["Frenzied_Bomber_Dragonfly"]="Frenzied_Fortified_Bomber_Dragonfly"
-lookup_table["Frenzied_Fortified_Bomber_Dragonfly"]="Fast_Frenzied_Fortified_Bomber_Dragonfly"
-lookup_table["Fast_Frenzied_Fortified_Bomber_Dragonfly"]=nil
--- Glutch
-lookup_table["Glutch_Manhunting"]="Glutch_Stitcher"
-lookup_table["Glutch_Stitcher"]="Bloated_Glutch"
-lookup_table["Bloated_Glutch"]="BadTrip_Bloated_Glutch"
-lookup_table["BadTrip_Bloated_Glutch"]="BadTrip_Bloated_Glutch_Stitcher"
-lookup_table["BadTrip_Bloated_Glutch_Stitcher"]=nil
--- Skarab evos
-lookup_table["Skarabei_Manhunting_Starving"]="Skarabei"
-lookup_table["Skarabei"]="Skarabei_Manhunting"
-lookup_table["Skarabei_Manhunting"]="Skarabei_Manhunting_Poisonous"
-lookup_table["Skarabei_Manhunting_Poisonous"]="Skarabei_Manhunting_Explosive"
-lookup_table["Skarabei_Manhunting_Explosive"]="Skarabei_Manhunting_Brute"
-lookup_table["Skarabei_Manhunting_Brute"]="PEx_Skarabei"
-lookup_table["PEx_Skarabei"]="PEx_Skarabei_Brute"
-lookup_table["PEx_Skarabei_Brute"]="Mutated_PEx_Skarabei_Brute"
-lookup_table["Mutated_PEx_Skarabei_Brute"]="Heavily_Mutated_PEx_Skarabei_Brute"
-lookup_table["Heavily_Mutated_PEx_Skarabei_Brute"]=nil
--- Shrieker evos 
-lookup_table["Shrieker_Hatchling"]="Shrieker_Manhunting"
-lookup_table["Shrieker_Manhunting_Hatchling"]="Shrieker_Manhunting"
-lookup_table["Shrieker"]="Shrieker_Manhunting_Mother"
-lookup_table["Shrieker_Manhunting"]="Shrieker_Manhunting_Mother"
-lookup_table["Shrieker_Manhunting_Mother"]="Entropic_Shrieker"
-lookup_table["Shrieker_Mother"]="Entropic_Shrieker"
-lookup_table["Entropic_Shrieker"]="Plague_Sniper_Shrieker"
-lookup_table["Plague_Sniper_Shrieker"]="Sniping_Entropy_Shielded_Shrieker"
-lookup_table["Sniping_Entropy_Shielded_Shrieker"]=nil
--- Scissorhands evos
-lookup_table["Scissorhands_Hatchling_Starving"]="Scissorhands"
-lookup_table["Scissorhands_Hatchling_Nesting"]="Scissorhands"
-lookup_table["Scissorhands_Nesting"]="Scissorhands"
-lookup_table["Scissorhands_Hatchling"]="Scissorhands"
-lookup_table["Scissorhands"]="Scissorhands_Brute"
-lookup_table["Scissorhands_Brute_Nesting"]="Scissorhands_Brute"
-lookup_table["Scissorhands_Brute"]="Brutal_Duelist_Scissorhands"
-lookup_table["Brutal_Duelist_Scissorhands"]="Rage_Fueled_Scissorhand_Duelist"
-lookup_table["Rage_Fueled_Scissorhand_Duelist"]="Rage_Focused_Scissorhands"
-lookup_table["Rage_Focused_Scissorhands"]=nil
--- Dog rvos
-lookup_table["dog_T1"]="dog_T3"
-lookup_table["dog_T3"]="dog_T4"
-lookup_table["dog_T4"]="dog_T5"
-lookup_table["dog_T5"]=nil
--- Gujo evos
-lookup_table["Gujo"]='GujoT2'
-lookup_table["GujoT2"]='GujoT3'
-lookup_table["GujoT3"]='GujoT4'
-lookup_table["GujoT4"]='GujoT5'
-lookup_table["GujoT5"]=nil
---light assault robot
-lookup_table["LightHostileRobot_LVL1"]='LightHostileRobot_LVL2'
-lookup_table["LightHostileRobot_LVL2"]='LightHostileRobot_LVL3'
-lookup_table["LightHostileRobot_LVL3"]='LightHostileRobot_LVL4'
-lookup_table["LightHostileRobot_LVL4"]='LightHostileRobot_LVL5'
-lookup_table["LightHostileRobot_LVL5"]=nil
--- heavy assault robot
-lookup_table["HeavyHostileRobot_LVL1"]='HeavyHostileRobot_LVL2'
-lookup_table["HeavyHostileRobot_LVL2"]='HeavyHostileRobot_LVL3'
-lookup_table["HeavyHostileRobot_LVL3"]='HeavyHostileRobot_LVL4'
-lookup_table["HeavyHostileRobot_LVL4"]='HeavyHostileRobot_LVL5'
-lookup_table["HeavyHostileRobot_LVL5"]=nil
--- Demolition Robot
-lookup_table["Demo_1"]='Demo_2'
-lookup_table["Demo_2"]='Demo_3'
-lookup_table["Demo_3"]='Demo_4'
-lookup_table["Demo_4"]='Demo_5'
-lookup_table["Demo_5"]=nil
--- monk robot
-lookup_table["HostileRobot_Monk_LVL1"]='HostileRobot_Monk_LVL2'
-lookup_table["HostileRobot_Monk_LVL2"]='HostileRobot_Monk_LVL3'
-lookup_table["HostileRobot_Monk_LVL3"]='HostileRobot_Monk_LVL4'
-lookup_table["HostileRobot_Monk_LVL4"]='HostileRobot_Monk_LVL3'
-lookup_table["HostileRobot_Monk_LVL5"]=nil
---scout robot
-lookup_table["HostileRobot_Scout_LVL1"]='HostileRobot_Scout_LVL2'
-lookup_table["HostileRobot_Scout_LVL2"]='HostileRobot_Scout_LVL3'
-lookup_table["HostileRobot_Scout_LVL3"]='HostileRobot_Scout_LVL4'
-lookup_table["HostileRobot_Scout_LVL4"]='HostileRobot_Scout_LVL5'
-lookup_table["HostileRobot_Scout_LVL5"]=nil
--- sup art robot
-lookup_table["HostileCrawler_LaserGun"]='Crawl_APC_LVL1'
-lookup_table["HostileCrawler_MachineGun"]='Crawl_APC_LVL1'
-lookup_table["Crawl_APC_LVL1"]='Crawl_APC_LVL2'
-lookup_table["Crawl_APC_LVL2"]='Crawl_APC_LVL3'
-lookup_table["Crawl_APC_LVL3"]=nil
--- art art robot
-lookup_table["Crawl_Cannon_T0"]='Crawl_Cannon_T1'
-lookup_table["Crawl_Cannon_T1"]='Crawl_Cannon_T2'
-lookup_table["Crawl_Cannon_T2"]='Crawl_Cannon_T3'
-lookup_table["Crawl_Cannon_T3"]=nil
--- QuadCopters
-lookup_table["HostileCombatQuadcopter_LVL1"]='HostileCombatQuadcopter_LVL2'
-lookup_table["HostileCombatQuadcopter_LVL2"]='HostileCombatQuadcopter_LVL3'
-lookup_table["HostileCombatQuadcopter_LVL3"]='HostileCombatQuadcopter_LVL4'
-lookup_table["HostileCombatQuadcopter_LVL4"]='HostileCombatQuadcopter_LVL5'
-lookup_table["HostileCombatQuadcopter_LVL5"]=nil
--- Camel
-lookup_table["Camel"]="Camel_T2"
-lookup_table["Camel_T2"]="Camel_T3"
-lookup_table["Camel_T3"]="Camel_T4"
-lookup_table["Camel_T4"]="Camel_T5"
-lookup_table["Camel_T5"]=nil
--- Shogu
-lookup_table["Shogu"]="Shogu_T2"
-lookup_table["Shogu_T2"]="Shogu_T3"
-lookup_table["Shogu_T3"]="Shogu_T4"
-lookup_table["Shogu_T4"]="Shogu_T5"
-lookup_table["Shogu_T5"]=nil
--- Noth
-lookup_table["Noth"]="Noth_T2"
-lookup_table["Noth_T2"]="Noth_T2"
-lookup_table["Noth_T3"]="Noth_T3"
-lookup_table["Noth_T4"]="Noth_T4"
-lookup_table["Noth_T5"]=nil
--- Draka
-lookup_table["Draka"]="Draka_T2"
-lookup_table["Draka_T2"]="Draka_T3"
-lookup_table["Draka_T3"]="Draka_T4"
-lookup_table["Draka_T4"]="Draka_T5"
-lookup_table["Draka_T5"]=nil
--- Ulfen
-lookup_table["Ulfen"]="Ulfen_T2"
-lookup_table["Ulfen_T2"]="Ulfen_T3"
-lookup_table["Ulfen_T3"]="Ulfen_T4"
-lookup_table["Ulfen_T4"]="Ulfen_T5"
-lookup_table["Ulfen_T5"]=nil
-
-
-local Juno = {["Juno"]=1,["Juno_Brute"]=2,["Angry_Juno"]=2,["Hulk_Juno"]=3,["Too_Angry_Too_Die_Juno"]=4,["Junoskar"]=5}
-local Tecatli = {["Tecatli"]=1,["VenomousRaptors"]=1,["Entombed_Tecatli"]=2,["Heat_Reinforced_Tecatli"]=3,["Intelligent_Tecatli"]=4,["Spellsword_Tecatli"]=5}
-local Dragonfly={["Dragonfly"]=1,["Frenzied_Dragonfly"]=2,["Frenzied_Bomber_Dragonfly"]=3,
-		["Frenzied_Fortified_Bomber_Dragonfly"]=4,["Fast_Frenzied_Fortified_Bomber_Dragonfly"]=5}
-local Glutch={["Glutch_Manhunting"]=1,["Glutch_Stitcher"]=2,["Bloated_Glutch"]=3,["BadTrip_Bloated_Glutch"]=4,["BadTrip_Bloated_Glutch_Stitcher"]=5}
-local Skarabei={["Skarabei_Manhunting_Starving"]=1,["Skarabei"]=1,["Skarabei_Manhunting"]=1,["Skarabei_Manhunting_Poisonous"]=1,["Skarabei_Manhunting_Explosive"]=2,
-		["Skarabei_Manhunting_Brute"]=2,["PEx_Skarabei"]=2,["PEx_Skarabei_Brute"]=3,["Mutated_PEx_Skarabei_Brute"]=4,["Heavily_Mutated_PEx_Skarabei_Brute"]=5}
-local Shrieker={["Shrieker_Hatchling"]=1,["Shrieker_Manhunting_Hatchling"]=1,["Shrieker"]=1,["Shrieker_Manhunting"]=1,["Shrieker_Manhunting_Mother"]=2,
-		["Shrieker_Mother"]=2,["Entropic_Shrieker"]=3,["Plague_Sniper_Shrieker"]=4,["Sniping_Entropy_Shielded_Shrieker"]=5}
-local Scissor={["Scissorhands_Hatchling_Starving"]=1,["Scissorhands_Hatchling_Nesting"]=1,["Scissorhands_Nesting"]=1,
-		["Scissorhands_Hatchling"]=1,["Scissorhands"]=1,["Scissorhands_Brute_Nesting"]=2,["Scissorhands_Brute"]=2,["Brutal_Duelist_Scissorhands"]=3,
-		["Rage_Fueled_Scissorhand_Duelist"]=4,["Rage_Focused_Scissorhands"]=5}
-local Dog={["dog_T1"]=2,["dog_T3"]=3,["dog_T4"]=4,["dog_T5"]=5,['Boxer']=1,['GreatDane']=1,['Weormaraner']=1}
-local Gujo={["Gujo"]=1,['GujoT2']=2,["GujoT3"]=3,['GujoT4']=4,['GujoT5']=5}
-local Camel={["Camel"]=1,["Camel_T2"]=2,["Camel_T3"]=3,["Camel_T4"]=4,["Camel_T5"]=5}
-local Shogu={["Shogu"]=1,["Shogu_T2"]=2,["Shogu_T3"]=3,["Shogu_T4"]=4,["Shogu_T5"]=5,}
-local Noth={["Noth"]=1,["Noth_T2"]=2,["Noth_T3"]=3,["Noth_T4"]=4,["Noth_T5"]=5}
-local Draka={["Draka"]=1,["Draka_T2"]=2,["Draka_T3"]=3,["Draka_T4"]=4,["Draka_T5"]=5}
-local Ulfen={["Ulfen"]=1,["Ulfen_T2"]=2,["Ulfen_T3"]=3,["Ulfen_T4"]=4,["Ulfen_T5"]=5}
-
-local organs = {
-	"Sintis","Nuedo","Bitherm","ToCo","Megdeb",""
-}
-
-local species_herd_mod = { -- all values * 10 to not have engine round to 0
-	{id='Ulfen',kc= 50 / 4}, -- 1.25x base
-	{id='Draka',kc= 50 / 4 }, -- 1.25x base
-	{id='Noth',kc= 10 / 2}, -- 0.5x base
-	{id='Shogu',kc= 10 / 2}, -- 0.5x base
-	{id='Camel',kc= 10 }, -- 1x base
-	{id='Gujo',kc= 70 / 10 }, -- 0.7x base
-	{id='Scissor',kc= 50 / 4}, -- 1.25x base
-	{id='Dog',kc= 70 / 10}, -- 0.7x base
-	{id='Shrieker',kc= 50 / 4 }, -- 1.25x base
-	{id='Tecatli',kc= 70 / 10 }, -- 0.7x base
-	{id='Juno',kc= 10 / 2}, -- 0.5x base
-}
-
-local preg_quota_cap = {}
-
------------------- TABLE QUERYING -----------------------------
-
-local function is_organ(resource)
-	for _,v in ipairs(organs) do
-		if v == resource then
-			return true
-		end 
+--[[ To be depreciated
+function set_expedition_tame(id, name)
+	DebugPrint("Expedition tame being set!")
+	name = name or 'N/A'
+	if MapVarValues['nest_awaken_exp_tame'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
+		MapVarValues['nest_awaken_exp_tame'] = id
+	else
+		MapVar('nest_awaken_exp_tame', id)
 	end
-	return false
-end
-
-function get_next(class)
-	return lookup_table[class] or nil
-end
-
-function get_tier(class_name)
-	if Juno[class_name] then return Juno[class_name]
-	elseif Tecatli[class_name] then return Tecatli[class_name]
-	elseif Dragonfly[class_name] then return Dragonfly[class_name]
-	elseif Juno[class_name] then return Juno[class_name]
-	elseif Glutch[class_name] then return Glutch[class_name]
-	elseif Skarabei[class_name] then return Skarabei[class_name]
-	elseif Scissor[class_name] then return Scissor[class_name]
-	elseif Shrieker[class_name] then return Shrieker[class_name]
-	elseif Dog[class_name] then return Dog[class_name]
-	elseif Camel[class_name] then return Camel[class_name]
-	elseif Shogu[class_name] then return Shogu[class_name]
-	elseif Noth[class_name] then return Noth[class_name]
-	elseif Draka[class_name] then return Draka[class_name]
-	elseif Ulfen[class_name] then return Ulfen[class_name]
-	elseif Gujo[class_name] then return Gujo[class_name]
-	else return nil
+	if MapVarValues['nest_awaken_tame_name'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
+		MapVarValues['nest_awaken_tame_name'] = name
+	else
+		MapVar('nest_awaken_tame_name', id)
 	end
 end
-
-function get_stop(class_name)
-	if Juno[class_name] then return 'Juno'
-	elseif Tecatli[class_name] then return 'Tecatli'
-	elseif Dragonfly[class_name] then return 'Dragonfly'
-	elseif Juno[class_name] then return 'Juno'
-	elseif Glutch[class_name] then return 'Glutch'
-	elseif Skarabei[class_name] then return 'Skarabei'
-	elseif Scissor[class_name] then return 'Scissor'
-	elseif Shrieker[class_name] then return 'Shrieker'
-	elseif Dog[class_name] then return 'Dog'
-	elseif Camel[class_name] then return 'Camel'
-	elseif Shogu[class_name] then return 'Shogu'
-	elseif Noth[class_name] then return 'Noth'
-	elseif Draka[class_name] then return 'Draka'
-	elseif Ulfen[class_name] then return 'Ulfen'
-	elseif Gujo[class_name] then return 'Gujo'
-	else return nil
-	end
-end
-
-function print_preg_quota_table()
-	for _,v in ipairs(preg_quota_cap) do
-		print(v['id'],v['quota'])
-	end
-end
-
-function upsert_preg_quota(stop,quota)
-	if not stop or not quota then return end
-	local found_flag = false 
-	for s,q in ipairs(preg_quota_cap) do
-		if s == stop then
-			found_flag = true
-			preg_quota_cap[s] = quota
-			return
+--]]
+local function add_perks_to_animals(type)
+	if type == 'milk' then
+		local output = ClassDescendantsList("Unit", function (name, classdef)
+			return (classdef.SpeciesGroup == 'species_ulfen' or classdef.SpeciesGroup == 'species_camel' or classdef.SpeciesGroup == 'species_noth') --unit_ent.SpeciesGroup == 'birds'
+		end)
+		for _,animal in ipairs(output) do
+			local def = _G[animal]
+			table.insert_unique(def.AnimalPerks, "MilkProducer")
+		end
+	elseif type == 'eggs' then
+		local output = ClassDescendantsList("Unit", function (name, classdef)
+			return classdef.SpeciesGroup == 'species_gujo' --unit_ent.SpeciesGroup == 'birds'
+		end)
+		for _,animal in ipairs(output) do
+			local def = _G[animal]
+			table.insert_unique(def.AnimalPerks, "EggsProducer")
 		end
 	end
-	if not found_flag then
-		preg_quota_cap[#preg_quota_cap+1] = {id=stop,quota=quota}
+end
+
+
+function OnMsg.ModsReloaded()
+	if _G.Mods["LH_Milk"] then
+		CreateRealTimeThread(function()
+			local milk_given = false
+			local retry = 3
+			while not milk_given and retry > 0 do
+				retry = retry - 1
+				Sleep(200)
+				if Presets.AnimalPerk.Default["MilkProducer"] then
+					add_perks_to_animals('milk')
+					milk_given = true
+				end
+			end
+		end)
+	end
+	if _G.Mods["LH_Eggs"] then
+		CreateRealTimeThread(function()
+			local eggs_given = false
+			local retry = 3
+			while not eggs_given and retry > 0 do
+				retry = retry - 1
+				Sleep(200)
+				if Presets.AnimalPerk.Default["EggsProducer"] then
+					add_perks_to_animals('eggs')
+					eggs_given = true
+				end
+			end
+		end)
 	end
 end
 
-function get_preg_quota(stop)
-	for _,v in ipairs(preg_quota_cap) do
-		if v['id'] == stop then
-			return v['quota']
+
+AppendClass.UnitNesting = {
+	properties = {
+		{ category = "Nest", id = "NestEffectRobo", name = "Nest Proximity Effect", editor = "preset_id", default = "FamiliarGroundRobo", preset_class = "RobotCondition", template = true },
+	}
+}
+
+AppendClass.UnitSpeciesGroup = {
+	properties = {
+		{category = "Species", id = "species_name", name = "Species Name", editor = "text", translate = true, default = T(1234567894, "Unknown Species"), help = "What species of creature.",},
+		{category = "Species", id = "herd_size_modifier", name = "Tame cap modifier (%)", editor = "number", scale = 'percent', default = 100, help = "How solitary this unit is. < 100 will cause unit to hit tame cap faster. > 100 will let them go above cap",},
+		{category = "Species", id = "primary_combat_group", name = "Primary combat group", editor = "choice", default = false, items = function() return CombatGroupsSetItems() end, help = "What combat group should this unit below too initially.",},
+		{category = "Species", id = "allied_combat_groups", name = "Allied Combat Groups", editor = "string_list", default = {}, help = "Combat groups that should not be attacked",},
+		{category = "Species", id = "nest_class", name = "Species Nest", editor = "choice", default = false, items = function() return ClassDescendantsList('TerritorialNest') end , help = "What nest is related to this species.",},
+		{category = "Species", id = "intelligence", name = "Intelligence", editor = "choice", default = 'primal', items = {"primal","sub-sentient",'sentient','coordinated'} , help = "How complicated this species can behave.",},
+	},
+}
+
+function UnitSpeciesGroup:ally_with(combat_group)
+	local found = false
+	for _, group in ipairs(self.allied_combat_groups) do
+		if group == combat_group then
+			found = true
 		end
 	end
-	return 30 -- default in case things fail
+	if not found then 
+		self.allied_combat_groups[#self.allied_combat_groups+1]= combat_group
+	end
+end
+
+function UnitSpeciesGroup:betrayed_by(combat_group)
+	local found = false
+	for _, group in ipairs(self.allied_combat_groups) do
+		if group == combat_group then
+			found = true
+		end
+	end
+	if found then 
+		self.allied_combat_groups[#self.allied_combat_groups+1]= combat_group
+	end
+end
+
+function UnitSpeciesGroup:change_primary_combat_group(combat_group)
+	if self.primary_combat_group ~= combat_group then
+		self.primary_combat_group = combat_group
+	end
+	-- todo map through each non-player controlled unit, check if they have the old primary comabt group. if so, change it to the new one.
+	MapForEach(true,'Unit',function(unit)
+		if IsKindOf(unit,'UnitAnimal') and unit.is_tamed then return end
+
+		if unit.CombatGroup == self.primary_combat_group and unit.command_center then
+			unit.CombatGroup = combat_group
+		end
+	end)
+end
+
+function combat_units_with_false()
+	local test_array = {false}
+	local combat_units = table.keys(ClassDescendants("UnitCombat"), true)
+	return table.append(test_array, combat_units)
+end
+
+DefineClass.UnitEvolution = {
+	__parents = { "UnitComponent" },
+	properties = {
+		{ category = "EE Combat", id = "unit_tier", name = "Unit Tier", editor = "number", help = "What tier of unit (This is tracked to ensure players can limit the max individual difficulty of a save by limiting based on tier)", },
+		{ category = "EE Combat", id = "evolution", name = "Evolved Form", editor = "choice", items = function (self) return combat_units_with_false() end, help = "What exact class this creature evolves into", },
+		{ category = "EE Combat", id = "devolution", name = "Ancestor", editor = "choice", items = function (self) return combat_units_with_false() end, help = "What exact class this creature evolved from.", },
+	},
+	unit_tier = 1,
+	evolution = false,
+	devolution = false
+}
+
+function Find_evolution(classdef)
+	Bkob_Log("Finding evolution for: ",classdef.id)
+	local possible
+	if classdef.is_tameable and classdef.NewbornClass then
+		possible = classdef.NewbornClass or classdef.id
+	else
+		possible = classdef.evolution or classdef.id
+	end
+	if g_Classes[possible].unit_tier > MapVarValues["ILU_Tier_Max"] then
+		Bkob_Log("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
+		possible = classdef.id
+	else
+		Bkob_Log("Giving back this evolution: ",possible)
+	end
+	return possible
 end
 
 -------------------------- Mini FUNCTIONS ----------------------------------
 
-
-local function lookupEP(name)
-	DebugPrint("Checking a species EP cost to spawn")
-	DebugPrint(name)
-	DebugPrint("\n")
-	local classdef = g_Classes[name or false]
-	local ep = classdef.EventProgressValue
-	return ep
-end
-
-local tamed_pregnancy = {}
-
-function flag_if_max_tier(class_id)
-local tier = get_tier(class_id)
-	if tier >= 5 then
-		tamed_pregnancy[class_id] = true
-	end
-end
-
-function has_birthed_max_tier(class_id)
-	return tamed_pregnancy[class_id] or false
-end
-
-
-local function are_organs_present(butcher_resources)
-	for _,v in ipairs(butcher_resources) do
-		if is_organ(v['resource']) then
-			return true
-		end
-	end
-	return false
-end
-
 local function is_preg_loaded()
-	for _,mod in ipairs(ModsLoaded) do
+	for _, mod in ipairs(ModsLoaded) do
 		if mod.id == 'hy8RluH' then
 			return true
 		end
@@ -355,133 +199,60 @@ local function is_preg_loaded()
 	return false
 end
 
-local function is_px_loaded()
-	for _,mod in ipairs(ModsLoaded) do
-		if mod.id == 'ucCehPy' then
-			return true
-		end
-	end
-	return false
-end
-
-local function is_animal(mod_item_id)
-	if get_stop(mod_item_id) then
-		return true
-	else
-		return false
-	end
-end
-
-
 local function build_output(final_full_table)
 	DebugPrint("Building final spawn table\n")
 	local additional_class_list = {}
 	local final_main_name = ''
-	for i=1,#final_full_table do
-		if i==1 then
+	for i = 1, #final_full_table do
+		if i == 1 then
 			final_main_name = final_full_table[i]['now']
 		else
-			additional_class_list[i-1] = {id=final_full_table[i]['now'],weight=final_full_table[i]['weight']}
+			additional_class_list[i - 1] = { id = final_full_table[i]['now'], weight = final_full_table[i]['weight'] }
 		end
 	end
 	return final_main_name, additional_class_list
 end
 
+-- This is already getting the id of the UnitSpeciesGroup
 function carrying_capacity(species)
-	DebugPrint("Getting carrying capacity of a species")
-	DebugPrint(species)
-	DebugPrint("\n")
+	Bkob_Log("Getting carrying capacity of a species: ",species)
+	local herd_mod = Presets.UnitSpeciesGroup.Default[species].herd_size_modifier or 100
 	local stop = get_stop(species)
-	local max 
-	if MapVarValues.O_Man_Cap then
-		max = get_preg_quota(species)
+	local max
+	if MapVarValues["EE_hard_cap"] then
+		max = MapVarValues[species] --get_preg_quota(species)
 	end
 	if not max then
-		max = MapVarValues['ILU_max'] or 150
-		max = DivRound(max,6)
-		local mod = 1
-		for _,v in ipairs(species_herd_mod) do
-			if v['id']==stop then
-				mod = v['kc']
-			end
-		end
-		max = DivRound(max * mod,10)
+		max = DivRound(DivRound(MapVarValues['ILU_max'] or 150, 6) * herd_mod, 100)
 	end
+	Bkob_Log("The maxx for this species is: ", max)
 	return max or 30 -- just in case we **** a brick
 end
 
-function refresh_tame_counts()
-	DebugPrint("Refreshing the tame counts\n")
-	if MapVarValues['tame_last_refresh'] then
-		MapVarValues['tame_last_refresh']= GameTime()
-	else
-		MapVar('tame_last_refresh',GameTime())
-	end
-	local count_table = {}
-	for _,animal in ipairs(UIPlayer.labels.TamedAnimals or empty_table) do
-		--print("looking at ",animal.class)
-		local stop_animal = get_stop(animal.class)
-		--print("It's stop category is: ",stop_animal)
-		local found = false
-		for __,entry in ipairs(count_table) do
-			if entry['id'] == stop_animal then
-				found = true
-				entry['count'] = entry['count']+1
-			end
-		end
-		if found == false then
-			--print("It is not in the table yet!")
-			count_table[#count_table+1] = {id=stop_animal,count=1}
-		end
-	end
-	--count_table has index,stop_name, & count
-	for _,v in ipairs(count_table) do
-		if MapVarValues[v['id']] then
-			MapVarValues[v['id']]=v['count']
-		else
-			MapVar(v['id'],v['count'])
-		end
-	end
-end
-
-
 ---------------------- MAJOR FUNCTIONS -----------------------------
 
-function set_expedition_tame(id,name)
-	DebugPrint("Expedition tame being set!")
-	name = name or 'N/A'
-	if MapVarValues['nest_awaken_exp_tame'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
-		MapVarValues['nest_awaken_exp_tame'] = id
-	else
-		MapVar('nest_awaken_exp_tame',id)
-	end
-	if MapVarValues['nest_awaken_tame_name'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
-		MapVarValues['nest_awaken_tame_name'] = name
-	else
-		MapVar('nest_awaken_tame_name',id)
-	end
-end
-
-function new_preg_rate(species_class,rate)
-	DebugPrint("Getting new preg rate for a species ")
-	DebugPrint(species_class)
+function new_preg_rate(specific_species, rate)
+	local species = specific_species.SpeciesGroup
+	if not Presets.UnitSpeciesGroup.Default[species] then return rate end
+	DebugPrint("Preg rate for ")
+	DebugPrint(species)
 	DebugPrint("\n")
-	local tame_check = MapVarValues['tame_last_refresh'] or 0
-	if tame_check + (2 * day_duration) < GameTime() then -- refresh every other day
-		refresh_tame_counts()
-	end
-	local base_rate = rate or species_class.DailyPregnancyChance or 60 -- default to 60 instead of 0
-	local stop = get_stop(species_class)
-	local no = MapVarValues[stop] or 0
-	local cc = carrying_capacity(species_class)
-	local fin_mod = 100*(cc - no) / cc
-	if cc - no <= 0 and not MapVarValues.HasCappedTamed then
-		if table.find(MapVars, 'HasCappedTames') then
-			MapVar('HasCappedTamed',true)
-		else
-			MapVarValues.HasCappedTamed = true
+	--local tame_check = MapVarValues['tame_last_refresh'] or 0
+	--if tame_check + (2 * day_duration) < GameTime() then -- refresh every other day
+	--		refresh_tame_counts()
+	--end
+	local base_rate = rate or specific_species.DailyPregnancyChance or 60 -- default to 60 instead of 0
+	--local stop = get_stop(species_class)
+	local count = 0
+	for _,v in ipairs(UIPlayer.labels.TamedAnimals) do
+		if v.SpeciesGroup == species then
+			count = count + 1
 		end
 	end
+	if count < 2 then return rate or 60 end
+	local no = MapVarValues[stop] or 0
+	local cc = carrying_capacity(species)
+	local fin_mod = 100 * (cc - no) / cc
 	local to_return = fin_mod * base_rate / 100
 	local override = false
 	if override then
@@ -494,36 +265,34 @@ function ILU_update_armor_hcs()
 	DebugPrint("Updating the armor HCs")
 	local combat_type = MapVarValues['ILU_combat_type']
 	local flip_table = {}
-	if not combat_type then return
+	if not combat_type then
+		return
 	elseif combat_type == 'simple' then
 		flip_table = {
-			{id='armor_leather_complex',flip='armor_leather_simple'},
-			{id='armor_vleather_complex',flip='armor_vleather_simple'},
-			{id='armor_synth_complex',flip='armor_synth_simple'},
-			{id='armor_badCarbon_complex',flip='armor_badCarbon_simple'},
-			{id='armor_carbon_complex',flip='armor_carbon_simple'},
+			{ id = 'armor_leather_complex',   flip = 'armor_leather_simple' },
+			{ id = 'armor_vleather_complex',  flip = 'armor_vleather_simple' },
+			{ id = 'armor_synth_complex',     flip = 'armor_synth_simple' },
+			{ id = 'armor_badCarbon_complex', flip = 'armor_badCarbon_simple' },
+			{ id = 'armor_carbon_complex',    flip = 'armor_carbon_simple' },
 		}
 	elseif combat_type == 'complex' then
 		flip_table = {
-			{flip='armor_leather_complex',id='armor_leather_simple'},
-			{flip='armor_vleather_complex',id='armor_vleather_simple'},
-			{flip='armor_synth_complex',id='armor_synth_simple'},
-			{flip='armor_badCarbon_complex',id='armor_badCarbon_simple'},
-			{flip='armor_carbon_complex',id='armor_carbon_simple'},
+			{ flip = 'armor_leather_complex',   id = 'armor_leather_simple' },
+			{ flip = 'armor_vleather_complex',  id = 'armor_vleather_simple' },
+			{ flip = 'armor_synth_complex',     id = 'armor_synth_simple' },
+			{ flip = 'armor_badCarbon_complex', id = 'armor_badCarbon_simple' },
+			{ flip = 'armor_carbon_complex',    id = 'armor_carbon_simple' },
 		}
 	end
 	local found_flip = true
 	while found_flip do
 		found_flip = false
-		MapForEach(true, "Human", function(unit,was_flipped)
-			--print("Checking: ",unit.id)
-			for _,v in ipairs(flip_table) do
+		MapForEach(true, "Human", function(unit, was_flipped)
+			for _, v in ipairs(flip_table) do
 				for _, effect in ipairs(unit.status_effects or empty_table) do
 					if IsKindOf(effect, "ModItemHealthCondition") and effect.id == v['id'] then
-						--print("Swapping a condition for the correct one (Based on mod option)")
 						unit:RemoveHealthCondition(v['id'])
-						unit:AddHealthCondition(v['flip'],'combatflip')
-						--print("Trying to mark var as flipped!")
+						unit:AddHealthCondition(v['flip'], 'combatflip')
 						found_flip = true
 					end
 				end
@@ -532,70 +301,74 @@ function ILU_update_armor_hcs()
 	end
 end
 
--- meat based upgrading
-function check_count_and_upgrade(start_animal,additionalClassList,progress_percent)
+-- classdef UnitEvolution Unit Component + EP based upgrading
+function check_count_and_upgrade(start_animal, additionalClassList, progress_percent)
 	DebugPrint("non-robot attack incoming\n")
 	progress_percent = progress_percent or 100
-	local actual_EP_Bank = DivRound((progress_percent*EventProgress),100)
+	local actual_EP_Bank = DivRound((progress_percent * EventProgress), 100)
 	local max_count = MapVarValues['ILU_max']
 	if not max_count then ILU_set_mod_options("rtw6tLg") end
 	local max_count = MapVarValues['ILU_max']
-	local min_average_cost = DivRound(actual_EP_Bank,max_count)
-	local start_ep = lookupEP(start_animal)
+	local min_average_cost = DivRound(actual_EP_Bank, max_count)
+	local start_ep = g_Classes[start_animal].EventProgressValue --lookupEP(start_animal)
 	local temp_class_list = {
-	  {start = start_animal,weight=100,now=start_animal,up_count=0,ep=start_ep},
+		{ start = start_animal, weight = 100, now = start_animal, up_count = 0},
 	}
 	local sum_weight = 100
 	local progress_and_weight = start_ep * 100
-	for i=1,#additionalClassList do
-		local this_ep = lookupEP(additionalClassList[i][1])
+	for i = 1, #additionalClassList do
+		local this_ep = g_Classes[additionalClassList[i][1]].EventProgressValue --lookupEP(additionalClassList[i][1])
 		local expansion = {}
-		expansion['now']=additionalClassList[i][1]
-		expansion['start']=additionalClassList[i][1]
-		expansion['weight']=additionalClassList[i][2]
-		expansion['up_count']=0
-		expansion['ep']=this_ep
+		expansion['now'] = additionalClassList[i][1]
+		expansion['start'] = additionalClassList[i][1]
+		expansion['weight'] = additionalClassList[i][2]
+		expansion['up_count'] = 0
+		--expansion['ep'] = this_ep
 		sum_weight = sum_weight + additionalClassList[i][2]
-		progress_and_weight = progress_and_weight + this_ep*additionalClassList[i][2]
-		temp_class_list[i+1] = expansion
+		progress_and_weight = progress_and_weight + this_ep * additionalClassList[i][2]
+		temp_class_list[i + 1] = expansion
 	end
-	local this_defs_avg = DivRound(progress_and_weight,sum_weight)
+	local this_defs_avg = DivRound(progress_and_weight, sum_weight)
 	if this_defs_avg > min_average_cost then return build_output(temp_class_list) end
 	local max_loops = 40
-	local up_tier = 1
+	local up_count_cap = 1
 	local max_tier = GameVarValues['ILU_Tier_Max'] or 6
 	local i = 0
 	local capped = 0
-	local found_an_upgrade_this_loop = false
+	local evolution = false
 	while i < max_loops and this_defs_avg < min_average_cost and capped < #temp_class_list do
 		i = i + 1
-		found_an_upgrade_this_loop = false
-		for _,v in ipairs(temp_class_list) do
-			local next = get_next(v['now'])
-			local cur_tier = get_tier(v['now'])
-			if not next or cur_tier == max_tier then
-				capped = capped + 1
-			elseif v['up_count'] < up_tier then
-				found_an_upgrade_this_loop = true
-				v['up_count'] = up_tier
-				local weighted_ep_old = DivRound(v['weight']*v['ep'],sum_weight)
-				v['now'] = next
-				local next_ep = lookupEP(next)
-				v['ep']=next_ep
-				local weighted_ep_new = DivRound(v['weight']*next_ep,sum_weight)
+		evolution = false
+		for _, v in ipairs(temp_class_list) do
+			local v_def = g_Classes[v['now']]
+			local next = Find_evolution(v['now'])
+			local maybe_evo = g_Classes[next]
+			local not_this_unit = v['up_count'] ~= up_count_cap
+			local same_creature = maybe_evo.id ~= v_def.id
+			local now_capped = maybe_evo.tier == max_tier
+			local too_high = maybe_evo.unit_tier > max_tier
+			if not (not_this_unit or same_creature or too_high or evolution) then
+				if now_capped then
+					capped = capped + 1
+				end
+				evolution = maybe_evo
+				v['now'] = evolution.id
+				v['up_count'] = v['up_count'] + 1
+				v['ep'] = evolution.EventProgressValue
+				local weighted_ep_old = DivRound(v['weight'] * v_def.EventProgressValue, sum_weight)
+				local weighted_ep_new = DivRound(v['weight'] * evolution.EventProgressValue, sum_weight)
 				this_defs_avg = this_defs_avg - weighted_ep_old + weighted_ep_new
 			end
 		end
-		if not found_an_upgrade_this_loop then
-			up_tier = up_tier + 1
+		if not evolution then
+			up_count_cap = up_count_cap + 1
 		end
 	end
 	return build_output(temp_class_list)
 end
 
-
 -- robot attack upgrader
-function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit,added_units, progress_mul)
+function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit, added_units, progress_mul)
 	DebugPrint("Robot attack incoming\n")
 	local robot_spawn_def = SpawnDefs[robot_spawndef]
 	if not robot_spawn_def then return end
@@ -604,12 +377,13 @@ function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit,added_uni
 	progress_mul = progress_mul or 100
 	local addedClassList = {}
 	local instance = {}
-	instance.spawnClass, addedClassList = check_count_and_upgrade(main_unit,added_units)
+	instance.spawnClass, addedClassList = check_count_and_upgrade(main_unit, added_units)
 	instance.AdditionalClassList = {}
 	--print("First assault chosen", instance.spawnClass)
 	--print(addedClassList)
-	for i=1,#addedClassList do
-		instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
+	for i = 1, #addedClassList do
+		instance.AdditionalClassList[#instance.AdditionalClassList + 1] = { addedClassList[i]['id'], addedClassList[i]
+			['weight'] }
 	end
 	robot_spawn_def = robot_spawn_def:CreateInstance(instance)
 	local seed = InteractionRand(nil, "AttackWave")
@@ -622,7 +396,7 @@ function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit,added_uni
 	end
 	local MaxInvadersPerDropship = const.Gameplay.MaxInvadersPerDropship
 	local MaxDropshipsPossible = const.Gameplay.MaxAttackDropshipsCount
-	local dropships = Min(DivCeil(count,MaxInvadersPerDropship), MaxDropshipsPossible)
+	local dropships = Min(DivCeil(count, MaxInvadersPerDropship), MaxDropshipsPossible)
 	robot_spawn_def.Count = count / dropships
 	instance = {}
 	instance.RobotSpawnDef = robot_spawn_def
@@ -637,7 +411,7 @@ local ProduceResource = ProduceResource
 local PlaceResourcePile = PlaceResourcePile
 local params = { disable_requests = true }
 function UnitAnimal:DoProduceResourcesDiminishingReturns()
-	DebugPrint("Animal doing a new res call")
+	DebugPrint("EE animal trying to generate limited resources")
 	if self:IsTamed() then
 		local happiness_pct = Min(self.Happiness / 1000, 100)
 		for _, res_amount in ipairs(self.ProduceResources) do
@@ -647,9 +421,9 @@ function UnitAnimal:DoProduceResourcesDiminishingReturns()
 				amount = amount + RoundResourceAmount(happiness_mod)
 			end
 			if UIPlayer:GetStoredResAmount(res_amount.resource) >= const.ResourceScale * 300 then
-				self:AddHealthCondition('tamed_constipated','too_many_resources')
+				self:AddHealthCondition('tamed_constipated', 'too_many_resources')
 			elseif self:HasHealthCondition('tamed_constipated') then
-				self:RemoveHealthCondition('tamed_constipated','resources_normalized')
+				self:RemoveHealthCondition('tamed_constipated', 'resources_normalized')
 				ProduceResource(nil, self, res_amount.resource, amount)
 			else
 				ProduceResource(nil, self, res_amount.resource, amount)
@@ -661,23 +435,35 @@ function UnitAnimal:DoProduceResourcesDiminishingReturns()
 		end
 	end
 	self:UpdateProductionTime()
+	DebugPrint("EE animal done generating resources (maybe)")
 end
 
+function EE_Instantiate()
+	if MapVarValues['ILU_max'] == nil then MapVar('ILU_max', 150) end
+	if MapVarValues['ILU_Tier_Max'] == nil then MapVar('ILU_Tier_Max', 6) end
+	if MapVarValues['ILU_combat_type'] == nil then MapVar('ILU_combat_type',"complex") end
+	if MapVarValues['species_shrieker_cap'] == nil then MapVar("species_shrieker_cap",20) end
+	if MapVarValues['species_scissorhands_cap'] == nil then MapVar("species_scissorhands_cap",10) end
+	if MapVarValues['species_draka_cap'] == nil then MapVar("species_draka_cap",20) end
+	if MapVarValues['species_ulfen_cap'] == nil then MapVar("species_ulfen_cap",20) end
+	if MapVarValues['species_noth_cap'] == nil then MapVar("species_noth_cap",20) end
+	if MapVarValues['species_shogu_cap'] == nil then MapVar("species_shogu_cap",10) end
+	if MapVarValues['species_camel_cap'] == nil then MapVar("species_camel_cap",20) end
+	if MapVarValues['species_gujo_cap'] == nil then MapVar("species_gujo_cap",10) end
+	if MapVarValues['species_dogs_cap'] == nil then MapVar("species_dogs_cap",20) end
+	if MapVarValues['species_tecatli_cap'] == nil then MapVar("species_tecatli_cap",10) end
+	if MapVarValues['species_juno_cap'] == nil then MapVar("species_juno_cap",10) end
+	if MapVarValues['EE_hard_cap'] == nil then MapVar("EE_hard_cap",false) end
+	if MapVarValues['nest_awaken_exp_tame'] == nil then MapVar('nest_awaken_exp_tame', false) end
+	if MapVarValues['nest_awaken_tame_name'] == nil then MapVar('nest_awaken_tame_name', false) end
+end
 
------------------------- META FUNCTIONS ------------------
---[[
-function ILU_reset_vars()
-	local map = GetMap()
-	if not map or map == "" then return end
-	MapVar('ILU_max', 150)
-	MapVar('ILU_Tier_Max', 6)
-	MapVar('ILU_combat_type',"complex")
-	MapVarValues['ILU_max']=150
-	MapVarValues['ILU_Tier_Max']=6
-	MapVarValues['ILU_combat_type']='complex'
-end]]
+function EE_init_and_set_options(id)
+	EE_Instantiate()
+	EE_set_mod_options(id)
+end
 
-function ILU_set_mod_options(id)
+function EE_set_mod_options(id)
 	id = id or CurrentModId
 	if is_preg_loaded() then
 		DebugPrint("Pregnancy Mod detected!\n")
@@ -691,194 +477,35 @@ function ILU_set_mod_options(id)
 	DebugPrint('Override tame cap found? ')
 	DebugPrint(options.O_Man_Cap)
 	DebugPrint("\n")
-	if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap",options.O_Man_Cap) end
+	--if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap", options.O_Man_Cap) end
 	if options.O_Man_Cap then
-		upsert_preg_quota('Ulfen',options.UlfenQuota or 20)
-		upsert_preg_quota('Draka',options.DrakaQuota or 20)
-		upsert_preg_quota('Noth',options.NothQuota or 20)
-		upsert_preg_quota('Shogu',options.ShoguQuota or 10)
-		upsert_preg_quota('Camel',options.CamelQuota or 20)
-		upsert_preg_quota('Gujo',options.GujoQuota or 10)
-		upsert_preg_quota('Scissor',options.ScissorQuota or 10)
-		upsert_preg_quota('Dog',options.DogQuota or 10)
-		upsert_preg_quota('Tecatli',options.TecatliQuota or 10)
-		upsert_preg_quota('Juno',options.JunoQuota or 10)
-		MapVarValues.O_Man_Cap = true
+		MapVarValues['EE_hard_cap'] = true
+		MapVarValues["species_shrieker_cap"]=options.ShriekersQuota or 20
+		MapVarValues["species_scissorhands_cap"]=options.ScissorQuota or 10
+		MapVarValues["species_draka_cap"]=options.DrakaQuota or 20
+		MapVarValues["species_ulfen_cap"]=options.UlfenQuota or 20
+		MapVarValues["species_noth_cap"]=options.NothQuota or 20
+		MapVarValues["species_shogu_cap"]=options.ShoguQuota or 10
+		MapVarValues["species_camel_cap"]=options.CamelQuota or 20
+		MapVarValues["species_gujo_cap"]=options.GujoQuota or 10
+		MapVarValues["species_dogs_cap"]=options.DogQuota or 20
+		MapVarValues["species_tecatli_cap"]=options.TecatliQuota or 10
+		MapVarValues["species_juno_cap"]=options.JunoQuota or 10
 	else
-		MapVarValues.O_Man_Cap = false
+		MapVarValues['EE_hard_cap'] = false
 	end
-	if MapVarValues.ILU_max then
-		MapVarValues.ILU_max = options.O_ILU_max or 150
-		MapVarValues.ILU_Tier_Max = options.O_ILU_max_tier or 6
-	else
-		MapVar('ILU_max', options.O_ILU_max or 150)
-		MapVar('ILU_Tier_Max', options.O_ILU_max_tier or 6)
-	end
+	MapVarValues["ILU_max"] = options.O_ILU_max or 150
+	MapVarValues["ILU_Tier_Max"] = options.O_ILU_max_tier or 6
 	if options.O_simple_combat == true then
-		MapVarValues.ILU_combat_type='simple'
+		MapVarValues["ILU_combat_type"] = 'simple'
 	elseif options.O_simple_combat == false then
-		MapVarValues.ILU_combat_type='complex'
+		MapVarValues["ILU_combat_type"] = 'complex'
 	else
-		MapVarValues.ILU_combat_type='complex'
+		MapVarValues["ILU_combat_type"] = 'complex'
 	end
 	ILU_update_armor_hcs()
 end
 
-if FirstLoad then
-	--ILU_reset_vars()
-	ILU_set_mod_options("rtw6tLg")
-end
-
-function unloadTest()
-	if not is_px_loaded() then
-		--print("Project-X not found, checking for organ remnants")
-		local found_organs = false
-		for _,mod in ipairs(ModsLoaded) do 
-			if mod.id == 'rtw6tLg' then
-				mod:ForEachItem(function(mc)
-					if is_animal(mc.id) then
-						local local_id = mc.id
-						if are_organs_present(mc.ButcherResources) then
-					 		--print("Organs found in animal: ",mc.id)
-							found_organs = true
-						end
-					end
-				end)
-				if found_organs then ForceActivateStoryBit("ILU_restart_required") end
-			end
-		end
-	end
-end
-
-local function ILU_mod_set_and_cc()
-	ILU_set_mod_options("rtw6tLg")
-	refresh_tame_counts()
-end
-
-local function ILU_set_and_test()
-	ILU_set_mod_options("rtw6tLg")
-	unloadTest()
-end
-
-OnMsg.ApplyModOptions = ILU_set_mod_options
---OnMsg.ModsReloaded = ILU_set_and_test
-OnMsg.LoadGame = ILU_mod_set_and_cc
-OnMsg.GameStarted = ILU_set_and_test
-
---function OnMsg.NewGame(game)
---	ILU_reset_vars()
---end
-
-function mass_pet_vr_train(bio_level)
-	bio_level = bio_level or 1
-	local pets = UIPlayer.labels.TamedAnimals
-	for _,pet in ipairs(pets or empty_table) do
-		if pet:CanBeTrained() and not pet:IsMaxTrainingLevelReached() then
-			local xp_give = bio_level * 100
-			pet.combat_xp = pet.combat_xp + xp_give
-			local previous_combat_skill = pet.CombatSkill
-			pet.CombatSkill = SkillExperienceToLevel(pet.combat_xp)
-			if previous_combat_skill ~= pet.CombatSkill then
-				Msg("AnimalChangeSkillLevel", pet, pet.CombatSkill, previous_combat_skill)
-				if pet:IsMaxTrainingLevelReached() then
-					pet.training_allowed = false
-				end
-			end
-
-		end
-	end
-end
-
---[[('ModifyObject', {
-					Id = "IncreasedConsumptionSolarFlareShielded",
-					ModProperty = "PowerConsumption",
-					Mul = 1500,
-					ObjectClass = "PowerComponent",
-				})
-			]]
-
-function enhancing_species(effect_case)
-	local label = "TamedAnimals"
-	local player = UIPlayer --unit.player or UIPlayer
-	local permanent = true
-	local effects
-	if effect_case == 'Shrieker_Range' then
-		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura1")
-		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura2")
-		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura3")
-		player:DetachEffectFromLabel("TamedAnimals", "ShriekerDura4")
-		effects = PlaceObj('ModifyObject', {
-				Add = 60,
-				DisplayText = T(722733588715, --[[ModItemTech ee_fake_shrieker_range DisplayText]] "Enhanced Eyesight"),
-				Id = "ShriekerEnhancement",
-				ModProperty = "SightRange",
-				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
-			})
-		player:AttachEffectToLabel(label, effects, permanent)
-		return
-	elseif effect_case == 'Shrieker_Durability' then
-		player:DetachEffectFromLabel("TamedAnimals", "ShriekerRange")
-		effects = {
-			PlaceObj('ModifyObject', {
-				id="ShriekerDura1",
-				ModProperty = "HitNegationChance_blunt",
-				Add=20,
-				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
-				param_bindings = false,
-			}),
-			PlaceObj('ModifyObject', {
-				id="ShriekerDura2ShriekerDura2",
-				ModProperty = "HitNegationChance_blunt",
-				Add=20,
-				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
-				param_bindings = false,
-			}),
-			PlaceObj('ModifyObject', {
-				id="ShriekerDura3",
-				ModProperty = "HitNegationChance_blunt",
-				Add=20,
-				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
-				param_bindings = false,
-			}),
-			PlaceObj('ModifyObject', {
-				id="ShriekerDura4",
-				ModProperty = "HitNegationChance_blunt",
-				Add=20,
-				ObjectClass = "Sniping_Entropy_Shielded_Shrieker",
-				param_bindings = false,
-			}),
-		}
-	end
-	if not effects then return end
-	--
-end
-
-function UnitAnimal:GetRealPregRate()
-	local pct = new_preg_rate(self.class, self.DailyPregnancyChance)
-	return Clamp(pct, 0, 100)
-end
-
-function UnitInvader:GiveResearchCreditIfMissing(reason)
-	local rc = UIPlayer.research_center
-	local field_tech = self.FieldResearchTech
-	local started = rc.tech_status[field_tech].started
-	if not started then
-		rc:StartResearch(field_tech)
-	end
-	local full_cost = rc.tech_status[field_tech].initial_points
-	rc:AddTechResearchPoints(field_tech, DivRound(full_cost,10), 'Killed an invader')
-end
-
-
-local origOnDead = UnitInvaderAutoResolve.OnDead or empty_func
-function UnitInvaderAutoResolve:OnDead(reason)
-	origOnDead(self, reason)
-	local attacker = self:GetValidAttacker()
-	if not attacker or attacker.CombatGroup ~= Human.CombatGroup or not attacker.player then
-		return
-	end
-	local rc = UIPlayer.research_center
-	if rc:IsTechResearched('EE_observe_killing_t2') and rc:IsTechResearched(self.FieldResearchTech) then
-		self:GiveResearchCredit(reason)
-	end
-end
+OnMsg.ApplyModOptions = EE_init_and_set_options
+--OnMsg.LoadGame = EE_check
+OnMsg.GameStarted = EE_Instantiate

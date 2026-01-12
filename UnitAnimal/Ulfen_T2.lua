@@ -1,11 +1,11 @@
-UndefineClass('Ulfen_T2')
-DefineClass.Ulfen_T2 = {
+UndefineClass('Ulfen_t2')
+DefineClass.Ulfen_t2 = {
 	__parents = { "UlfenBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "UlfenBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_ulfen",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -38,11 +38,11 @@ DefineClass.Ulfen_T2 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_ulfen",
-	DisplayName = T(986002543988, --[[ModItemUnitAnimalCompositeDef Ulfen_T2 DisplayName]] "Wooly Ulfen"),
-	DisplayNamePl = T(995201687953, --[[ModItemUnitAnimalCompositeDef Ulfen_T2 DisplayNamePl]] "Wooly Ulfens"),
-	DisplayNameUnknown = T(713191142286, --[[ModItemUnitAnimalCompositeDef Ulfen_T2 DisplayNameUnknown]] "Unknown Ulfen Evolution"),
-	DisplayNameUnknownPL = T(861360607220, --[[ModItemUnitAnimalCompositeDef Ulfen_T2 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
-	Description = T(894774101788, --[[ModItemUnitAnimalCompositeDef Ulfen_T2 Description]] "An aggressive evolution of the Ulfen"),
+	DisplayName = T(986002543988, --[[ModItemUnitAnimalCompositeDef Ulfen_t2 DisplayName]] "Wooly Ulfen"),
+	DisplayNamePl = T(995201687953, --[[ModItemUnitAnimalCompositeDef Ulfen_t2 DisplayNamePl]] "Wooly Ulfens"),
+	DisplayNameUnknown = T(713191142286, --[[ModItemUnitAnimalCompositeDef Ulfen_t2 DisplayNameUnknown]] "Unknown Ulfen Evolution"),
+	DisplayNameUnknownPL = T(861360607220, --[[ModItemUnitAnimalCompositeDef Ulfen_t2 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
+	Description = T(894774101788, --[[ModItemUnitAnimalCompositeDef Ulfen_t2 Description]] "An aggressive evolution of the Ulfen"),
 	BaseMaxHealth = 350000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -131,7 +131,7 @@ DefineClass.Ulfen_T2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Ulfen_T3",
+	NewbornClass = "Ulfen_t3",
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
 	FieldVisibilityCold = 30000,

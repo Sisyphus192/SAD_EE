@@ -1,11 +1,11 @@
-UndefineClass('Camel_T5')
-DefineClass.Camel_T5 = {
+UndefineClass('Camel_t5')
+DefineClass.Camel_t5 = {
 	__parents = { "CamelBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "CamelBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_camel",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -43,11 +43,11 @@ DefineClass.Camel_T5 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_camel",
-	DisplayName = T(893069937506, --[[ModItemUnitAnimalCompositeDef Camel_T5 DisplayName]] "Royal Llamel"),
-	DisplayNamePl = T(208203639834, --[[ModItemUnitAnimalCompositeDef Camel_T5 DisplayNamePl]] "Royal Llamels"),
-	DisplayNameUnknown = T(820153423221, --[[ModItemUnitAnimalCompositeDef Camel_T5 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
-	DisplayNameUnknownPL = T(405126334598, --[[ModItemUnitAnimalCompositeDef Camel_T5 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
-	Description = T(134372948946, --[[ModItemUnitAnimalCompositeDef Camel_T5 Description]] "Aggressive spitting dromedary, with it's saliva able to destroy any obstacle"),
+	DisplayName = T(893069937506, --[[ModItemUnitAnimalCompositeDef Camel_t5 DisplayName]] "Royal Llamel"),
+	DisplayNamePl = T(208203639834, --[[ModItemUnitAnimalCompositeDef Camel_t5 DisplayNamePl]] "Royal Llamels"),
+	DisplayNameUnknown = T(820153423221, --[[ModItemUnitAnimalCompositeDef Camel_t5 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
+	DisplayNameUnknownPL = T(405126334598, --[[ModItemUnitAnimalCompositeDef Camel_t5 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
+	Description = T(134372948946, --[[ModItemUnitAnimalCompositeDef Camel_t5 Description]] "Aggressive spitting dromedary, with it's saliva able to destroy any obstacle"),
 	BaseMaxHealth = 1200000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

@@ -4,8 +4,9 @@ DefineClass.Noth = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "base unit, T1",
 	object_class = "UlfenBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_noth",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -101,7 +102,7 @@ DefineClass.Noth = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Noth_T2",
+	NewbornClass = "Noth_t2",
 	FieldVisibilityCold = 75000,
 	FieldVisibilityWarm = 25000,
 	MoveSpeedCold = 1000,

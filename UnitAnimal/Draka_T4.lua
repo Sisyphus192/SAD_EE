@@ -1,11 +1,11 @@
-UndefineClass('Draka_T4')
-DefineClass.Draka_T4 = {
+UndefineClass('Draka_t4')
+DefineClass.Draka_t4 = {
 	__parents = { "DrakaBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "DrakaBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_draka",
 	RoamRadius = 30000,
 	RoamMinDist = 5000,
 	RoamMaxDist = 20000,
@@ -46,9 +46,9 @@ DefineClass.Draka_T4 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_draka",
-	DisplayName = T(342153828864, --[[ModItemUnitAnimalCompositeDef Draka_T4 DisplayName]] "DrikaDrakka"),
-	DisplayNamePl = T(300064191432, --[[ModItemUnitAnimalCompositeDef Draka_T4 DisplayNamePl]] "DrikaDrakkas"),
-	Description = T(894512638170, --[[ModItemUnitAnimalCompositeDef Draka_T4 Description]] "Aggressive Evolution of the Drakka. This species now emits sound waves long after the impacts that caused it."),
+	DisplayName = T(342153828864, --[[ModItemUnitAnimalCompositeDef Draka_t4 DisplayName]] "DrikaDrakka"),
+	DisplayNamePl = T(300064191432, --[[ModItemUnitAnimalCompositeDef Draka_t4 DisplayNamePl]] "DrikaDrakkas"),
+	Description = T(894512638170, --[[ModItemUnitAnimalCompositeDef Draka_t4 Description]] "Aggressive Evolution of the Drakka. This species now emits sound waves long after the impacts that caused it."),
 	BaseMaxHealth = 1200000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -128,7 +128,7 @@ DefineClass.Draka_T4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2000000,
 	GrowDuration = 2000000,
-	NewbornClass = "Draka_T5",
+	NewbornClass = "Draka_t5",
 	MaxGrownScale = 100,
 	FieldVisibilityCold = 30000,
 	FieldVisibilityWarm = 10000,

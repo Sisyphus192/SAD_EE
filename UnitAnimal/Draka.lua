@@ -4,8 +4,9 @@ DefineClass.Draka = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "base unit, T1",
 	object_class = "DrakaBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_draka",
 	RoamRadius = 30000,
 	RoamMinDist = 5000,
 	RoamMaxDist = 20000,
@@ -111,7 +112,7 @@ DefineClass.Draka = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Draka_T2",
+	NewbornClass = "Draka_t2",
 	MaxGrownScale = 100,
 	FieldVisibilityCold = 30000,
 	FieldVisibilityWarm = 10000,

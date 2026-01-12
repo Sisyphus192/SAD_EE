@@ -1,14 +1,16 @@
 UndefineClass('HostileRobot_Monk_LVL5')
 DefineClass.HostileRobot_Monk_LVL5 = {
-	__parents = { "CombatRobot" },
+	__parents = { "UnitNesting", "CombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Monk_Special", "Monk_T3", "Robot" ),
 	pfclass = 17,
 	Health = 1500000,
 	MaxHealth = 1500000,
+	CombatGroup = "Robots",
 	HitNegationChance = {
 		HitNegationChance_blunt = 30,
 		HitNegationChance_energy = 55,
@@ -57,5 +59,6 @@ DefineClass.HostileRobot_Monk_LVL5 = {
 			},
 		}),
 	},
+	UnitNesting = true,
 }
 

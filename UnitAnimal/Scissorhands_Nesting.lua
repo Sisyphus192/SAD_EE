@@ -4,9 +4,9 @@ DefineClass.Scissorhands_Nesting = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T0.1",
+	comment = "base unit, T1",
 	object_class = "GroundAnimal",
-	SpeciesGroup = "insects",
+	SpeciesGroup = "species_scissorhand",
 	UnitTags = set( "AgitatedByPheromones", "Animal" ),
 	RoamRadius = 10000,
 	pfclass = 5,

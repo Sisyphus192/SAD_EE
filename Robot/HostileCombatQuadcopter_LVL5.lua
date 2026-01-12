@@ -1,6 +1,6 @@
 UndefineClass('HostileCombatQuadcopter_LVL5')
 DefineClass.HostileCombatQuadcopter_LVL5 = {
-	__parents = { "CombatQuadcopter" },
+	__parents = { "UnitNesting", "CombatQuadcopter" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
@@ -11,6 +11,7 @@ DefineClass.HostileCombatQuadcopter_LVL5 = {
 	damage_reduction = {
 		piercing = 20,
 	},
+	CombatGroup = "Robots",
 	Movement = 125000,
 	DisplayName = T(449854643933, --[[ModItemRobotCompositeDef HostileCombatQuadcopter_LVL5 DisplayName]] "D-F5-346l3"),
 	DisplayNameShort = T(260759826748, --[[ModItemRobotCompositeDef HostileCombatQuadcopter_LVL5 DisplayNameShort]] "DF5"),
@@ -25,6 +26,7 @@ DefineClass.HostileCombatQuadcopter_LVL5 = {
 	SpawnDefWeight = 50,
 	SpawnTags = set( "Boss" ),
 	FlightEscapeInside = true,
+	UnitNesting = true,
 	res_consumed = "LiquidFuel",
 	res_max_stored = 30000,
 	res_used = 1000,

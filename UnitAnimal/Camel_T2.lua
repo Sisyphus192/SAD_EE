@@ -1,11 +1,11 @@
-UndefineClass('Camel_T2')
-DefineClass.Camel_T2 = {
+UndefineClass('Camel_t2')
+DefineClass.Camel_t2 = {
 	__parents = { "CamelBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "CamelBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_camel",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -26,11 +26,11 @@ DefineClass.Camel_T2 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_camel",
-	DisplayName = T(860337454211, --[[ModItemUnitAnimalCompositeDef Camel_T2 DisplayName]] "Llamel"),
-	DisplayNamePl = T(683878998499, --[[ModItemUnitAnimalCompositeDef Camel_T2 DisplayNamePl]] "Llamels"),
-	DisplayNameUnknown = T(123371203784, --[[ModItemUnitAnimalCompositeDef Camel_T2 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
-	DisplayNameUnknownPL = T(226359582646, --[[ModItemUnitAnimalCompositeDef Camel_T2 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
-	Description = T(710987730029, --[[ModItemUnitAnimalCompositeDef Camel_T2 Description]] "Dromadary with the ability to shoot spit from long distances away."),
+	DisplayName = T(860337454211, --[[ModItemUnitAnimalCompositeDef Camel_t2 DisplayName]] "Llamel"),
+	DisplayNamePl = T(683878998499, --[[ModItemUnitAnimalCompositeDef Camel_t2 DisplayNamePl]] "Llamels"),
+	DisplayNameUnknown = T(123371203784, --[[ModItemUnitAnimalCompositeDef Camel_t2 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
+	DisplayNameUnknownPL = T(226359582646, --[[ModItemUnitAnimalCompositeDef Camel_t2 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
+	Description = T(710987730029, --[[ModItemUnitAnimalCompositeDef Camel_t2 Description]] "Dromadary with the ability to shoot spit from long distances away."),
 	BaseMaxHealth = 150000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -109,7 +109,7 @@ DefineClass.Camel_T2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Camel_T3",
+	NewbornClass = "Camel_t3",
 	MinGrownScale = 70,
 	MaxGrownScale = 85,
 	FieldVisibilityCold = 75000,

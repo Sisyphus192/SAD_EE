@@ -4,7 +4,7 @@ DefineClass.Scissorhands_Brute = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T2",
+	comment = "base unitT2",
 	object_class = "Scissorhands",
 	EventProgressValue = 180,
 	lead_priority = 12,
@@ -32,7 +32,7 @@ DefineClass.Scissorhands_Brute = {
 		"DraftableAnimal",
 	},
 	attack_weapon = "ScissorhandsMelee_Brute",
-	NewbornClass = "Brutal_Duelist_Scissorhands",
+	NewbornClass = "scissorhands_t3",
 	MinNewbornScale = 60,
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,

@@ -4,8 +4,9 @@ DefineClass.Ulfen = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "base unit, T1",
 	object_class = "UlfenBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_ulfen",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -110,7 +111,7 @@ DefineClass.Ulfen = {
 	DailyPregnancyChance = 65,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "Ulfen_T2",
+	NewbornClass = "Ulfen_t2",
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
 	FieldVisibilityCold = 30000,

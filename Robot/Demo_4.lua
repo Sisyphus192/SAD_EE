@@ -1,10 +1,11 @@
 UndefineClass('Demo_4')
 DefineClass.Demo_4 = {
-	__parents = { "HeavyCombatRobot" },
+	__parents = { "UnitNesting", "HeavyCombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
 	object_class = "HeavyCombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Demo_T3", "Robot" ),
 	pfclass = 0,
 	Health = 550000,
@@ -15,6 +16,7 @@ DefineClass.Demo_4 = {
 		gas = 40,
 		piercing = 15,
 	},
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	Movement = 175000,
 	SkinColor = PlaceObj('ColorizationPropSet', {
@@ -48,6 +50,7 @@ DefineClass.Demo_4 = {
 			},
 		}),
 	},
+	UnitNesting = true,
 	res_consumed = "LiquidFuel",
 	res_max_stored = 30000,
 	res_used = 1000,

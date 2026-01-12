@@ -1,11 +1,11 @@
-UndefineClass('Draka_T3')
-DefineClass.Draka_T3 = {
+UndefineClass('Draka_t3')
+DefineClass.Draka_t3 = {
 	__parents = { "DrakaBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "DrakaBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_draka",
 	RoamRadius = 30000,
 	RoamMinDist = 5000,
 	RoamMaxDist = 20000,
@@ -46,9 +46,9 @@ DefineClass.Draka_T3 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_draka",
-	DisplayName = T(384580682194, --[[ModItemUnitAnimalCompositeDef Draka_T3 DisplayName]] "DrikaDrakk"),
-	DisplayNamePl = T(959449292169, --[[ModItemUnitAnimalCompositeDef Draka_T3 DisplayNamePl]] "DrikaDrakk"),
-	Description = T(807758166765, --[[ModItemUnitAnimalCompositeDef Draka_T3 Description]] "Aggressive Evolution of the Drakka. Can weaponize it's acoustic outer shell."),
+	DisplayName = T(384580682194, --[[ModItemUnitAnimalCompositeDef Draka_t3 DisplayName]] "DrikaDrakk"),
+	DisplayNamePl = T(959449292169, --[[ModItemUnitAnimalCompositeDef Draka_t3 DisplayNamePl]] "DrikaDrakk"),
+	Description = T(807758166765, --[[ModItemUnitAnimalCompositeDef Draka_t3 Description]] "Aggressive Evolution of the Drakka. Can weaponize it's acoustic outer shell."),
 	BaseMaxHealth = 800000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -128,7 +128,7 @@ DefineClass.Draka_T3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Draka_T4",
+	NewbornClass = "Draka_t4",
 	MaxGrownScale = 100,
 	FieldVisibilityCold = 30000,
 	FieldVisibilityWarm = 10000,

@@ -1,15 +1,16 @@
 UndefineClass('HostileRobot_Scout_LVL5')
 DefineClass.HostileRobot_Scout_LVL5 = {
-	__parents = { "CombatRobot" },
+	__parents = { "UnitNesting", "CombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
-	comment = "Scout T2",
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Cyber_Eye", "Robot", "Scout_T2" ),
 	pfclass = 17,
 	Health = 500000,
 	MaxHealth = 500000,
+	CombatGroup = "Robots",
 	HitNegationChance = {
 		HitNegationChance_blunt = 15,
 		HitNegationChance_energy = 15,
@@ -67,5 +68,6 @@ DefineClass.HostileRobot_Scout_LVL5 = {
 			},
 		}),
 	},
+	UnitNesting = true,
 }
 

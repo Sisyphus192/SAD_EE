@@ -1,10 +1,11 @@
 UndefineClass('Crawl_Cannon_T2')
 DefineClass.Crawl_Cannon_T2 = {
-	__parents = { "CrawlerMachineGun" },
+	__parents = { "UnitNesting", "CrawlerMachineGun" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
 	object_class = "CrawlerMachineGun",
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	Movement = 50000,
 	DisplayName = T(321124799692, --[[ModItemRobotCompositeDef Crawl_Cannon_T2 DisplayName]] "C-A2-c4nn0n4d3"),
@@ -30,5 +31,6 @@ DefineClass.Crawl_Cannon_T2 = {
 	siege_time = 10000,
 	WalkSpeed = 2000,
 	attack_weapon = "Crawler_cannon",
+	UnitNesting = true,
 }
 

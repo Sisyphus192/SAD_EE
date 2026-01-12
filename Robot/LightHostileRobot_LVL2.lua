@@ -5,8 +5,10 @@ DefineClass.LightHostileRobot_LVL2 = {
 
 
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Robot", "assault_T1" ),
 	pfclass = 17,
+	CombatGroup = "Robots",
 	HitNegationChance = {
 		HitNegationChance_blunt = 5,
 		HitNegationChance_energy = 5,

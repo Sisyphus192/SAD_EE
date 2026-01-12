@@ -5,6 +5,7 @@ DefineClass.LightHostileRobot_LVL5 = {
 
 
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Robot", "assault_T2" ),
 	pfclass = 17,
 	Health = 800000,
@@ -12,6 +13,7 @@ DefineClass.LightHostileRobot_LVL5 = {
 	DamagedStateAt = 40,
 	BrokenStateAt = 15,
 	HideIntegrityBarWhenDestroyed = false,
+	CombatGroup = "Robots",
 	HitNegationChance = {
 		HitNegationChance_blunt = 45,
 		HitNegationChance_energy = 45,

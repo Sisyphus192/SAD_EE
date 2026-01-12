@@ -4,9 +4,9 @@ DefineClass.Tecatli = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T1",
+	comment = "base unit, T1",
 	object_class = "TecatliBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_tecatli",
 	RoamIntervalMin = 2000,
 	RoamIntervalMax = 3000,
 	pfclass = 3,
@@ -84,7 +84,7 @@ DefineClass.Tecatli = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Entombed_Tecatli",
+	NewbornClass = "tecatli_t2",
 	MinNewbornScale = 35,
 	MaxNewbornScale = 35,
 	MinGrownScale = 65,

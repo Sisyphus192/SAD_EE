@@ -4,12 +4,14 @@ DefineClass.LightHostileRobot_LVL1 = {
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
-	comment = "Assault evos",
+	comment = "Base Light extension",
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Robot", "assault_T1" ),
 	pfclass = 17,
 	Health = 50000,
 	MaxHealth = 50000,
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	SkinColor = PlaceObj('ColorizationPropSet', {
 		'EditableColor1', RGBA(88, 60, 40, 255),

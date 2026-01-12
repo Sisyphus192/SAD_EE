@@ -4,9 +4,9 @@ DefineClass.Gujo = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T1",
+	comment = "base unit, T1",
 	object_class = "GujoBase",
-	SpeciesGroup = "birds",
+	SpeciesGroup = "species_gujo",
 	RoamIntervalMin = 2000,
 	RoamIntervalMax = 3000,
 	PainMask = "PainMask",
@@ -103,7 +103,7 @@ DefineClass.Gujo = {
 	DailyPregnancyChance = 65,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "GujoT2",
+	NewbornClass = "Gujo_t2",
 	MinGrownScale = 75,
 	MaxGrownScale = 85,
 	RoamRadiusStarving = 50000,

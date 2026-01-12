@@ -4,7 +4,7 @@ DefineClass.Juno_Brute = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T2",
+	comment = "base unit, T2",
 	object_class = "Juno",
 	EventProgressValue = 500,
 	lead_priority = 6,
@@ -35,7 +35,7 @@ DefineClass.Juno_Brute = {
 	},
 	attack_weapon = "JunoMelee_Brute",
 	TamingChance = 60,
-	NewbornClass = "Angry_Juno",
+	NewbornClass = "juno_t3",
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 70,
 	FrenzyChance = 50,

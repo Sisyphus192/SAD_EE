@@ -1,15 +1,17 @@
 UndefineClass('HostileRobot_Monk_LVL1')
 DefineClass.HostileRobot_Monk_LVL1 = {
-	__parents = { "CombatRobot" },
+	__parents = { "UnitNesting", "CombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
 	comment = "Monk evos",
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Monk_T1", "Robot" ),
 	pfclass = 17,
 	Health = 150000,
 	MaxHealth = 150000,
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	Combat = 1000,
 	SkinColor = PlaceObj('ColorizationPropSet', {
@@ -32,5 +34,6 @@ DefineClass.HostileRobot_Monk_LVL1 = {
 	can_lead_formation = false,
 	max_skinned_decals = 1,
 	max_skinned_decals_low = 0,
+	UnitNesting = true,
 }
 

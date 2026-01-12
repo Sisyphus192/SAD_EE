@@ -4,8 +4,9 @@ DefineClass.Camel = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "base unit, T1",
 	object_class = "CamelBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_camel",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -102,7 +103,7 @@ DefineClass.Camel = {
 	DailyPregnancyChance = 75,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Camel_T2",
+	NewbornClass = "Camel_t2",
 	MinGrownScale = 70,
 	MaxGrownScale = 85,
 	FieldVisibilityCold = 75000,

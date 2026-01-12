@@ -1,11 +1,11 @@
-UndefineClass('Noth_T3')
-DefineClass.Noth_T3 = {
+UndefineClass('Noth_t3')
+DefineClass.Noth_t3 = {
 	__parents = { "UlfenBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "UlfenBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_noth",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -38,9 +38,9 @@ DefineClass.Noth_T3 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_noth",
-	DisplayName = T(987839064234, --[[ModItemUnitAnimalCompositeDef Noth_T3 DisplayName]] "DuNoth"),
-	DisplayNamePl = T(760617251943, --[[ModItemUnitAnimalCompositeDef Noth_T3 DisplayNamePl]] "DuNoths"),
-	Description = T(201444620241, --[[ModItemUnitAnimalCompositeDef Noth_T3 Description]] "With a smaller brain, but a thicker forehead plate; this creature sports a newfound love of headbutting."),
+	DisplayName = T(987839064234, --[[ModItemUnitAnimalCompositeDef Noth_t3 DisplayName]] "DuNoth"),
+	DisplayNamePl = T(760617251943, --[[ModItemUnitAnimalCompositeDef Noth_t3 DisplayNamePl]] "DuNoths"),
+	Description = T(201444620241, --[[ModItemUnitAnimalCompositeDef Noth_t3 Description]] "With a smaller brain, but a thicker forehead plate; this creature sports a newfound love of headbutting."),
 	BaseMaxHealth = 1000000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -116,7 +116,7 @@ DefineClass.Noth_T3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Noth_T4",
+	NewbornClass = "Noth_t4",
 	FieldVisibilityCold = 75000,
 	FieldVisibilityWarm = 25000,
 	MoveSpeedCold = 1000,

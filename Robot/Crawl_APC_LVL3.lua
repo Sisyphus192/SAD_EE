@@ -14,6 +14,7 @@ DefineClass.Crawl_APC_LVL3 = {
 		gas = 80,
 		piercing = 80,
 	},
+	CombatGroup = "Robots",
 	Movement = 200000,
 	DisplayName = T(962345212319, --[[ModItemRobotCompositeDef Crawl_APC_LVL3 DisplayName]] "C-B3-5m3l73r"),
 	DisplayNameShort = T(863292482755, --[[ModItemRobotCompositeDef Crawl_APC_LVL3 DisplayNameShort]] "CB3"),

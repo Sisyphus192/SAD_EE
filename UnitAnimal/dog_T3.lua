@@ -1,12 +1,11 @@
-UndefineClass('dog_T3')
-DefineClass.dog_T3 = {
+UndefineClass('dog_t3')
+DefineClass.dog_t3 = {
 	__parents = { "DogBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T3",
 	object_class = "DogBase",
-	SpeciesGroup = "dogs",
+	SpeciesGroup = "species_dogs",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -41,11 +40,11 @@ DefineClass.dog_T3 = {
 	ObservationDistanceMin = 12000,
 	ObservationDistanceMax = 18000,
 	Icon = "UI/Icons/Resources/res_dog_great_dane",
-	DisplayName = T(524799919675, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayName]] "Ice Wolf"),
-	DisplayNamePl = T(198253438355, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNamePl]] "Ice Wolf"),
-	DisplayNameUnknown = T(539396120412, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknown]] "Unknown Dog Evolution"),
-	DisplayNameUnknownPL = T(757802182891, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-	Description = T(749386049337, --[[ModItemUnitAnimalCompositeDef dog_T3 Description]] "Able to dodge and weave, avoiding small arms fire. Lives with other species, assisting in hunting, tracking, or killing their enemies. Which unfortunately is us. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+	DisplayName = T(524799919675, --[[ModItemUnitAnimalCompositeDef dog_t3 DisplayName]] "Ice Wolf"),
+	DisplayNamePl = T(198253438355, --[[ModItemUnitAnimalCompositeDef dog_t3 DisplayNamePl]] "Ice Wolf"),
+	DisplayNameUnknown = T(539396120412, --[[ModItemUnitAnimalCompositeDef dog_t3 DisplayNameUnknown]] "Unknown Dog Evolution"),
+	DisplayNameUnknownPL = T(757802182891, --[[ModItemUnitAnimalCompositeDef dog_t3 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+	Description = T(749386049337, --[[ModItemUnitAnimalCompositeDef dog_t3 Description]] "Able to dodge and weave, avoiding small arms fire. Lives with other species, assisting in hunting, tracking, or killing their enemies. Which unfortunately is us. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 200000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -116,7 +115,7 @@ DefineClass.dog_T3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "dog_T4",
+	NewbornClass = "dog_t4",
 	MinGrownScale = 110,
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,

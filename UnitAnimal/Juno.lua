@@ -4,9 +4,9 @@ DefineClass.Juno = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T1",
+	comment = "base unit, T1",
 	object_class = "GroundAnimal",
-	SpeciesGroup = "insects",
+	SpeciesGroup = "species_juno",
 	RoamRadius = 10000,
 	BypassTrapsChance = 90,
 	pfclass = 5,

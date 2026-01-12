@@ -4,8 +4,9 @@ DefineClass.Shogu = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "base unit, T1",
 	object_class = "ShoguBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_shogu",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -111,7 +112,7 @@ DefineClass.Shogu = {
 	DailyPregnancyChance = 75,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Shogu_T2",
+	NewbornClass = "Shogu_t2",
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
 	MoveSpeedCold = 1000,

@@ -1,11 +1,12 @@
 UndefineClass('Shrieker_Manhunting_Mother')
 DefineClass.Shrieker_Manhunting_Mother = {
-	__parents = { "Shrieker_Manhunting", "UnitAreaEffect" },
+	__parents = { "UnitNesting", "Shrieker_Manhunting", "UnitAreaEffect" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T1",
+	comment = "base unit, T1",
 	object_class = "Shrieker_Manhunting",
+	SpeciesGroup = "species_shrieker",
 	UnitTags = set( "Animal" ),
 	pfclass = 3,
 	EventProgressValue = 250,
@@ -40,7 +41,17 @@ DefineClass.Shrieker_Manhunting_Mother = {
 	SelectionRadius = 600,
 	ChanceToBeMale = 0,
 	BodySize = "large",
+	ProduceResources = {
+		PlaceObj('ResAmount', {
+			'resource', "CarbonNanotubes",
+			'amount', 20000,
+		}),
+	},
 	ProduceResInterval = 2880000,
+	CmdProduceResources = function (animal)
+		if not animal:IsTamed() then return animal:UpdateProductionTime() end
+		return animal:DoProduceResourcesDiminishingReturns()
+	end,
 	AnimalPerks = {
 		"CarbonNanoGlands",
 		"AgitatingPheromones",
@@ -53,9 +64,11 @@ DefineClass.Shrieker_Manhunting_Mother = {
 	IntimidationRange = 25000,
 	TamedLifetimeMin = 184320000,
 	TamedLifetimeMax = 322560000,
+	NewbornClass = "shrieker_t2",
 	MinGrownScale = 140,
 	MaxGrownScale = 150,
 	UnitAreaEffect = true,
+	UnitNesting = true,
 	AffectRadius = 25000,
 	AffectClass = "UnitAnimal",
 	Effects = {

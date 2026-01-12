@@ -4,7 +4,7 @@ DefineClass.Scissorhands_Brute_Nesting = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T2",
+	comment = "base unit, T2",
 	object_class = "Scissorhands",
 	composite_part_target = "Scissorhands_Brute",
 	EventProgressValue = 180,
@@ -33,6 +33,7 @@ DefineClass.Scissorhands_Brute_Nesting = {
 		"DraftableAnimal",
 	},
 	attack_weapon = "ScissorhandsMelee_Brute",
+	NewbornClass = "scissorhands_t3",
 	MinNewbornScale = 60,
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,

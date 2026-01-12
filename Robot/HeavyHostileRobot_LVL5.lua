@@ -5,6 +5,7 @@ DefineClass.HeavyHostileRobot_LVL5 = {
 
 
 	object_class = "HeavyCombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Heavy_Malus", "Heavy_Shred_T2", "Heavy_Slow_T2", "Robot" ),
 	Health = 2000000,
 	MaxHealth = 2000000,
@@ -14,6 +15,7 @@ DefineClass.HeavyHostileRobot_LVL5 = {
 		gas = 35,
 		piercing = 15,
 	},
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	Movement = 90000,
 	Combat = 3000,

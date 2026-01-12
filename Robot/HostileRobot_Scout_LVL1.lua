@@ -4,11 +4,13 @@ DefineClass.HostileRobot_Scout_LVL1 = {
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
-	comment = "Scout T1",
+	comment = "Scout Class",
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	pfclass = 17,
 	Health = 50000,
 	MaxHealth = 50000,
+	CombatGroup = "Robots",
 	HumanThreat = true,
 	Combat = 1000,
 	SkinColor = PlaceObj('ColorizationPropSet', {

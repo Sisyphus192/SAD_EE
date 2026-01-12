@@ -1,11 +1,11 @@
-UndefineClass('Shogu_T3')
-DefineClass.Shogu_T3 = {
+UndefineClass('Shogu_t3')
+DefineClass.Shogu_t3 = {
 	__parents = { "ShoguBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	object_class = "ShoguBase",
-	SpeciesGroup = "hoofed",
+	SpeciesGroup = "species_shogu",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -43,9 +43,9 @@ DefineClass.Shogu_T3 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_shogu",
-	DisplayName = T(504320282932, --[[ModItemUnitAnimalCompositeDef Shogu_T3 DisplayName]] "Poxu"),
-	DisplayNamePl = T(958903764635, --[[ModItemUnitAnimalCompositeDef Shogu_T3 DisplayNamePl]] "Poxus"),
-	Description = T(484543651722, --[[ModItemUnitAnimalCompositeDef Shogu_T3 Description]] "Evolution has decreed that this creature suffer from all manner of ailments. And it's tusks can easily spread it's gifts."),
+	DisplayName = T(504320282932, --[[ModItemUnitAnimalCompositeDef Shogu_t3 DisplayName]] "Poxu"),
+	DisplayNamePl = T(958903764635, --[[ModItemUnitAnimalCompositeDef Shogu_t3 DisplayNamePl]] "Poxus"),
+	Description = T(484543651722, --[[ModItemUnitAnimalCompositeDef Shogu_t3 Description]] "Evolution has decreed that this creature suffer from all manner of ailments. And it's tusks can easily spread it's gifts."),
 	BaseMaxHealth = 50000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -131,7 +131,7 @@ DefineClass.Shogu_T3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Shogu_T4",
+	NewbornClass = "Shogu_t4",
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
 	MoveSpeedCold = 1000,

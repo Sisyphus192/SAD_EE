@@ -4,12 +4,13 @@ DefineClass.HostileRobot_Scout_LVL4 = {
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
-	comment = "Scout T2",
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Cyber_Eye", "Robot", "Scout_T1" ),
 	pfclass = 17,
 	Health = 400000,
 	MaxHealth = 400000,
+	CombatGroup = "Robots",
 	HitNegationChance = {
 		HitNegationChance_blunt = 10,
 		HitNegationChance_energy = 10,

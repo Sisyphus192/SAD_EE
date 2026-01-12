@@ -1,10 +1,11 @@
 UndefineClass('HostileRobot_Monk_LVL4')
 DefineClass.HostileRobot_Monk_LVL4 = {
-	__parents = { "CombatRobot" },
+	__parents = { "UnitNesting", "CombatRobot" },
 	__generated_by_class = "ModItemRobotCompositeDef",
 
 
 	object_class = "CombatRobot",
+	SpeciesGroup = "species_consortium",
 	UnitTags = set( "Monk_T3", "Robot" ),
 	pfclass = 17,
 	Health = 1200000,
@@ -46,5 +47,6 @@ DefineClass.HostileRobot_Monk_LVL4 = {
 	can_lead_formation = false,
 	max_skinned_decals = 1,
 	max_skinned_decals_low = 0,
+	UnitNesting = true,
 }
 

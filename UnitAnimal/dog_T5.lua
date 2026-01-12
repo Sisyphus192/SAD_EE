@@ -1,12 +1,11 @@
-UndefineClass('dog_T5')
-DefineClass.dog_T5 = {
+UndefineClass('dog_t5')
+DefineClass.dog_t5 = {
 	__parents = { "DogBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "T5",
 	object_class = "DogBase",
-	SpeciesGroup = "dogs",
+	SpeciesGroup = "species_dogs",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -43,11 +42,11 @@ DefineClass.dog_T5 = {
 	ObservationDistanceMax = 18000,
 	ForcedApproachPlanning = true,
 	Icon = "UI/Icons/Resources/res_dog_great_dane",
-	DisplayName = T(837731857481, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayName]] "Fenrir"),
-	DisplayNamePl = T(957203847118, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNamePl]] "Fenrirs"),
-	DisplayNameUnknown = T(603621195429, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknown]] "Dog's final form?"),
-	DisplayNameUnknownPL = T(524587432992, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknownPL]] "Dog's final form?"),
-	Description = T(852322442181, --[[ModItemUnitAnimalCompositeDef dog_T5 Description]] "Commander of the fauna's attacks against us. Prioritize killing to weaken the rest of the horde. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+	DisplayName = T(837731857481, --[[ModItemUnitAnimalCompositeDef dog_t5 DisplayName]] "Fenrir"),
+	DisplayNamePl = T(957203847118, --[[ModItemUnitAnimalCompositeDef dog_t5 DisplayNamePl]] "Fenrirs"),
+	DisplayNameUnknown = T(603621195429, --[[ModItemUnitAnimalCompositeDef dog_t5 DisplayNameUnknown]] "Dog's final form?"),
+	DisplayNameUnknownPL = T(524587432992, --[[ModItemUnitAnimalCompositeDef dog_t5 DisplayNameUnknownPL]] "Dog's final form?"),
+	Description = T(852322442181, --[[ModItemUnitAnimalCompositeDef dog_t5 Description]] "Commander of the fauna's attacks against us. Prioritize killing to weaken the rest of the horde. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 800000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -117,7 +116,6 @@ DefineClass.dog_T5 = {
 	DailyPregnancyChance = 65,
 	PregnancyDuration = 1920000,
 	GrowDuration = 1920000,
-	NewbornClass = "dog_T5",
 	MinGrownScale = 110,
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
