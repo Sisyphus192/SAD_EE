@@ -1,5 +1,5 @@
-UndefineClass('Camel_t3')
-DefineClass.Camel_t3 = {
+UndefineClass('Camel_T3')
+DefineClass.Camel_T3 = {
 	__parents = { "CamelBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -37,11 +37,11 @@ DefineClass.Camel_t3 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_camel",
-	DisplayName = T(946154925318, --[[ModItemUnitAnimalCompositeDef Camel_t3 DisplayName]] "Llamel Brute"),
-	DisplayNamePl = T(478971232664, --[[ModItemUnitAnimalCompositeDef Camel_t3 DisplayNamePl]] "Llamel Brutes"),
-	DisplayNameUnknown = T(755225927923, --[[ModItemUnitAnimalCompositeDef Camel_t3 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
-	DisplayNameUnknownPL = T(141098364520, --[[ModItemUnitAnimalCompositeDef Camel_t3 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
-	Description = T(768013042972, --[[ModItemUnitAnimalCompositeDef Camel_t3 Description]] "Aggressive spitting dromedary"),
+	DisplayName = T(946154925318, --[[ModItemUnitAnimalCompositeDef Camel_T3 DisplayName]] "Llamel Brute"),
+	DisplayNamePl = T(478971232664, --[[ModItemUnitAnimalCompositeDef Camel_T3 DisplayNamePl]] "Llamel Brutes"),
+	DisplayNameUnknown = T(755225927923, --[[ModItemUnitAnimalCompositeDef Camel_T3 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
+	DisplayNameUnknownPL = T(141098364520, --[[ModItemUnitAnimalCompositeDef Camel_T3 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
+	Description = T(768013042972, --[[ModItemUnitAnimalCompositeDef Camel_T3 Description]] "Aggressive spitting dromedary"),
 	BaseMaxHealth = 300000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -120,7 +120,7 @@ DefineClass.Camel_t3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Camel_t4",
+	NewbornClass = "Camel_T4",
 	MinGrownScale = 70,
 	MaxGrownScale = 85,
 	FieldVisibilityCold = 75000,

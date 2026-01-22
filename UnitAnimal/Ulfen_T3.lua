@@ -1,5 +1,5 @@
-UndefineClass('Ulfen_t3')
-DefineClass.Ulfen_t3 = {
+UndefineClass('Ulfen_T3')
+DefineClass.Ulfen_T3 = {
 	__parents = { "UlfenBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -38,11 +38,11 @@ DefineClass.Ulfen_t3 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_ulfen",
-	DisplayName = T(269925995611, --[[ModItemUnitAnimalCompositeDef Ulfen_t3 DisplayName]] "Goren"),
-	DisplayNamePl = T(582577092576, --[[ModItemUnitAnimalCompositeDef Ulfen_t3 DisplayNamePl]] "Gorens"),
-	DisplayNameUnknown = T(591059861479, --[[ModItemUnitAnimalCompositeDef Ulfen_t3 DisplayNameUnknown]] "Unknown Ulfen Evolutions"),
-	DisplayNameUnknownPL = T(277911413873, --[[ModItemUnitAnimalCompositeDef Ulfen_t3 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
-	Description = T(704688046028, --[[ModItemUnitAnimalCompositeDef Ulfen_t3 Description]] "An Aggressive evolution of the Ulfen, better able to attack with it's horns"),
+	DisplayName = T(269925995611, --[[ModItemUnitAnimalCompositeDef Ulfen_T3 DisplayName]] "Goren"),
+	DisplayNamePl = T(582577092576, --[[ModItemUnitAnimalCompositeDef Ulfen_T3 DisplayNamePl]] "Gorens"),
+	DisplayNameUnknown = T(591059861479, --[[ModItemUnitAnimalCompositeDef Ulfen_T3 DisplayNameUnknown]] "Unknown Ulfen Evolutions"),
+	DisplayNameUnknownPL = T(277911413873, --[[ModItemUnitAnimalCompositeDef Ulfen_T3 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
+	Description = T(704688046028, --[[ModItemUnitAnimalCompositeDef Ulfen_T3 Description]] "An Aggressive evolution of the Ulfen, better able to attack with it's horns"),
 	BaseMaxHealth = 700000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -132,7 +132,7 @@ DefineClass.Ulfen_t3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Ulfen_t4",
+	NewbornClass = "Ulfen_T4",
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
 	FieldVisibilityCold = 30000,

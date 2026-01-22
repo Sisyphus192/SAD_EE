@@ -1,5 +1,5 @@
-UndefineClass('Noth_t4')
-DefineClass.Noth_t4 = {
+UndefineClass('Noth_T4')
+DefineClass.Noth_T4 = {
 	__parents = { "UlfenBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -38,9 +38,9 @@ DefineClass.Noth_t4 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_noth",
-	DisplayName = T(325860930156, --[[ModItemUnitAnimalCompositeDef Noth_t4 DisplayName]] "Slidrugtanni"),
-	DisplayNamePl = T(549501833355, --[[ModItemUnitAnimalCompositeDef Noth_t4 DisplayNamePl]] "Slidrugtannis"),
-	Description = T(130013877284, --[[ModItemUnitAnimalCompositeDef Noth_t4 Description]] "Flesh that has properties of metal with an aggressive demeanor. Be careful trying to give this an Eskimo kiss!"),
+	DisplayName = T(325860930156, --[[ModItemUnitAnimalCompositeDef Noth_T4 DisplayName]] "Slidrugtanni"),
+	DisplayNamePl = T(549501833355, --[[ModItemUnitAnimalCompositeDef Noth_T4 DisplayNamePl]] "Slidrugtannis"),
+	Description = T(130013877284, --[[ModItemUnitAnimalCompositeDef Noth_T4 Description]] "Flesh that has properties of metal with an aggressive demeanor. Be careful trying to give this an Eskimo kiss!"),
 	BaseMaxHealth = 1700000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -116,7 +116,7 @@ DefineClass.Noth_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2000000,
 	GrowDuration = 2000000,
-	NewbornClass = "Noth_t5",
+	NewbornClass = "Noth_T5",
 	FieldVisibilityCold = 75000,
 	FieldVisibilityWarm = 25000,
 	MoveSpeedCold = 1000,

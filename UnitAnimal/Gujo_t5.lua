@@ -1,5 +1,5 @@
-UndefineClass('Gujo_t5')
-DefineClass.Gujo_t5 = {
+UndefineClass('Gujo_T5')
+DefineClass.Gujo_T5 = {
 	__parents = { "GujoBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -30,11 +30,11 @@ DefineClass.Gujo_t5 = {
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	Icon = "UI/Icons/Resources/res_gujo",
-	DisplayName = T(797438362363, --[[ModItemUnitAnimalCompositeDef Gujo_t5 DisplayName]] "Vengeful Dodo"),
-	DisplayNamePl = T(301981042325, --[[ModItemUnitAnimalCompositeDef Gujo_t5 DisplayNamePl]] "Vengeful Dodos"),
-	DisplayNameUnknown = T(654417377239, --[[ModItemUnitAnimalCompositeDef Gujo_t5 DisplayNameUnknown]] "Gujo Final Form?"),
-	DisplayNameUnknownPL = T(534116871229, --[[ModItemUnitAnimalCompositeDef Gujo_t5 DisplayNameUnknownPL]] "Gujos Final Form?"),
-	Description = T(103303410892, --[[ModItemUnitAnimalCompositeDef Gujo_t5 Description]] "The closest Earth equivalent to this errant evolution of the Gujo is the dodo. If the dodo was twice the size of a human, and had a razor sharp beak! Based on it's behavior, it must be very angry the Dodo went extinct on Earth and is taking it out on literally anything on this planet."),
+	DisplayName = T(797438362363, --[[ModItemUnitAnimalCompositeDef Gujo_T5 DisplayName]] "Vengeful Dodo"),
+	DisplayNamePl = T(301981042325, --[[ModItemUnitAnimalCompositeDef Gujo_T5 DisplayNamePl]] "Vengeful Dodos"),
+	DisplayNameUnknown = T(654417377239, --[[ModItemUnitAnimalCompositeDef Gujo_T5 DisplayNameUnknown]] "Gujo Final Form?"),
+	DisplayNameUnknownPL = T(534116871229, --[[ModItemUnitAnimalCompositeDef Gujo_T5 DisplayNameUnknownPL]] "Gujos Final Form?"),
+	Description = T(103303410892, --[[ModItemUnitAnimalCompositeDef Gujo_T5 Description]] "The closest Earth equivalent to this errant evolution of the Gujo is the dodo. If the dodo was twice the size of a human, and had a razor sharp beak! Based on it's behavior, it must be very angry the Dodo went extinct on Earth and is taking it out on literally anything on this planet."),
 	BaseMaxHealth = 1000000,
 	FoodResources = {
 		"FoodAnimalCarnivore",

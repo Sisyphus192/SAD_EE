@@ -1,5 +1,5 @@
-UndefineClass('Gujo_t4')
-DefineClass.Gujo_t4 = {
+UndefineClass('Gujo_T4')
+DefineClass.Gujo_T4 = {
 	__parents = { "GujoBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -30,11 +30,11 @@ DefineClass.Gujo_t4 = {
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	Icon = "UI/Icons/Resources/res_gujo",
-	DisplayName = T(671274472486, --[[ModItemUnitAnimalCompositeDef Gujo_t4 DisplayName]] "Micro-Raptor"),
-	DisplayNamePl = T(840275622208, --[[ModItemUnitAnimalCompositeDef Gujo_t4 DisplayNamePl]] "Micro-Raptors"),
-	DisplayNameUnknown = T(105215405361, --[[ModItemUnitAnimalCompositeDef Gujo_t4 DisplayNameUnknown]] "Unknown Gujo Evolution"),
-	DisplayNameUnknownPL = T(398545264919, --[[ModItemUnitAnimalCompositeDef Gujo_t4 DisplayNameUnknownPL]] "Unknown Gujo Evolution"),
-	Description = T(596608540170, --[[ModItemUnitAnimalCompositeDef Gujo_t4 Description]] "This creatures evolution is all over the place, biologically appearing similar to a long ago dinosaur and then a closer to modern times flightless bird.... Regardless, this species should still be handled with EXTREME caution."),
+	DisplayName = T(671274472486, --[[ModItemUnitAnimalCompositeDef Gujo_T4 DisplayName]] "Micro-Raptor"),
+	DisplayNamePl = T(840275622208, --[[ModItemUnitAnimalCompositeDef Gujo_T4 DisplayNamePl]] "Micro-Raptors"),
+	DisplayNameUnknown = T(105215405361, --[[ModItemUnitAnimalCompositeDef Gujo_T4 DisplayNameUnknown]] "Unknown Gujo Evolution"),
+	DisplayNameUnknownPL = T(398545264919, --[[ModItemUnitAnimalCompositeDef Gujo_T4 DisplayNameUnknownPL]] "Unknown Gujo Evolution"),
+	Description = T(596608540170, --[[ModItemUnitAnimalCompositeDef Gujo_T4 Description]] "This creatures evolution is all over the place, biologically appearing similar to a long ago dinosaur and then a closer to modern times flightless bird.... Regardless, this species should still be handled with EXTREME caution."),
 	BaseMaxHealth = 750000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -113,7 +113,7 @@ DefineClass.Gujo_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 1920000,
 	GrowDuration = 1920000,
-	NewbornClass = "Gujo_t5",
+	NewbornClass = "Gujo_T5",
 	MinGrownScale = 75,
 	MaxGrownScale = 85,
 	RoamRadiusStarving = 50000,

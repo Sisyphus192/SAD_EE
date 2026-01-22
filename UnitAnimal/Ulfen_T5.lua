@@ -1,5 +1,5 @@
-UndefineClass('Ulfen_t5')
-DefineClass.Ulfen_t5 = {
+UndefineClass('Ulfen_T5')
+DefineClass.Ulfen_T5 = {
 	__parents = { "UlfenBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -45,11 +45,11 @@ DefineClass.Ulfen_t5 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_ulfen",
-	DisplayName = T(425471431989, --[[ModItemUnitAnimalCompositeDef Ulfen_t5 DisplayName]] "Bestigor"),
-	DisplayNamePl = T(363761689017, --[[ModItemUnitAnimalCompositeDef Ulfen_t5 DisplayNamePl]] "Bestigors"),
-	DisplayNameUnknown = T(467155412208, --[[ModItemUnitAnimalCompositeDef Ulfen_t5 DisplayNameUnknown]] "Unknown Ulfen Evolutions"),
-	DisplayNameUnknownPL = T(746499045313, --[[ModItemUnitAnimalCompositeDef Ulfen_t5 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
-	Description = T(258615234368, --[[ModItemUnitAnimalCompositeDef Ulfen_t5 Description]] "Sharp horns and a body weighing more than a Tractor Trailer. Woe unto whoever this creature decides to charge! An aggressive evolution of the Ulfen."),
+	DisplayName = T(425471431989, --[[ModItemUnitAnimalCompositeDef Ulfen_T5 DisplayName]] "Bestigor"),
+	DisplayNamePl = T(363761689017, --[[ModItemUnitAnimalCompositeDef Ulfen_T5 DisplayNamePl]] "Bestigors"),
+	DisplayNameUnknown = T(467155412208, --[[ModItemUnitAnimalCompositeDef Ulfen_T5 DisplayNameUnknown]] "Unknown Ulfen Evolutions"),
+	DisplayNameUnknownPL = T(746499045313, --[[ModItemUnitAnimalCompositeDef Ulfen_T5 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
+	Description = T(258615234368, --[[ModItemUnitAnimalCompositeDef Ulfen_T5 Description]] "Sharp horns and a body weighing more than a Tractor Trailer. Woe unto whoever this creature decides to charge! An aggressive evolution of the Ulfen."),
 	BaseMaxHealth = 2000000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

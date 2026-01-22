@@ -1,5 +1,5 @@
-UndefineClass('Noth_t5')
-DefineClass.Noth_t5 = {
+UndefineClass('Noth_T5')
+DefineClass.Noth_T5 = {
 	__parents = { "UlfenBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -38,9 +38,9 @@ DefineClass.Noth_t5 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_noth",
-	DisplayName = T(486600116398, --[[ModItemUnitAnimalCompositeDef Noth_t5 DisplayName]] "Gullinbursti"),
-	DisplayNamePl = T(913171357773, --[[ModItemUnitAnimalCompositeDef Noth_t5 DisplayNamePl]] "Gullinburstis"),
-	Description = T(214347615620, --[[ModItemUnitAnimalCompositeDef Noth_t5 Description]] "Metallic Flesh, aggressive demeanor, loves to headbutt. Careful!"),
+	DisplayName = T(486600116398, --[[ModItemUnitAnimalCompositeDef Noth_T5 DisplayName]] "Gullinbursti"),
+	DisplayNamePl = T(913171357773, --[[ModItemUnitAnimalCompositeDef Noth_T5 DisplayNamePl]] "Gullinburstis"),
+	Description = T(214347615620, --[[ModItemUnitAnimalCompositeDef Noth_T5 Description]] "Metallic Flesh, aggressive demeanor, loves to headbutt. Careful!"),
 	BaseMaxHealth = 2500000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

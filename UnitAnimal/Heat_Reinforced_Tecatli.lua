@@ -1,0 +1,85 @@
+UndefineClass('Heat_Reinforced_Tecatli')
+DefineClass.Heat_Reinforced_Tecatli = {
+	__parents = { "TecatliBase" },
+	__generated_by_class = "ModItemUnitAnimalCompositeDef",
+
+
+	comment = "T3",
+	object_class = "TecatliBase",
+	composite_part_target = "Heat_Reinforced_Tecatli",
+	composite_part_groups = {
+		"Tecatli",
+	},
+	EventProgressValue = 450,
+	SpawnDefWeight = 60,
+	CombatGroup = "Insects",
+	HitNegationChance = {
+		blunt = 30,
+		energy = 30,
+		gas = 15,
+		pacify = 30,
+		piercing = 15,
+	},
+	HitNegationChance_blunt = 30,
+	HitNegationChance_piercing = 15,
+	HitNegationChance_energy = 30,
+	HitNegationChance_gas = 15,
+	HitNegationChance_pacify = 30,
+	HumanThreat = true,
+	FieldResearchTech = "Field_Tecatli_T2",
+	Icon = "UI/Icons/Resources/res_tecatli",
+	DisplayName = T(824650785642, --[[ModItemUnitAnimalCompositeDef Heat_Reinforced_Tecatli DisplayName]] "Heat Reinforced Tecatli"),
+	DisplayNamePl = T(542436234730, --[[ModItemUnitAnimalCompositeDef Heat_Reinforced_Tecatli DisplayNamePl]] "Heat Reinforced Tecatli"),
+	DisplayNameUnknown = T(774551941941, --[[ModItemUnitAnimalCompositeDef Heat_Reinforced_Tecatli DisplayNameUnknown]] "Unknown Tecatli Evolution"),
+	DisplayNameUnknownPL = T(363694499496, --[[ModItemUnitAnimalCompositeDef Heat_Reinforced_Tecatli DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
+	Description = T(786622818400, --[[ModItemUnitAnimalCompositeDef Heat_Reinforced_Tecatli Description]] "This creature radiates heat. Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	FoodResources = {
+		"FoodAnimalCarnivore",
+		"Slop",
+		"FoodAnimalHerbivore",
+	},
+	DailyEatingAmount = 3000,
+	Diet = "Omnivore",
+	EatingDuration = 4000,
+	ButcherResources = {
+		PlaceObj('ButcherResAmount', {
+			'resource', "RawMeat",
+			'min_amount', 20000,
+			'max_amount', 30000,
+		}),
+	},
+	ChanceToBeMale = 33,
+	CmdProduceResources = function (animal)
+		return animal:DoProduceResourcesDiminishingReturns()
+	end,
+	AnimalPerks = {
+		"DraftableAnimal",
+		"AP_Fortified",
+	},
+	attack_weapon = "TecatliWeapon",
+	anim_idle = {
+		"idle",
+	},
+	anim_idle_playful = {
+		"idle_Playfull",
+		"idle_Playfull2",
+	},
+	Tameable = true,
+	TamingFood = "RawMeat",
+	TamingFoodAmount = 20000,
+	TamingMinimumSkill = 5,
+	TamingChance = 50,
+	TamingAggressiveChance = 20,
+	TamingDistance = 10000,
+	TamedLifetimeMin = 92160000,
+	TamedLifetimeMax = 138240000,
+	CombatSkillInitial = range(5, 6),
+	BondingChance = 5,
+	ReproductionType = "two sexes",
+	ReproductionGroup = "Tecatli",
+	DailyPregnancyChance = 55,
+	PregnancyDuration = 3840000,
+	GrowDuration = 3840000,
+	NewbornClass = "Intelligent_Tecatli",
+}
+

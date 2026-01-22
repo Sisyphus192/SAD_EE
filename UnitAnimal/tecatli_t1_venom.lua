@@ -1,5 +1,5 @@
-UndefineClass('tecatli_t1_venom')
-DefineClass.tecatli_t1_venom = {
+UndefineClass('Tecatli_T1_venom')
+DefineClass.Tecatli_T1_venom = {
 	__parents = { "TecatliBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -46,11 +46,11 @@ DefineClass.tecatli_t1_venom = {
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	Icon = "UI/Icons/Resources/res_tecatli",
-	DisplayName = T(634903365979, --[[ModItemUnitAnimalCompositeDef tecatli_t1_venom DisplayName]] "Venomous Raptor"),
-	DisplayNamePl = T(355114956419, --[[ModItemUnitAnimalCompositeDef tecatli_t1_venom DisplayNamePl]] "Venomous Raptors"),
-	DisplayNameUnknown = T(633557471551, --[[ModItemUnitAnimalCompositeDef tecatli_t1_venom DisplayNameUnknown]] "Unknown Tecatli Evolution"),
-	DisplayNameUnknownPL = T(416990062940, --[[ModItemUnitAnimalCompositeDef tecatli_t1_venom DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
-	Description = T(207143499342, --[[ModItemUnitAnimalCompositeDef tecatli_t1_venom Description]] "Hunts during the night. Is an aggressive sub-species of the Tecatli. Has venomous glands and good awareness, appears to be quite intelligent. Has good defense to poison and gas chemicals, however is weak against piercing, blunt, energy and pacify attacks. If tamed can bring meat from hunting wildlife.  Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(634903365979, --[[ModItemUnitAnimalCompositeDef Tecatli_T1_venom DisplayName]] "Venomous Raptor"),
+	DisplayNamePl = T(355114956419, --[[ModItemUnitAnimalCompositeDef Tecatli_T1_venom DisplayNamePl]] "Venomous Raptors"),
+	DisplayNameUnknown = T(633557471551, --[[ModItemUnitAnimalCompositeDef Tecatli_T1_venom DisplayNameUnknown]] "Unknown Tecatli Evolution"),
+	DisplayNameUnknownPL = T(416990062940, --[[ModItemUnitAnimalCompositeDef Tecatli_T1_venom DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
+	Description = T(207143499342, --[[ModItemUnitAnimalCompositeDef Tecatli_T1_venom Description]] "Hunts during the night. Is an aggressive sub-species of the Tecatli. Has venomous glands and good awareness, appears to be quite intelligent. Has good defense to poison and gas chemicals, however is weak against piercing, blunt, energy and pacify attacks. If tamed can bring meat from hunting wildlife.  Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
 	BaseMaxHealth = 250000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -116,7 +116,7 @@ DefineClass.tecatli_t1_venom = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "tecatli_t2",
+	NewbornClass = "Tecatli_T2",
 	MinNewbornScale = 35,
 	MaxNewbornScale = 35,
 	MinGrownScale = 65,

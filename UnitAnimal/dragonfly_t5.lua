@@ -1,5 +1,5 @@
-UndefineClass('dragonfly_t5')
-DefineClass.dragonfly_t5 = {
+UndefineClass('Dragonfly_T5')
+DefineClass.Dragonfly_T5 = {
 	__parents = { "DragonflyBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -39,11 +39,11 @@ DefineClass.dragonfly_t5 = {
 	ObservationDistanceMax = 21000,
 	SkipTesting = true,
 	Icon = "UI/Icons/Resources/res_dragonfly",
-	DisplayName = T(661997517268, --[[ModItemUnitAnimalCompositeDef dragonfly_t5 DisplayName]] "Fast Frenzied Fortified Bomber Deathfly"),
-	DisplayNamePl = T(362935075377, --[[ModItemUnitAnimalCompositeDef dragonfly_t5 DisplayNamePl]] "Fast Frenzied Fortified Bomber Deathfly"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef dragonfly_t5 DisplayNameUnknown]] "Dragonfly Final Form?"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef dragonfly_t5 DisplayNameUnknownPL]] "Dragonfly Final Form?"),
-	Description = T(998813574519, --[[ModItemUnitAnimalCompositeDef dragonfly_t5 Description]] "Oh great, now they are fast, deal area damage, incredibly bulky.... No clear weakness either. Deals <color TextNegative>Energy</color> damage."),
+	DisplayName = T(661997517268, --[[ModItemUnitAnimalCompositeDef Dragonfly_T5 DisplayName]] "Fast Frenzied Fortified Bomber Deathfly"),
+	DisplayNamePl = T(362935075377, --[[ModItemUnitAnimalCompositeDef Dragonfly_T5 DisplayNamePl]] "Fast Frenzied Fortified Bomber Deathfly"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Dragonfly_T5 DisplayNameUnknown]] "Dragonfly Final Form?"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Dragonfly_T5 DisplayNameUnknownPL]] "Dragonfly Final Form?"),
+	Description = T(998813574519, --[[ModItemUnitAnimalCompositeDef Dragonfly_T5 Description]] "Oh great, now they are fast, deal area damage, incredibly bulky.... No clear weakness either. Deals <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 160000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

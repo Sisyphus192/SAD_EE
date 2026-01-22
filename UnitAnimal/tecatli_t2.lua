@@ -1,6 +1,6 @@
-UndefineClass('tecatli_t2')
-DefineClass.tecatli_t2 = {
-	__parents = { "TecatliBase" },
+UndefineClass('Tecatli_T2')
+DefineClass.Tecatli_T2 = {
+	__parents = { "TecatliBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -28,11 +28,11 @@ DefineClass.tecatli_t2 = {
 	HumanThreat = true,
 	FieldResearchTech = "FieldTecatli",
 	Icon = "UI/Icons/Resources/res_tecatli",
-	DisplayName = T(947892632261, --[[ModItemUnitAnimalCompositeDef tecatli_t2 DisplayName]] "Entombed Tecatli"),
-	DisplayNamePl = T(343349551885, --[[ModItemUnitAnimalCompositeDef tecatli_t2 DisplayNamePl]] "Entombed Tecatli"),
-	DisplayNameUnknown = T(244909361783, --[[ModItemUnitAnimalCompositeDef tecatli_t2 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
-	DisplayNameUnknownPL = T(793178284453, --[[ModItemUnitAnimalCompositeDef tecatli_t2 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
-	Description = T(581609748142, --[[ModItemUnitAnimalCompositeDef tecatli_t2 Description]] "This species has gotten much bulkier... I hope we can pierce it's new hide. Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(947892632261, --[[ModItemUnitAnimalCompositeDef Tecatli_T2 DisplayName]] "Entombed Tecatli"),
+	DisplayNamePl = T(343349551885, --[[ModItemUnitAnimalCompositeDef Tecatli_T2 DisplayNamePl]] "Entombed Tecatli"),
+	DisplayNameUnknown = T(244909361783, --[[ModItemUnitAnimalCompositeDef Tecatli_T2 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
+	DisplayNameUnknownPL = T(793178284453, --[[ModItemUnitAnimalCompositeDef Tecatli_T2 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
+	Description = T(581609748142, --[[ModItemUnitAnimalCompositeDef Tecatli_T2 Description]] "This species has gotten much bulkier... I hope we can pierce it's new hide. Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
 	FoodResources = {
 		"FoodAnimalCarnivore",
 		"Slop",
@@ -78,6 +78,11 @@ DefineClass.tecatli_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4320000,
 	GrowDuration = 4320000,
-	NewbornClass = "tecatli_t3",
+	NewbornClass = "Tecatli_T3",
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_1",
+	},
 }
 

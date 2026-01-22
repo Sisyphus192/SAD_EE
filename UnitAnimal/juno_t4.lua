@@ -1,5 +1,5 @@
-UndefineClass('juno_t4')
-DefineClass.juno_t4 = {
+UndefineClass('Juno_T4')
+DefineClass.Juno_T4 = {
 	__parents = { "Juno", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -25,11 +25,11 @@ DefineClass.juno_t4 = {
 	FieldResearchTech = "Field_Juno_T2",
 	ForcedApproachPlanning = true,
 	lead_priority = 6,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef juno_t4 DisplayName]] "Hulk Juno"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef juno_t4 DisplayNamePl]] "Hulk Juno"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef juno_t4 DisplayNameUnknown]] "Unknown Juno Evolution"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef juno_t4 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
-	Description = T(453181849768, --[[ModItemUnitAnimalCompositeDef juno_t4 Description]] "Somehow, this creature is even more aggressive than the last. Thankfully evolution has not deemed defenses to be a high priority. Low defenses, high damage. Deals <color TextButton>Blunt</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Juno_T4 DisplayName]] "Hulk Juno"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Juno_T4 DisplayNamePl]] "Hulk Juno"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Juno_T4 DisplayNameUnknown]] "Unknown Juno Evolution"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Juno_T4 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
+	Description = T(453181849768, --[[ModItemUnitAnimalCompositeDef Juno_T4 Description]] "Somehow, this creature is even more aggressive than the last. Thankfully evolution has not deemed defenses to be a high priority. Low defenses, high damage. Deals <color TextButton>Blunt</color> damage."),
 	BaseMaxHealth = 1200000,
 	DailyEatingAmount = 3000,
 	ButcherResources = {
@@ -59,7 +59,7 @@ DefineClass.juno_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "juno_t5",
+	NewbornClass = "Juno_T5",
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyChance = 200,

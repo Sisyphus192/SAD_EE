@@ -1,5 +1,5 @@
-UndefineClass('scissorhands_t3')
-DefineClass.scissorhands_t3 = {
+UndefineClass('Scissorhands_T3')
+DefineClass.Scissorhands_T3 = {
 	__parents = { "Scissorhands", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -24,11 +24,11 @@ DefineClass.scissorhands_t3 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Scissorhands_T2",
 	lead_priority = 12,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef scissorhands_t3 DisplayName]] "Brutal Scissorhand Duelist"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scissorhands_t3 DisplayNamePl]] "Brutal Scissorhand Duelist"),
-	DisplayNameUnknown = T(568883049640, --[[ModItemUnitAnimalCompositeDef scissorhands_t3 DisplayNameUnknown]] "Unknown Scissorhands Evolution"),
-	DisplayNameUnknownPL = T(183266165907, --[[ModItemUnitAnimalCompositeDef scissorhands_t3 DisplayNameUnknownPL]] "Unknown Scissorhands Evolution"),
-	Description = T(810154241954, --[[ModItemUnitAnimalCompositeDef scissorhands_t3 Description]] "Blades that are honed by attacking or defending from other Scissorhands. If this blade touches us, it will be more likely to deal critical wounds. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Scissorhands_T3 DisplayName]] "Brutal Scissorhand Duelist"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Scissorhands_T3 DisplayNamePl]] "Brutal Scissorhand Duelist"),
+	DisplayNameUnknown = T(568883049640, --[[ModItemUnitAnimalCompositeDef Scissorhands_T3 DisplayNameUnknown]] "Unknown Scissorhands Evolution"),
+	DisplayNameUnknownPL = T(183266165907, --[[ModItemUnitAnimalCompositeDef Scissorhands_T3 DisplayNameUnknownPL]] "Unknown Scissorhands Evolution"),
+	Description = T(810154241954, --[[ModItemUnitAnimalCompositeDef Scissorhands_T3 Description]] "Blades that are honed by attacking or defending from other Scissorhands. If this blade touches us, it will be more likely to deal critical wounds. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 400000,
 	DailyEatingAmount = 3000,
 	ButcherResources = {
@@ -54,7 +54,7 @@ DefineClass.scissorhands_t3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "scissorhands_t4",
+	NewbornClass = "Scissorhands_T4",
 	MinNewbornScale = 60,
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,

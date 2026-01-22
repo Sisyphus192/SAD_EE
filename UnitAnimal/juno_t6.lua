@@ -1,5 +1,5 @@
-UndefineClass('juno_t6')
-DefineClass.juno_t6 = {
+UndefineClass('Juno_T6')
+DefineClass.Juno_T6 = {
 	__parents = { "UnitAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -41,11 +41,11 @@ DefineClass.juno_t6 = {
 	ObservationDistanceMin = 500,
 	ObservationDistanceMax = 1500,
 	Icon = "UI/Icons/Resources/res_juno",
-	DisplayName = T(165312950418, --[[ModItemUnitAnimalCompositeDef juno_t6 DisplayName]] "Junoskar"),
-	DisplayNamePl = T(228230442862, --[[ModItemUnitAnimalCompositeDef juno_t6 DisplayNamePl]] "Junoskar's"),
-	DisplayNameUnknown = T(644425790231, --[[ModItemUnitAnimalCompositeDef juno_t6 DisplayNameUnknown]] "Juno's Final Form?"),
-	DisplayNameUnknownPL = T(285674502291, --[[ModItemUnitAnimalCompositeDef juno_t6 DisplayNameUnknownPL]] "Juno's Final Form?"),
-	Description = T(651746830861, --[[ModItemUnitAnimalCompositeDef juno_t6 Description]] "It appears to be a Juno, however is much larger in size, different in color and definitely scarier. Upon closer examination these things have the most deadliest strike that can inflict a deadly poison, capable of killing a Human in seconds. Deals <color TextButton>Blunt</color> damage."),
+	DisplayName = T(165312950418, --[[ModItemUnitAnimalCompositeDef Juno_T6 DisplayName]] "Junoskar"),
+	DisplayNamePl = T(228230442862, --[[ModItemUnitAnimalCompositeDef Juno_T6 DisplayNamePl]] "Junoskar's"),
+	DisplayNameUnknown = T(644425790231, --[[ModItemUnitAnimalCompositeDef Juno_T6 DisplayNameUnknown]] "Juno's Final Form?"),
+	DisplayNameUnknownPL = T(285674502291, --[[ModItemUnitAnimalCompositeDef Juno_T6 DisplayNameUnknownPL]] "Juno's Final Form?"),
+	Description = T(651746830861, --[[ModItemUnitAnimalCompositeDef Juno_T6 Description]] "It appears to be a Juno, however is much larger in size, different in color and definitely scarier. Upon closer examination these things have the most deadliest strike that can inflict a deadly poison, capable of killing a Human in seconds. Deals <color TextButton>Blunt</color> damage."),
 	BaseMaxHealth = 3000000,
 	FoodResources = {
 		"RawMeatHuman",

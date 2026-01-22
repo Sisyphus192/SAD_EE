@@ -1,5 +1,5 @@
-UndefineClass('dragonfly_t2')
-DefineClass.dragonfly_t2 = {
+UndefineClass('Dragonfly_T2')
+DefineClass.Dragonfly_T2 = {
 	__parents = { "DragonflyBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -35,11 +35,11 @@ DefineClass.dragonfly_t2 = {
 	ObservationDistanceMax = 21000,
 	SkipTesting = true,
 	Icon = "UI/Icons/Resources/res_dragonfly",
-	DisplayName = T(827606296623, --[[ModItemUnitAnimalCompositeDef dragonfly_t2 DisplayName]] "Deathfly"),
-	DisplayNamePl = T(740187821407, --[[ModItemUnitAnimalCompositeDef dragonfly_t2 DisplayNamePl]] "Deathfly"),
-	DisplayNameUnknown = T(284440498649, --[[ModItemUnitAnimalCompositeDef dragonfly_t2 DisplayNameUnknown]] "Unknown Hummingfly Evolution"),
-	DisplayNameUnknownPL = T(238166120256, --[[ModItemUnitAnimalCompositeDef dragonfly_t2 DisplayNameUnknownPL]] "Unknown Hummingfly Evolution"),
-	Description = T(524852674837, --[[ModItemUnitAnimalCompositeDef dragonfly_t2 Description]] "A Hummingfly that has evolved to be able to spit their Greek Fireballs faster, named Dragonfly. Deals <color TextNegative>Energy</color> damage."),
+	DisplayName = T(827606296623, --[[ModItemUnitAnimalCompositeDef Dragonfly_T2 DisplayName]] "Deathfly"),
+	DisplayNamePl = T(740187821407, --[[ModItemUnitAnimalCompositeDef Dragonfly_T2 DisplayNamePl]] "Deathfly"),
+	DisplayNameUnknown = T(284440498649, --[[ModItemUnitAnimalCompositeDef Dragonfly_T2 DisplayNameUnknown]] "Unknown Hummingfly Evolution"),
+	DisplayNameUnknownPL = T(238166120256, --[[ModItemUnitAnimalCompositeDef Dragonfly_T2 DisplayNameUnknownPL]] "Unknown Hummingfly Evolution"),
+	Description = T(524852674837, --[[ModItemUnitAnimalCompositeDef Dragonfly_T2 Description]] "A Hummingfly that has evolved to be able to spit their Greek Fireballs faster, named Dragonfly. Deals <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 20000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

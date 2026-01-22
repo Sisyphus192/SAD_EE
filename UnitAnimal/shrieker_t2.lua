@@ -1,5 +1,5 @@
-UndefineClass('shrieker_t2')
-DefineClass.shrieker_t2 = {
+UndefineClass('Shrieker_T2')
+DefineClass.Shrieker_T2 = {
 	__parents = { "UnitNesting", "ShriekerBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -30,9 +30,9 @@ DefineClass.shrieker_t2 = {
 	ObservationDistanceMax = 1500,
 	lead_priority = 15,
 	Icon = "UI/Icons/Resources/res_shrieker",
-	DisplayName = T(329148512487, --[[ModItemUnitAnimalCompositeDef shrieker_t2 DisplayName]] "Shrieker"),
-	DisplayNamePl = T(259457015709, --[[ModItemUnitAnimalCompositeDef shrieker_t2 DisplayNamePl]] "Shriekers"),
-	Description = T(873438453556, --[[ModItemUnitAnimalCompositeDef shrieker_t2 Description]] "This semi-intelligent nesting insect shoots spikes from its tail from wide distance."),
+	DisplayName = T(329148512487, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayName]] "Shrieker"),
+	DisplayNamePl = T(259457015709, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayNamePl]] "Shriekers"),
+	Description = T(873438453556, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 Description]] "This semi-intelligent nesting insect shoots spikes from its tail from wide distance."),
 	fx_actor_base_class = "Shrieker",
 	BaseMaxHealth = 50000,
 	FoodResources = {
@@ -98,7 +98,7 @@ DefineClass.shrieker_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "shrieker_t3",
+	NewbornClass = "Shrieker_T3",
 	MinGrownScale = 90,
 	MaxGrownScale = 110,
 	UnitNesting = true,

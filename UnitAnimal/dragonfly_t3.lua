@@ -1,5 +1,5 @@
-UndefineClass('dragonfly_t3')
-DefineClass.dragonfly_t3 = {
+UndefineClass('Dragonfly_T3')
+DefineClass.Dragonfly_T3 = {
 	__parents = { "DragonflyBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -39,11 +39,11 @@ DefineClass.dragonfly_t3 = {
 	ObservationDistanceMax = 21000,
 	SkipTesting = true,
 	Icon = "UI/Icons/Resources/res_dragonfly",
-	DisplayName = T(508102423796, --[[ModItemUnitAnimalCompositeDef dragonfly_t3 DisplayName]] "Bomber Deathfly"),
-	DisplayNamePl = T(126098911780, --[[ModItemUnitAnimalCompositeDef dragonfly_t3 DisplayNamePl]] "Bomber Deathfly"),
-	DisplayNameUnknown = T(470610819090, --[[ModItemUnitAnimalCompositeDef dragonfly_t3 DisplayNameUnknown]] "Unknown Hummingfly Evolution"),
-	DisplayNameUnknownPL = T(570355189261, --[[ModItemUnitAnimalCompositeDef dragonfly_t3 DisplayNameUnknownPL]] "Unknown Hummingfly Evolution"),
-	Description = T(898906357328, --[[ModItemUnitAnimalCompositeDef dragonfly_t3 Description]] "A Dragonfly who's spit splashes everywhere, we must split up when attacked by these creatures! Deals <color TextNegative>Energy</color> damage."),
+	DisplayName = T(508102423796, --[[ModItemUnitAnimalCompositeDef Dragonfly_T3 DisplayName]] "Bomber Deathfly"),
+	DisplayNamePl = T(126098911780, --[[ModItemUnitAnimalCompositeDef Dragonfly_T3 DisplayNamePl]] "Bomber Deathfly"),
+	DisplayNameUnknown = T(470610819090, --[[ModItemUnitAnimalCompositeDef Dragonfly_T3 DisplayNameUnknown]] "Unknown Hummingfly Evolution"),
+	DisplayNameUnknownPL = T(570355189261, --[[ModItemUnitAnimalCompositeDef Dragonfly_T3 DisplayNameUnknownPL]] "Unknown Hummingfly Evolution"),
+	Description = T(898906357328, --[[ModItemUnitAnimalCompositeDef Dragonfly_T3 Description]] "A Dragonfly who's spit splashes everywhere, we must split up when attacked by these creatures! Deals <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 40000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

@@ -1,5 +1,5 @@
-UndefineClass('Shogu_t5')
-DefineClass.Shogu_t5 = {
+UndefineClass('Shogu_T5')
+DefineClass.Shogu_T5 = {
 	__parents = { "ShoguBase", "UnitPerkFrenzy", "UnitReanimate" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -43,9 +43,9 @@ DefineClass.Shogu_t5 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_shogu",
-	DisplayName = T(286973149884, --[[ModItemUnitAnimalCompositeDef Shogu_t5 DisplayName]] "Poxumagus"),
-	DisplayNamePl = T(659216291714, --[[ModItemUnitAnimalCompositeDef Shogu_t5 DisplayNamePl]] "Poxumagus"),
-	Description = T(392714846508, --[[ModItemUnitAnimalCompositeDef Shogu_t5 Description]] "Filled so full of parasites, it's essentially a walking corpse. Aggressively jerks around for food."),
+	DisplayName = T(286973149884, --[[ModItemUnitAnimalCompositeDef Shogu_T5 DisplayName]] "Poxumagus"),
+	DisplayNamePl = T(659216291714, --[[ModItemUnitAnimalCompositeDef Shogu_T5 DisplayNamePl]] "Poxumagus"),
+	Description = T(392714846508, --[[ModItemUnitAnimalCompositeDef Shogu_T5 Description]] "Filled so full of parasites, it's essentially a walking corpse. Aggressively jerks around for food."),
 	BaseMaxHealth = 50000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

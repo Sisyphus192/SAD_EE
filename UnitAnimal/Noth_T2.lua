@@ -1,5 +1,5 @@
-UndefineClass('Noth_t2')
-DefineClass.Noth_t2 = {
+UndefineClass('Noth_T2')
+DefineClass.Noth_T2 = {
 	__parents = { "UlfenBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -35,9 +35,9 @@ DefineClass.Noth_t2 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_noth",
-	DisplayName = T(428897806632, --[[ModItemUnitAnimalCompositeDef Noth_t2 DisplayName]] "Doth"),
-	DisplayNamePl = T(556112310692, --[[ModItemUnitAnimalCompositeDef Noth_t2 DisplayNamePl]] "Doths"),
-	Description = T(855728463757, --[[ModItemUnitAnimalCompositeDef Noth_t2 Description]] "Usually passive. Small chance to retaliate when attacked. It's main defense is how hefty it is."),
+	DisplayName = T(428897806632, --[[ModItemUnitAnimalCompositeDef Noth_T2 DisplayName]] "Doth"),
+	DisplayNamePl = T(556112310692, --[[ModItemUnitAnimalCompositeDef Noth_T2 DisplayNamePl]] "Doths"),
+	Description = T(855728463757, --[[ModItemUnitAnimalCompositeDef Noth_T2 Description]] "Usually passive. Small chance to retaliate when attacked. It's main defense is how hefty it is."),
 	BaseMaxHealth = 500000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -112,7 +112,7 @@ DefineClass.Noth_t2 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Noth_t3",
+	NewbornClass = "Noth_T3",
 	FieldVisibilityCold = 75000,
 	FieldVisibilityWarm = 25000,
 	MoveSpeedCold = 1000,

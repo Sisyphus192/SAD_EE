@@ -1,5 +1,5 @@
-UndefineClass('Gujo_t2')
-DefineClass.Gujo_t2 = {
+UndefineClass('Gujo_T2')
+DefineClass.Gujo_T2 = {
 	__parents = { "GujoBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -30,11 +30,11 @@ DefineClass.Gujo_t2 = {
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	Icon = "UI/Icons/Resources/res_gujo",
-	DisplayName = T(601758872909, --[[ModItemUnitAnimalCompositeDef Gujo_t2 DisplayName]] "Archaeopteryx"),
-	DisplayNamePl = T(472985392270, --[[ModItemUnitAnimalCompositeDef Gujo_t2 DisplayNamePl]] "Archaeopteryxs"),
-	DisplayNameUnknown = T(240341128554, --[[ModItemUnitAnimalCompositeDef Gujo_t2 DisplayNameUnknown]] "Unknown Gujo Evolution"),
-	DisplayNameUnknownPL = T(792453996712, --[[ModItemUnitAnimalCompositeDef Gujo_t2 DisplayNameUnknownPL]] "Unknown Gujo Evolution"),
-	Description = T(119985563969, --[[ModItemUnitAnimalCompositeDef Gujo_t2 Description]] "Taller, angrier, and has immense healing capabilities in combat"),
+	DisplayName = T(601758872909, --[[ModItemUnitAnimalCompositeDef Gujo_T2 DisplayName]] "Archaeopteryx"),
+	DisplayNamePl = T(472985392270, --[[ModItemUnitAnimalCompositeDef Gujo_T2 DisplayNamePl]] "Archaeopteryxs"),
+	DisplayNameUnknown = T(240341128554, --[[ModItemUnitAnimalCompositeDef Gujo_T2 DisplayNameUnknown]] "Unknown Gujo Evolution"),
+	DisplayNameUnknownPL = T(792453996712, --[[ModItemUnitAnimalCompositeDef Gujo_T2 DisplayNameUnknownPL]] "Unknown Gujo Evolution"),
+	Description = T(119985563969, --[[ModItemUnitAnimalCompositeDef Gujo_T2 Description]] "Taller, angrier, and has immense healing capabilities in combat"),
 	BaseMaxHealth = 250000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -111,7 +111,7 @@ DefineClass.Gujo_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Gujo_t2",
+	NewbornClass = "Gujo_T3",
 	MinGrownScale = 75,
 	MaxGrownScale = 85,
 	RoamRadiusStarving = 50000,

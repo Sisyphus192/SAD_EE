@@ -1,6 +1,6 @@
-UndefineClass('tecatli_t3')
-DefineClass.tecatli_t3 = {
-	__parents = { "TecatliBase" },
+UndefineClass('Tecatli_T3')
+DefineClass.Tecatli_T3 = {
+	__parents = { "TecatliBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -28,11 +28,11 @@ DefineClass.tecatli_t3 = {
 	HumanThreat = true,
 	FieldResearchTech = "Field_Tecatli_T2",
 	Icon = "UI/Icons/Resources/res_tecatli",
-	DisplayName = T(440729338139, --[[ModItemUnitAnimalCompositeDef tecatli_t3 DisplayName]] "Heat Reinforced Tecatli"),
-	DisplayNamePl = T(966238638017, --[[ModItemUnitAnimalCompositeDef tecatli_t3 DisplayNamePl]] "Heat Reinforced Tecatli"),
-	DisplayNameUnknown = T(880956780545, --[[ModItemUnitAnimalCompositeDef tecatli_t3 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
-	DisplayNameUnknownPL = T(265627096139, --[[ModItemUnitAnimalCompositeDef tecatli_t3 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
-	Description = T(942702596531, --[[ModItemUnitAnimalCompositeDef tecatli_t3 Description]] "This creature radiates heat. Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(440729338139, --[[ModItemUnitAnimalCompositeDef Tecatli_T3 DisplayName]] "Heat Reinforced Tecatli"),
+	DisplayNamePl = T(966238638017, --[[ModItemUnitAnimalCompositeDef Tecatli_T3 DisplayNamePl]] "Heat Reinforced Tecatli"),
+	DisplayNameUnknown = T(880956780545, --[[ModItemUnitAnimalCompositeDef Tecatli_T3 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
+	DisplayNameUnknownPL = T(265627096139, --[[ModItemUnitAnimalCompositeDef Tecatli_T3 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
+	Description = T(942702596531, --[[ModItemUnitAnimalCompositeDef Tecatli_T3 Description]] "This creature radiates heat. Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
 	FoodResources = {
 		"FoodAnimalCarnivore",
 		"Slop",
@@ -80,6 +80,11 @@ DefineClass.tecatli_t3 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "tecatli_t4",
+	NewbornClass = "Tecatli_T4",
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_2",
+	},
 }
 

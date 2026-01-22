@@ -35,7 +35,7 @@ DefineClass.Juno_Brute = {
 	},
 	attack_weapon = "JunoMelee_Brute",
 	TamingChance = 60,
-	NewbornClass = "juno_t3",
+	NewbornClass = "Juno_T3",
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 70,
 	FrenzyChance = 50,

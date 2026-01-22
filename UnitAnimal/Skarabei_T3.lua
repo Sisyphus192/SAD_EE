@@ -1,6 +1,6 @@
-UndefineClass('Skarabei_Manhunting')
-DefineClass.Skarabei_Manhunting = {
-	__parents = { "GroundAnimal" },
+UndefineClass('Skarabei_T3')
+DefineClass.Skarabei_T3 = {
+	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -13,11 +13,22 @@ DefineClass.Skarabei_Manhunting = {
 	},
 	PainMask = "PainMask",
 	SpecialOrientation = 1,
-	EventProgressValue = 10,
-	SpawnTags = set( "Minion" ),
+	EventProgressValue = 190,
 	SightRange = 15000,
 	CombatGroup = "Insects",
-	CombatHostile = true,
+	HitNegationChance = {
+		blunt = 10,
+		energy = 35,
+		gas = 0,
+		pacify = 40,
+		piercing = 40,
+	},
+	HitNegationChance_blunt = 10,
+	HitNegationChance_piercing = 40,
+	HitNegationChance_energy = 35,
+	HitNegationChance_pacify = 40,
+	HumanThreat = true,
+	RobotThreat = true,
 	DistressCallRange = 5000,
 	SwitchTargetChance = 50,
 	CombatRestrictPFBonus = 250000,
@@ -31,16 +42,18 @@ DefineClass.Skarabei_Manhunting = {
 	ButcherDuration = 5000,
 	BloodColor = 4278467654,
 	max_skinned_decals = 1,
-	FieldResearchTech = "FieldSkarabei",
+	FieldResearchTech = "Field_Skarab_T1",
 	ObservationDistanceMin = 500,
 	ObservationDistanceMax = 1500,
 	can_lead_formation = false,
 	Icon = "UI/Icons/Resources/res_skarabei",
-	DisplayName = T(696939769698, --[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting DisplayName]] "Skarabei"),
-	DisplayNamePl = T(294175478420, --[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting DisplayNamePl]] "Skarabei"),
-	Description = T(303536058677, --[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting Description]] "A Skarabei swarm warrior. Skarabei compensate their lack of strength with sheer numbers."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Skarabei_T3 DisplayName]] "PEx Skarabei Brute"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Skarabei_T3 DisplayNamePl]] "PEx Skarabei Brute"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Skarabei_T3 DisplayNameUnknown]] "Unknown Skarabei evolution"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Skarabei_T3 DisplayNameUnknownPL]] "Unknown Skarabei evolution"),
+	Description = T(173524527878, --[[ModItemUnitAnimalCompositeDef Skarabei_T3 Description]] "These Skarabei are the largest we have observed! But the carapace is stronger than ever. Very resistant to pierce attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Skarabei",
-	BaseMaxHealth = 10000,
+	BaseMaxHealth = 200000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
 		"FoodAnimalCarnivore",
@@ -66,6 +79,9 @@ DefineClass.Skarabei_Manhunting = {
 	SelectionRadius = 100,
 	ChanceToBeMale = 100,
 	BodySize = "small",
+	CmdProduceResources = function (animal)
+		return animal:DoProduceResourcesDiminishingReturns()
+	end,
 	radius = 200,
 	movement_adjust = 2500,
 	EnrageChanceOtherAnimals = 100,
@@ -81,5 +97,10 @@ DefineClass.Skarabei_Manhunting = {
 	SleepEndAnim = "faint_To_Standing",
 	SleepInterruptedAnim = "faint_To_Standing",
 	ReproductionType = "two sexes",
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_2",
+	},
 }
 

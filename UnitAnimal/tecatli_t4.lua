@@ -1,6 +1,6 @@
-UndefineClass('tecatli_t4')
-DefineClass.tecatli_t4 = {
-	__parents = { "TecatliBase" },
+UndefineClass('Tecatli_T4')
+DefineClass.Tecatli_T4 = {
+	__parents = { "TecatliBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -30,10 +30,10 @@ DefineClass.tecatli_t4 = {
 	HumanThreat = true,
 	FieldResearchTech = "Field_Tecatli_T2",
 	Icon = "UI/Icons/Resources/res_tecatli",
-	DisplayName = T(375005765624, --[[ModItemUnitAnimalCompositeDef tecatli_t4 DisplayName]] "Intelligent Tecatli"),
-	DisplayNameUnknown = T(996042991236, --[[ModItemUnitAnimalCompositeDef tecatli_t4 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
-	DisplayNameUnknownPL = T(429405169305, --[[ModItemUnitAnimalCompositeDef tecatli_t4 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
-	Description = T(329787477205, --[[ModItemUnitAnimalCompositeDef tecatli_t4 Description]] "This species has evolved to be smaller, and with that extra energy it's brain is able to process information much better! Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(375005765624, --[[ModItemUnitAnimalCompositeDef Tecatli_T4 DisplayName]] "Intelligent Tecatli"),
+	DisplayNameUnknown = T(996042991236, --[[ModItemUnitAnimalCompositeDef Tecatli_T4 DisplayNameUnknown]] "Unknown Tecatli Evolution"),
+	DisplayNameUnknownPL = T(429405169305, --[[ModItemUnitAnimalCompositeDef Tecatli_T4 DisplayNameUnknownPL]] "Unknown Tecatli Evolution"),
+	Description = T(329787477205, --[[ModItemUnitAnimalCompositeDef Tecatli_T4 Description]] "This species has evolved to be smaller, and with that extra energy it's brain is able to process information much better! Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
 	FoodResources = {
 		"FoodAnimalCarnivore",
 		"Slop",
@@ -80,6 +80,11 @@ DefineClass.tecatli_t4 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 3360000,
 	GrowDuration = 3360000,
-	NewbornClass = "tecatli_t5",
+	NewbornClass = "Tecatli_T5",
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_3",
+	},
 }
 

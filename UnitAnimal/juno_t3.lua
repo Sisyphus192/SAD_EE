@@ -1,5 +1,5 @@
-UndefineClass('juno_t3')
-DefineClass.juno_t3 = {
+UndefineClass('Juno_T3')
+DefineClass.Juno_T3 = {
 	__parents = { "Juno", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -25,11 +25,11 @@ DefineClass.juno_t3 = {
 	FieldResearchTech = "Field_Juno_T2",
 	ForcedApproachPlanning = true,
 	lead_priority = 6,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef juno_t3 DisplayName]] "Angry Juno"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef juno_t3 DisplayNamePl]] "Angry Juno"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef juno_t3 DisplayNameUnknown]] "Unknown Juno Evolution"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef juno_t3 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
-	Description = T(191163878118, --[[ModItemUnitAnimalCompositeDef juno_t3 Description]] "This Juno's species has focused it's biology on killing, and identifying what needs to be killed next. Low defenses, high damage. Deals <color TextButton>Blunt</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Juno_T3 DisplayName]] "Angry Juno"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Juno_T3 DisplayNamePl]] "Angry Juno"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Juno_T3 DisplayNameUnknown]] "Unknown Juno Evolution"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Juno_T3 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
+	Description = T(191163878118, --[[ModItemUnitAnimalCompositeDef Juno_T3 Description]] "This Juno's species has focused it's biology on killing, and identifying what needs to be killed next. Low defenses, high damage. Deals <color TextButton>Blunt</color> damage."),
 	BaseMaxHealth = 500000,
 	DailyEatingAmount = 2000,
 	ButcherResources = {
@@ -56,7 +56,7 @@ DefineClass.juno_t3 = {
 	DailyPregnancyChance = 90,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "juno_t4",
+	NewbornClass = "Juno_T4",
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

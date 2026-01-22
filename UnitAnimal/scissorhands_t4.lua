@@ -1,5 +1,5 @@
-UndefineClass('scissorhands_t4')
-DefineClass.scissorhands_t4 = {
+UndefineClass('Scissorhands_T4')
+DefineClass.Scissorhands_T4 = {
 	__parents = { "Scissorhands", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -25,11 +25,11 @@ DefineClass.scissorhands_t4 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Scissorhands_T2",
 	lead_priority = 12,
-	DisplayName = T(531860184462, --[[ModItemUnitAnimalCompositeDef scissorhands_t4 DisplayName]] "Rage Fueled Scissorhand Duelist"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scissorhands_t4 DisplayNamePl]] "Scissorhands demolishers"),
-	DisplayNameUnknown = T(119769262102, --[[ModItemUnitAnimalCompositeDef scissorhands_t4 DisplayNameUnknown]] "Unknown Scissorhands Evolution"),
-	DisplayNameUnknownPL = T(657436726773, --[[ModItemUnitAnimalCompositeDef scissorhands_t4 DisplayNameUnknownPL]] "Unknown Scissorhands Evolution"),
-	Description = T(156199244050, --[[ModItemUnitAnimalCompositeDef scissorhands_t4 Description]] "This species is much more focused on killing than others. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(531860184462, --[[ModItemUnitAnimalCompositeDef Scissorhands_T4 DisplayName]] "Rage Fueled Scissorhand Duelist"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Scissorhands_T4 DisplayNamePl]] "Scissorhands demolishers"),
+	DisplayNameUnknown = T(119769262102, --[[ModItemUnitAnimalCompositeDef Scissorhands_T4 DisplayNameUnknown]] "Unknown Scissorhands Evolution"),
+	DisplayNameUnknownPL = T(657436726773, --[[ModItemUnitAnimalCompositeDef Scissorhands_T4 DisplayNameUnknownPL]] "Unknown Scissorhands Evolution"),
+	Description = T(156199244050, --[[ModItemUnitAnimalCompositeDef Scissorhands_T4 Description]] "This species is much more focused on killing than others. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 800000,
 	DailyEatingAmount = 4000,
 	ButcherResources = {
@@ -54,7 +54,7 @@ DefineClass.scissorhands_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "scissorhands_t5",
+	NewbornClass = "Scissorhands_T5",
 	MinNewbornScale = 60,
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,

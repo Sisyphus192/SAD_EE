@@ -1,5 +1,5 @@
-UndefineClass('scarab_t5')
-DefineClass.scarab_t5 = {
+UndefineClass('Scarab_T5')
+DefineClass.Scarab_T5 = {
 	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -48,11 +48,11 @@ DefineClass.scarab_t5 = {
 	ObservationDistanceMax = 1500,
 	can_lead_formation = false,
 	Icon = "UI/Icons/Resources/res_skarabei",
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef scarab_t5 DisplayName]] "Heavily Mutated PEx Skarabei Brute"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scarab_t5 DisplayNamePl]] "Heavily Mutated PEx Skarabei Brute"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef scarab_t5 DisplayNameUnknown]] "Skarabei Final Form?"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef scarab_t5 DisplayNameUnknownPL]] "Skarabei Final Form?"),
-	Description = T(791364568593, --[[ModItemUnitAnimalCompositeDef scarab_t5 Description]] "A Skarabei that has undergone extreme mutations. Poisons and explodes on death. Carapace practically immune to to pierce and energy attacks. Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Scarab_T5 DisplayName]] "Heavily Mutated PEx Skarabei Brute"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Scarab_T5 DisplayNamePl]] "Heavily Mutated PEx Skarabei Brute"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Scarab_T5 DisplayNameUnknown]] "Skarabei Final Form?"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Scarab_T5 DisplayNameUnknownPL]] "Skarabei Final Form?"),
+	Description = T(791364568593, --[[ModItemUnitAnimalCompositeDef Scarab_T5 Description]] "A Skarabei that has undergone extreme mutations. Poisons and explodes on death. Carapace practically immune to to pierce and energy attacks. Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Skarabei",
 	BaseMaxHealth = 800000,
 	FoodResources = {

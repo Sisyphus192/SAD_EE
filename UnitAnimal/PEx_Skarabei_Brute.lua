@@ -1,12 +1,12 @@
-UndefineClass('Skarabei_Manhunting_Brute')
-DefineClass.Skarabei_Manhunting_Brute = {
+UndefineClass('PEx_Skarabei_Brute')
+DefineClass.PEx_Skarabei_Brute = {
 	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	comment = "base unit, T2",
+	comment = "T3",
 	object_class = "GroundAnimal",
-	SpeciesGroup = "species_skarabei",
+	SpeciesGroup = "scarabs",
 	UnitTags = set( "AgitatedByPheromones", "Animal" ),
 	pfclass = 4,
 	composite_part_groups = {
@@ -14,19 +14,20 @@ DefineClass.Skarabei_Manhunting_Brute = {
 	},
 	PainMask = "PainMask",
 	SpecialOrientation = 1,
-	EventProgressValue = 120,
+	EventProgressValue = 190,
 	SightRange = 15000,
 	CombatGroup = "Insects",
 	HitNegationChance = {
-		blunt = 0,
-		energy = 10,
+		blunt = 10,
+		energy = 35,
 		gas = 0,
-		pacify = 20,
-		piercing = 20,
+		pacify = 40,
+		piercing = 40,
 	},
-	HitNegationChance_piercing = 20,
-	HitNegationChance_energy = 10,
-	HitNegationChance_pacify = 20,
+	HitNegationChance_blunt = 10,
+	HitNegationChance_piercing = 40,
+	HitNegationChance_energy = 35,
+	HitNegationChance_pacify = 40,
 	HumanThreat = true,
 	RobotThreat = true,
 	DistressCallRange = 5000,
@@ -47,12 +48,13 @@ DefineClass.Skarabei_Manhunting_Brute = {
 	ObservationDistanceMax = 1500,
 	can_lead_formation = false,
 	Icon = "UI/Icons/Resources/res_skarabei",
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting_Brute DisplayName]] "PEx Skarabei"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting_Brute DisplayNamePl]] "PEx Skarabei"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting_Brute DisplayNameUnknown]] "Unknown Skarabei evolution"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting_Brute DisplayNameUnknownPL]] "Unknown Skarabei evolution"),
-	Description = T(881139664981, --[[ModItemUnitAnimalCompositeDef Skarabei_Manhunting_Brute Description]] "A Skarabei swarm warrior. Poisons and explodes on death. Carapace becoming resistant to pierce and energy attacks. Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(347928801018, --[[ModItemUnitAnimalCompositeDef PEx_Skarabei_Brute DisplayName]] "PEx Skarabei Brute"),
+	DisplayNamePl = T(174621992358, --[[ModItemUnitAnimalCompositeDef PEx_Skarabei_Brute DisplayNamePl]] "PEx Skarabei Brute"),
+	DisplayNameUnknown = T(768308462988, --[[ModItemUnitAnimalCompositeDef PEx_Skarabei_Brute DisplayNameUnknown]] "Unknown Skarabei evolution"),
+	DisplayNameUnknownPL = T(541182606308, --[[ModItemUnitAnimalCompositeDef PEx_Skarabei_Brute DisplayNameUnknownPL]] "Unknown Skarabei evolution"),
+	Description = T(828842746226, --[[ModItemUnitAnimalCompositeDef PEx_Skarabei_Brute Description]] "These Skarabei are the largest we have observed! But the carapace is stronger than ever. Very resistant to pierce attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Skarabei",
+	BaseMaxHealth = 200000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
 		"FoodAnimalCarnivore",
@@ -70,7 +72,7 @@ DefineClass.Skarabei_Manhunting_Brute = {
 	ButcherResources = {
 		PlaceObj('ButcherResAmount', {
 			'resource', "RawMeatInsect",
-			'min_amount', 25000,
+			'min_amount', 5000,
 		}),
 	},
 	can_be_stomped = true,
@@ -99,7 +101,7 @@ DefineClass.Skarabei_Manhunting_Brute = {
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {
-		"Frenzy_Conscious_1",
+		"Frenzy_Conscious_2",
 	},
 }
 

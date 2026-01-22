@@ -1,5 +1,5 @@
-UndefineClass('Shogu_t2')
-DefineClass.Shogu_t2 = {
+UndefineClass('Shogu_T2')
+DefineClass.Shogu_T2 = {
 	__parents = { "ShoguBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -37,9 +37,9 @@ DefineClass.Shogu_t2 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_shogu",
-	DisplayName = T(887545666757, --[[ModItemUnitAnimalCompositeDef Shogu_t2 DisplayName]] "Infected Shogu"),
-	DisplayNamePl = T(990957586290, --[[ModItemUnitAnimalCompositeDef Shogu_t2 DisplayNamePl]] "Infected Shogus"),
-	Description = T(115355775673, --[[ModItemUnitAnimalCompositeDef Shogu_t2 Description]] "Evolution of the Shogu that is prone to disease and ill health."),
+	DisplayName = T(887545666757, --[[ModItemUnitAnimalCompositeDef Shogu_T2 DisplayName]] "Infected Shogu"),
+	DisplayNamePl = T(990957586290, --[[ModItemUnitAnimalCompositeDef Shogu_T2 DisplayNamePl]] "Infected Shogus"),
+	Description = T(115355775673, --[[ModItemUnitAnimalCompositeDef Shogu_T2 Description]] "Evolution of the Shogu that is prone to disease and ill health."),
 	BaseMaxHealth = 50000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -123,7 +123,7 @@ DefineClass.Shogu_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Shogu_t3",
+	NewbornClass = "Shogu_T3",
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
 	MoveSpeedCold = 1000,

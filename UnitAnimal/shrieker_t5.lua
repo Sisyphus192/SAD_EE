@@ -1,5 +1,5 @@
-UndefineClass('shrieker_t5')
-DefineClass.shrieker_t5 = {
+UndefineClass('Shrieker_T5')
+DefineClass.Shrieker_T5 = {
 	__parents = { "UnitNesting", "Shrieker_Manhunting", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -26,11 +26,11 @@ DefineClass.shrieker_t5 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Shrieker_T4",
 	lead_priority = 6,
-	DisplayName = T(219852402884, --[[ModItemUnitAnimalCompositeDef shrieker_t5 DisplayName]] "Sniping Entropic Shielded Shrieker"),
-	DisplayNamePl = T(394183373238, --[[ModItemUnitAnimalCompositeDef shrieker_t5 DisplayNamePl]] "Sniping Entropic Shielded Shrieker"),
-	DisplayNameUnknown = T(358521198402, --[[ModItemUnitAnimalCompositeDef shrieker_t5 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
-	DisplayNameUnknownPL = T(224838244446, --[[ModItemUnitAnimalCompositeDef shrieker_t5 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
-	Description = T(919946988433, --[[ModItemUnitAnimalCompositeDef shrieker_t5 Description]] "A regenerating, long range, durable Shrieker. The only thing that can reliably hit them are energy weapons, filling their sealed exoskeleton with energy. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(219852402884, --[[ModItemUnitAnimalCompositeDef Shrieker_T5 DisplayName]] "Sniping Entropic Shielded Shrieker"),
+	DisplayNamePl = T(394183373238, --[[ModItemUnitAnimalCompositeDef Shrieker_T5 DisplayNamePl]] "Sniping Entropic Shielded Shrieker"),
+	DisplayNameUnknown = T(358521198402, --[[ModItemUnitAnimalCompositeDef Shrieker_T5 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
+	DisplayNameUnknownPL = T(224838244446, --[[ModItemUnitAnimalCompositeDef Shrieker_T5 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
+	Description = T(919946988433, --[[ModItemUnitAnimalCompositeDef Shrieker_T5 Description]] "A regenerating, long range, durable Shrieker. The only thing that can reliably hit them are energy weapons, filling their sealed exoskeleton with energy. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 1000000,
 	ButcherResources = {
 		PlaceObj('ButcherResAmount', {
@@ -46,10 +46,6 @@ DefineClass.shrieker_t5 = {
 		}),
 	},
 	ProduceResInterval = 2400000,
-	CmdProduceResources = function (animal)
-		if not animal:IsTamed() then return animal:UpdateProductionTime() end
-		return animal:DoProduceResourcesDiminishingReturns()
-	end,
 	AnimalPerks = {
 		"StrongAnimal",
 		"SmartPredator",

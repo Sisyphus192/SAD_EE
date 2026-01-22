@@ -1,5 +1,5 @@
-UndefineClass('Camel_t4')
-DefineClass.Camel_t4 = {
+UndefineClass('Camel_T4')
+DefineClass.Camel_T4 = {
 	__parents = { "CamelBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -43,11 +43,11 @@ DefineClass.Camel_t4 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_camel",
-	DisplayName = T(465727968103, --[[ModItemUnitAnimalCompositeDef Camel_t4 DisplayName]] "Llamel Soldier"),
-	DisplayNamePl = T(703972505780, --[[ModItemUnitAnimalCompositeDef Camel_t4 DisplayNamePl]] "Llamel Soldiers"),
-	DisplayNameUnknown = T(959780937654, --[[ModItemUnitAnimalCompositeDef Camel_t4 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
-	DisplayNameUnknownPL = T(438449897644, --[[ModItemUnitAnimalCompositeDef Camel_t4 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
-	Description = T(134587557425, --[[ModItemUnitAnimalCompositeDef Camel_t4 Description]] "Aggressive spitting dromedary, with it's saliva able to destroy any obstacle."),
+	DisplayName = T(465727968103, --[[ModItemUnitAnimalCompositeDef Camel_T4 DisplayName]] "Llamel Soldier"),
+	DisplayNamePl = T(703972505780, --[[ModItemUnitAnimalCompositeDef Camel_T4 DisplayNamePl]] "Llamel Soldiers"),
+	DisplayNameUnknown = T(959780937654, --[[ModItemUnitAnimalCompositeDef Camel_T4 DisplayNameUnknown]] "Unknown Dromadda Evolution"),
+	DisplayNameUnknownPL = T(438449897644, --[[ModItemUnitAnimalCompositeDef Camel_T4 DisplayNameUnknownPL]] "Unknown Dromadda Evolutions"),
+	Description = T(134587557425, --[[ModItemUnitAnimalCompositeDef Camel_T4 Description]] "Aggressive spitting dromedary, with it's saliva able to destroy any obstacle."),
 	BaseMaxHealth = 600000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -126,7 +126,7 @@ DefineClass.Camel_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2000000,
 	GrowDuration = 2000000,
-	NewbornClass = "Camel_t5",
+	NewbornClass = "Camel_T5",
 	MinGrownScale = 70,
 	MaxGrownScale = 85,
 	FieldVisibilityCold = 75000,

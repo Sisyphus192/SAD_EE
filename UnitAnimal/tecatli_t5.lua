@@ -1,6 +1,6 @@
-UndefineClass('tecatli_t5')
-DefineClass.tecatli_t5 = {
-	__parents = { "TecatliBase" },
+UndefineClass('Tecatli_T5')
+DefineClass.Tecatli_T5 = {
+	__parents = { "TecatliBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -30,11 +30,11 @@ DefineClass.tecatli_t5 = {
 	HumanThreat = true,
 	FieldResearchTech = "Field_Tecatli_T4",
 	Icon = "UI/Icons/Resources/res_tecatli",
-	DisplayName = T(586792446004, --[[ModItemUnitAnimalCompositeDef tecatli_t5 DisplayName]] "Spellsword Tecatli"),
-	DisplayNamePl = T(726261985535, --[[ModItemUnitAnimalCompositeDef tecatli_t5 DisplayNamePl]] "Spellsword Tecatli"),
-	DisplayNameUnknown = T(961709341942, --[[ModItemUnitAnimalCompositeDef tecatli_t5 DisplayNameUnknown]] "Tecatli Final Form?"),
-	DisplayNameUnknownPL = T(520953085215, --[[ModItemUnitAnimalCompositeDef tecatli_t5 DisplayNameUnknownPL]] "Tecatli Final Form?"),
-	Description = T(563977516885, --[[ModItemUnitAnimalCompositeDef tecatli_t5 Description]] "When this creature hits you, good luck ever feeling the same! Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(586792446004, --[[ModItemUnitAnimalCompositeDef Tecatli_T5 DisplayName]] "Spellsword Tecatli"),
+	DisplayNamePl = T(726261985535, --[[ModItemUnitAnimalCompositeDef Tecatli_T5 DisplayNamePl]] "Spellsword Tecatli"),
+	DisplayNameUnknown = T(961709341942, --[[ModItemUnitAnimalCompositeDef Tecatli_T5 DisplayNameUnknown]] "Tecatli Final Form?"),
+	DisplayNameUnknownPL = T(520953085215, --[[ModItemUnitAnimalCompositeDef Tecatli_T5 DisplayNameUnknownPL]] "Tecatli Final Form?"),
+	Description = T(563977516885, --[[ModItemUnitAnimalCompositeDef Tecatli_T5 Description]] "When this creature hits you, good luck ever feeling the same! Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
 	FoodResources = {
 		"FoodAnimalCarnivore",
 		"Slop",
@@ -80,5 +80,10 @@ DefineClass.tecatli_t5 = {
 	DailyPregnancyChance = 65,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_4",
+	},
 }
 

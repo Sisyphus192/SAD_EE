@@ -1,3 +1,36 @@
+
+local def_group = const.Combat.DefaultGroup or "Default"
+function CombatGroupsSetItems()
+	local groups = {}
+	ClassDescendants("AttackableObject", function(name, def, groups)
+		groups[def.CombatGroup or def_group] = true
+	end, groups)
+	groups['Robots']=true
+	return table.keys(groups, true)
+end
+
+-- Gujo (and Tecatli) override so they are more aggressive after 2 years of game time
+function GujoBase:IsAttackTarget(target)
+	local human_group = Human.CombatGroup
+	if target.CombatGroup == human_group and GameTime() > (const.YearDuration * 2) then
+		--Gujo never attack Humans, unless enraged (by Human) or forced by storybit
+		if self:IsForcedAttackTarget(target) then
+			return true
+		end
+		if self:IsAggressive() then
+			local history = self.attacked_history
+			for _, attacker in ipairs(history) do
+				if attacker.CombatGroup == human_group and GameTime() - history[attacker] > self.AttackMemory then
+					return true
+				end
+			end
+		end
+		return
+	end
+	return UnitAnimal.IsAttackTarget(self, target)
+end
+
+-- Raise assert time from 100ms to 500ms
 function SpawnDef:ActivateSpawn(target, context, progress)
 	if not self.Enabled or (GameState.Tutorial and not self.EnabledInTutorial) then return end
 	if not self.EnabledWithoutSurvivors and not CheckValidSurvivorsOnMap() then return end
@@ -88,11 +121,13 @@ function SpawnDef:ActivateSpawn(target, context, progress)
 	end
 end
 
+-- Making Robots use combat groups so factions can be enabled in more complex mods
 AppendClass.Robot = {
 	properties = {
 		{ category = "Combat", id = "CombatGroup", name = "Combat Group", editor = "combo", default = false, items = CombatGroupsComboItems, template = true, help = "Members of the same combat group do not attack each other", },	},
 }
 
+-- Adding code that doesn't try and set a skill level above 10
 function ModifySkill:OnStart(obj, context)
 	local skill = self.Skill
 	if skill == "" then return end

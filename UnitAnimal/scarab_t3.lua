@@ -1,5 +1,5 @@
-UndefineClass('scarab_t3')
-DefineClass.scarab_t3 = {
+UndefineClass('Scarab_T3')
+DefineClass.Scarab_T3 = {
 	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -13,19 +13,20 @@ DefineClass.scarab_t3 = {
 	},
 	PainMask = "PainMask",
 	SpecialOrientation = 1,
-	EventProgressValue = 190,
+	EventProgressValue = 155,
 	SightRange = 15000,
 	CombatGroup = "Insects",
 	HitNegationChance = {
-		blunt = 10,
+		blunt = 20,
 		energy = 35,
-		gas = 0,
+		gas = 15,
 		pacify = 40,
-		piercing = 40,
+		piercing = 50,
 	},
-	HitNegationChance_blunt = 10,
-	HitNegationChance_piercing = 40,
+	HitNegationChance_blunt = 20,
+	HitNegationChance_piercing = 50,
 	HitNegationChance_energy = 35,
+	HitNegationChance_gas = 15,
 	HitNegationChance_pacify = 40,
 	HumanThreat = true,
 	RobotThreat = true,
@@ -47,13 +48,13 @@ DefineClass.scarab_t3 = {
 	ObservationDistanceMax = 1500,
 	can_lead_formation = false,
 	Icon = "UI/Icons/Resources/res_skarabei",
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef scarab_t3 DisplayName]] "PEx Skarabei Brute"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scarab_t3 DisplayNamePl]] "PEx Skarabei Brute"),
-	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef scarab_t3 DisplayNameUnknown]] "Unknown Skarabei evolution"),
-	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef scarab_t3 DisplayNameUnknownPL]] "Unknown Skarabei evolution"),
-	Description = T(173524527878, --[[ModItemUnitAnimalCompositeDef scarab_t3 Description]] "These Skarabei are the largest we have observed! But the carapace is stronger than ever. Very resistant to pierce attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(951125891639, --[[ModItemUnitAnimalCompositeDef Scarab_T3 DisplayName]] "PEx Skarabei"),
+	DisplayNamePl = T(148844092330, --[[ModItemUnitAnimalCompositeDef Scarab_T3 DisplayNamePl]] "PEx Skarabei"),
+	DisplayNameUnknown = T(--[[ModItemUnitAnimalCompositeDef Scarab_T3 DisplayNameUnknown]] "Unknown Skarabei evolution"),
+	DisplayNameUnknownPL = T(--[[ModItemUnitAnimalCompositeDef Scarab_T3 DisplayNameUnknownPL]] "Unknown Skarabei evolution"),
+	Description = T(173524527878, --[[ModItemUnitAnimalCompositeDef Scarab_T3 Description]] "These Skarabei are the largest we have observed! But the carapace is stronger than ever. Very resistant to pierce attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Skarabei",
-	BaseMaxHealth = 200000,
+	BaseMaxHealth = 300000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
 		"FoodAnimalCarnivore",
@@ -100,7 +101,7 @@ DefineClass.scarab_t3 = {
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {
-		"Frenzy_Conscious_2",
+		"Frenzy_Conscious_3",
 	},
 }
 

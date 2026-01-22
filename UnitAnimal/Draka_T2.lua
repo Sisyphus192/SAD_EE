@@ -1,5 +1,5 @@
-UndefineClass('Draka_t2')
-DefineClass.Draka_t2 = {
+UndefineClass('Draka_T2')
+DefineClass.Draka_T2 = {
 	__parents = { "DrakaBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -46,9 +46,9 @@ DefineClass.Draka_t2 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_draka",
-	DisplayName = T(188299442951, --[[ModItemUnitAnimalCompositeDef Draka_t2 DisplayName]] "Drikka"),
-	DisplayNamePl = T(380323294146, --[[ModItemUnitAnimalCompositeDef Draka_t2 DisplayNamePl]] "Drikkas"),
-	Description = T(698713214828, --[[ModItemUnitAnimalCompositeDef Draka_t2 Description]] "Aggressive Evolution of the Drakka. The exoskeleton clicks and clacks."),
+	DisplayName = T(188299442951, --[[ModItemUnitAnimalCompositeDef Draka_T2 DisplayName]] "Drikka"),
+	DisplayNamePl = T(380323294146, --[[ModItemUnitAnimalCompositeDef Draka_T2 DisplayNamePl]] "Drikkas"),
+	Description = T(698713214828, --[[ModItemUnitAnimalCompositeDef Draka_T2 Description]] "Aggressive Evolution of the Drakka. The exoskeleton clicks and clacks."),
 	BaseMaxHealth = 350000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -128,7 +128,7 @@ DefineClass.Draka_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "Draka_t3",
+	NewbornClass = "Draka_T3",
 	MaxGrownScale = 100,
 	FieldVisibilityCold = 30000,
 	FieldVisibilityWarm = 10000,

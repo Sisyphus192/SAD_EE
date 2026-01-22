@@ -1,5 +1,5 @@
-UndefineClass('Gujo_t3')
-DefineClass.Gujo_t3 = {
+UndefineClass('Gujo_T3')
+DefineClass.Gujo_T3 = {
 	__parents = { "GujoBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -30,11 +30,11 @@ DefineClass.Gujo_t3 = {
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	Icon = "UI/Icons/Resources/res_gujo",
-	DisplayName = T(261277686877, --[[ModItemUnitAnimalCompositeDef Gujo_t3 DisplayName]] "Angry Ostrich"),
-	DisplayNamePl = T(246230868727, --[[ModItemUnitAnimalCompositeDef Gujo_t3 DisplayNamePl]] "Angry Ostrichs"),
-	DisplayNameUnknown = T(508094361828, --[[ModItemUnitAnimalCompositeDef Gujo_t3 DisplayNameUnknown]] "Unknown Gujo Evolution"),
-	DisplayNameUnknownPL = T(953781653922, --[[ModItemUnitAnimalCompositeDef Gujo_t3 DisplayNameUnknownPL]] "Unknown Gujo Evolutions"),
-	Description = T(709802447425, --[[ModItemUnitAnimalCompositeDef Gujo_t3 Description]] "It's beak and neck are now twice as long, resembling an Earth Ostrich. When dissected, stomach acid clings to the neck to start digestion as soon as possible."),
+	DisplayName = T(261277686877, --[[ModItemUnitAnimalCompositeDef Gujo_T3 DisplayName]] "Angry Ostrich"),
+	DisplayNamePl = T(246230868727, --[[ModItemUnitAnimalCompositeDef Gujo_T3 DisplayNamePl]] "Angry Ostrichs"),
+	DisplayNameUnknown = T(508094361828, --[[ModItemUnitAnimalCompositeDef Gujo_T3 DisplayNameUnknown]] "Unknown Gujo Evolution"),
+	DisplayNameUnknownPL = T(953781653922, --[[ModItemUnitAnimalCompositeDef Gujo_T3 DisplayNameUnknownPL]] "Unknown Gujo Evolutions"),
+	Description = T(709802447425, --[[ModItemUnitAnimalCompositeDef Gujo_T3 Description]] "It's beak and neck are now twice as long, resembling an Earth Ostrich. When dissected, stomach acid clings to the neck to start digestion as soon as possible."),
 	BaseMaxHealth = 500000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -111,7 +111,7 @@ DefineClass.Gujo_t3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "Gujo_t4",
+	NewbornClass = "Gujo_T4",
 	MinGrownScale = 75,
 	MaxGrownScale = 85,
 	RoamRadiusStarving = 50000,

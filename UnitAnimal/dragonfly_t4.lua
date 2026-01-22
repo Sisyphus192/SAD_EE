@@ -1,5 +1,5 @@
-UndefineClass('dragonfly_t4')
-DefineClass.dragonfly_t4 = {
+UndefineClass('Dragonfly_T4')
+DefineClass.Dragonfly_T4 = {
 	__parents = { "DragonflyBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -39,11 +39,11 @@ DefineClass.dragonfly_t4 = {
 	ObservationDistanceMax = 21000,
 	SkipTesting = true,
 	Icon = "UI/Icons/Resources/res_dragonfly",
-	DisplayName = T(406188342891, --[[ModItemUnitAnimalCompositeDef dragonfly_t4 DisplayName]] "Frenzied Fortified Bomber Deathfly"),
-	DisplayNamePl = T(923848022936, --[[ModItemUnitAnimalCompositeDef dragonfly_t4 DisplayNamePl]] "Frenzied Fortified Bomber Deathfly"),
-	DisplayNameUnknown = T(991372140381, --[[ModItemUnitAnimalCompositeDef dragonfly_t4 DisplayNameUnknown]] "Hummingfly Final Form?"),
-	DisplayNameUnknownPL = T(273592225259, --[[ModItemUnitAnimalCompositeDef dragonfly_t4 DisplayNameUnknownPL]] "Hummingfly Final Form?"),
-	Description = T(565205596293, --[[ModItemUnitAnimalCompositeDef dragonfly_t4 Description]] "These Dragonflys have improved defensive capabilities, including it's wings. Generally harder to bring down by any weaponry. Deals <color TextNegative>Energy</color> damage."),
+	DisplayName = T(406188342891, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayName]] "Frenzied Fortified Bomber Deathfly"),
+	DisplayNamePl = T(923848022936, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNamePl]] "Frenzied Fortified Bomber Deathfly"),
+	DisplayNameUnknown = T(991372140381, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNameUnknown]] "Hummingfly Final Form?"),
+	DisplayNameUnknownPL = T(273592225259, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNameUnknownPL]] "Hummingfly Final Form?"),
+	Description = T(565205596293, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 Description]] "These Dragonflys have improved defensive capabilities, including it's wings. Generally harder to bring down by any weaponry. Deals <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 800000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

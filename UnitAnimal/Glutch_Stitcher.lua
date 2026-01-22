@@ -1,9 +1,10 @@
-UndefineClass('Glutch_Manhunting')
-DefineClass.Glutch_Manhunting = {
-	__parents = { "GroundAnimal" },
+UndefineClass('Glutch_Stitcher')
+DefineClass.Glutch_Stitcher = {
+	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "T2",
 	object_class = "GroundAnimal",
 	SpeciesGroup = "insects",
 	UnitTags = set( "AgitatedByPheromones", "Animal" ),
@@ -17,16 +18,22 @@ DefineClass.Glutch_Manhunting = {
 	},
 	PainMask = "PainMask",
 	SpecialOrientation = 2,
-	EventProgressValue = 50,
-	SpawnDefWeight = 20,
-	SpawnTags = set( "Boss" ),
+	EventProgressValue = 175,
 	SightRange = 10000,
 	CombatGroup = "Insects",
-	CombatHostile = true,
 	HitNegationChance = {
-		gas = 50,
+		blunt = 30,
+		energy = 20,
+		gas = 75,
+		pacify = 20,
+		piercing = 0,
 	},
-	HitNegationChance_gas = 50,
+	HitNegationChance_blunt = 30,
+	HitNegationChance_energy = 20,
+	HitNegationChance_gas = 75,
+	HitNegationChance_pacify = 20,
+	HumanThreat = true,
+	RobotThreat = true,
 	CombatDisengageDist = 40000,
 	BloodColor = 4286036179,
 	max_skinned_decals_low = -1,
@@ -35,13 +42,12 @@ DefineClass.Glutch_Manhunting = {
 	ObservationDistanceMax = 1500,
 	lead_priority = 10,
 	Icon = "UI/Icons/Resources/res_glutch_red",
-	DisplayName = T(274894075194, --[[ModItemUnitAnimalCompositeDef Glutch_Manhunting DisplayName]] "Manhunting Glutch"),
-	DisplayNamePl = T(368662550642, --[[ModItemUnitAnimalCompositeDef Glutch_Manhunting DisplayNamePl]] "Manhunting Glutches"),
-	DisplayNameUnknown = T(414783125334, --[[ModItemUnitAnimalCompositeDef Glutch_Manhunting DisplayNameUnknown]] "Aggressive bloated insect"),
-	DisplayNameUnknownPL = T(994549565186, --[[ModItemUnitAnimalCompositeDef Glutch_Manhunting DisplayNameUnknownPL]] "Aggressive bloated insects"),
-	Description = T(552925479785, --[[ModItemUnitAnimalCompositeDef Glutch_Manhunting Description]] "This usually passive animal has gone mad."),
+	DisplayName = T(683326986968, --[[ModItemUnitAnimalCompositeDef Glutch_Stitcher DisplayName]] "Glutch Stitcher"),
+	DisplayNamePl = T(281838293090, --[[ModItemUnitAnimalCompositeDef Glutch_Stitcher DisplayNamePl]] "Glutch Stitcher"),
+	DisplayNameUnknown = T(772067070300, --[[ModItemUnitAnimalCompositeDef Glutch_Stitcher DisplayNameUnknown]] "Unknown Glutch Evolution"),
+	DisplayNameUnknownPL = T(706093807273, --[[ModItemUnitAnimalCompositeDef Glutch_Stitcher DisplayNameUnknownPL]] "Unknown Glutch Evolution"),
+	Description = T(893348800476, --[[ModItemUnitAnimalCompositeDef Glutch_Stitcher Description]] "These Glutches are able to regenerate their wounds. Must be due to thier skin being largely gasseous. Dedicated firepower to pierce it like a balloon is needed. VERY resistant to gas/blunt attacks. Deals <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Glutch",
-	BaseMaxHealth = 50000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
 		"Slop",
@@ -59,6 +65,12 @@ DefineClass.Glutch_Manhunting = {
 	SelectionRadius = 1250,
 	BodySize = "small",
 	DeathWeapon = "GlutchWeapon",
+	CmdProduceResources = function (animal)
+		return animal:DoProduceResourcesDiminishingReturns()
+	end,
+	AnimalPerks = {
+		"AP_Regen",
+	},
 	radius = 1500,
 	movement_adjust = 1500,
 	attack_weapon = "GlutchWeapon",
@@ -81,5 +93,10 @@ DefineClass.Glutch_Manhunting = {
 	SleepInterruptedAnim = "sleep_Interupted",
 	MinGrownScale = 70,
 	MaxGrownScale = 100,
+	UnitPerkFrenzy = true,
+	FrenzyHealthPct = 99,
+	FrenzyEffects = {
+		"Frenzy_Conscious_1",
+	},
 }
 

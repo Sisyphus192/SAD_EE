@@ -1,11 +1,12 @@
-UndefineClass('gasbag_t4')
-DefineClass.gasbag_t4 = {
+UndefineClass('BadTrip_Bloated_Glutch')
+DefineClass.BadTrip_Bloated_Glutch = {
 	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "T4",
 	object_class = "GroundAnimal",
-	SpeciesGroup = "species_glutch",
+	SpeciesGroup = "insects",
 	UnitTags = set( "AgitatedByPheromones", "Animal" ),
 	RoamRadius = 15000,
 	RoamMaxDist = 7000,
@@ -42,11 +43,11 @@ DefineClass.gasbag_t4 = {
 	ObservationDistanceMax = 1500,
 	lead_priority = 10,
 	Icon = "UI/Icons/Resources/res_glutch_red",
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef gasbag_t4 DisplayName]] "BadTrip Bloated Glutch"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef gasbag_t4 DisplayNamePl]] "BadTrip Bloated Glutch"),
-	DisplayNameUnknown = T(959553155703, --[[ModItemUnitAnimalCompositeDef gasbag_t4 DisplayNameUnknown]] "Unknown Glutch Evolution"),
-	DisplayNameUnknownPL = T(972311943002, --[[ModItemUnitAnimalCompositeDef gasbag_t4 DisplayNameUnknownPL]] "Unknown Glutch Evolution"),
-	Description = T(899293864569, --[[ModItemUnitAnimalCompositeDef gasbag_t4 Description]] "This species continues to grow almost exponentially. And it's outer shell continues to grow, with their death explosions causing mini-earthquakes. Dedicated firepower to pierce it like a balloon is needed. VERY resistant to gas/blunt attacks. Deals <color TextPositive>Gas</color> damage."),
+	DisplayName = T(191778471383, --[[ModItemUnitAnimalCompositeDef BadTrip_Bloated_Glutch DisplayName]] "BadTrip Bloated Glutch"),
+	DisplayNamePl = T(505395729353, --[[ModItemUnitAnimalCompositeDef BadTrip_Bloated_Glutch DisplayNamePl]] "BadTrip Bloated Glutch"),
+	DisplayNameUnknown = T(492130038357, --[[ModItemUnitAnimalCompositeDef BadTrip_Bloated_Glutch DisplayNameUnknown]] "Unknown Glutch Evolution"),
+	DisplayNameUnknownPL = T(362232721750, --[[ModItemUnitAnimalCompositeDef BadTrip_Bloated_Glutch DisplayNameUnknownPL]] "Unknown Glutch Evolution"),
+	Description = T(292160509175, --[[ModItemUnitAnimalCompositeDef BadTrip_Bloated_Glutch Description]] "This species continues to grow almost exponentially. And it's outer shell continues to grow, with their death explosions causing mini-earthquakes. Dedicated firepower to pierce it like a balloon is needed. VERY resistant to gas/blunt attacks. Deals <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Glutch",
 	BaseMaxHealth = 1000000,
 	FoodResources = {

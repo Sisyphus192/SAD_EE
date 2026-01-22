@@ -1,5 +1,5 @@
-UndefineClass('Shogu_t4')
-DefineClass.Shogu_t4 = {
+UndefineClass('Shogu_T4')
+DefineClass.Shogu_T4 = {
 	__parents = { "ShoguBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -43,9 +43,9 @@ DefineClass.Shogu_t4 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_shogu",
-	DisplayName = T(238232468743, --[[ModItemUnitAnimalCompositeDef Shogu_t4 DisplayName]] "Poxugor"),
-	DisplayNamePl = T(946414543372, --[[ModItemUnitAnimalCompositeDef Shogu_t4 DisplayNamePl]] "Poxugors"),
-	Description = T(702253245244, --[[ModItemUnitAnimalCompositeDef Shogu_t4 Description]] "A diseased creature seemingly only allowed to exist to spread it's poxes. Aggressively searches for food."),
+	DisplayName = T(238232468743, --[[ModItemUnitAnimalCompositeDef Shogu_T4 DisplayName]] "Poxugor"),
+	DisplayNamePl = T(946414543372, --[[ModItemUnitAnimalCompositeDef Shogu_T4 DisplayNamePl]] "Poxugors"),
+	Description = T(702253245244, --[[ModItemUnitAnimalCompositeDef Shogu_T4 Description]] "A diseased creature seemingly only allowed to exist to spread it's poxes. Aggressively searches for food."),
 	BaseMaxHealth = 50000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -131,7 +131,7 @@ DefineClass.Shogu_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2000000,
 	GrowDuration = 2000000,
-	NewbornClass = "Shogu_t5",
+	NewbornClass = "Shogu_T5",
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
 	MoveSpeedCold = 1000,

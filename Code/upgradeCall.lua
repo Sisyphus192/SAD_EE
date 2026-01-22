@@ -8,15 +8,24 @@ local resource_scale = const.ResourceScale
 
 function Bkob_Log(hard_string,var)
 	DebugPrint(hard_string)
-	DebugPrint(var)
+	if var then
+		DebugPrint(var)
+	end
 	DebugPrint("\n")
+	if MapVarValues['EE_debug'] == 'all' then
+		print(hard_string)
+		print(var)
+	end
 end
 
-function SavegameFixups.ILU_fixes()
-	DebugPrint("Fixing up a save game due to older EE version present!\n")
-	MapForEach("map", "GujoT2", function(obj)
-		obj:ComposeBodyParts()
-		obj:InitEntity()
+function SavegameFixups.ILU_Gujo_fixes()
+	Bkob_Log("Fixing up a save game due to older EE version present!\n")
+	MapForEach("map", "GujoT3", function(obj,ids)
+		if ids[obj.id] then
+			obj.id = ids[obj.id]
+			obj:ComposeBodyParts()
+			obj:InitEntity()
+		end
 	end)
 	for i, animal in ipairs(UIPlayer.labels.TamedAnimals) do
 		if not UIPlayer.research_center:IsTechResearched(animal['FieldResearchTech']) then
@@ -24,34 +33,49 @@ function SavegameFixups.ILU_fixes()
 		end
 		animal:InitEntity()
 	end
-	MapForEach("map", "TerritorialNest", function(nest)
-		nest:Init() -- resets nests from 1st and bad implementation
+end
+
+function rebuild_animals()
+	MapForEach("map",'UnitAnimal', function(obj)
+		obj:ComposeBodyParts()
+		obj:InitEntity()
 	end)
-	refresh_tame_counts()
 end
---[[ To be depreciated
-function set_expedition_tame(id, name)
-	DebugPrint("Expedition tame being set!")
-	name = name or 'N/A'
-	if MapVarValues['nest_awaken_exp_tame'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
-		MapVarValues['nest_awaken_exp_tame'] = id
-	else
-		MapVar('nest_awaken_exp_tame', id)
-	end
-	if MapVarValues['nest_awaken_tame_name'] or MapVarValues['nest_awaken_exp_tame'] == 'N/A' then
-		MapVarValues['nest_awaken_tame_name'] = name
-	else
-		MapVar('nest_awaken_tame_name', id)
+
+function SavegameFixups.ILU_Decom_fixes()
+	Bkob_Log("Fixing up a save game due to older EE version present!\n")
+	rebuild_animals()
+end
+
+function SavegameFixups.ILU_id_change_fix()
+	local to_decom = {
+		GujoT5="Gujo_T5",GujoT4="Gujo_T4",GujoT3="Gujo_T3",GujoT2="Gujo_T2",
+		--dog_T5="Dog_T5",dog_T4="Dog_T4",dog_T3="Dog_T4",
+		dog_T1="Dog_T2",
+		Heavily_Mutated_PEx_Skarabei_Brute="Scarab_T5",Mutated_PEx_Skarabei_Brute="Scarab_T4",PEx_Skarabei="Scarab_T2",PEx_Skarabei_Brute="Scarab_T3",
+		BadTrip_Bloated_Glutch_Stitcher="Glutch_T5",BadTrip_Bloated_Glutch="Glutch_T4",Bloated_Glutch="Glutch_T3",Glutch_Stitcher="Glutch_T2",
+		Fast_Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T5",Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T4",Frenzied_Bomber_Dragonfly="Dragongly_T3",Frenzied_Dragonfly="Dragongly_T2",
+		Spellsword_Tecatli="Tecatli_T5",Intelligent_Tecatli="Tecatli_T4",Heat_Reinforced_Tecatli="Tecatli_T3",Entombed_Tecatli="Tecatli_T2",VenomousRaptors="Tecatli_T1_venom",
+		Rage_Focused_Scissorhands="Scissorhands_T5",Rage_Fueled_Scissorhand_Duelist="Scissorhands_T4",Brutal_Duelist_Scissorhands="Scissorhands_T3",
+		Junoskar="Juno_T6",Too_Angry_Too_Die_Juno="Juno_T5",Hulk_Juno="Juno_T4",Angry_Juno="Juno_T3",
+		Sniping_Entropy_Shielded_Shrieker="Shrieker_T5",Plague_Sniper_Shrieker="Shrieker_T4",Entropic_Shrieker="Shrieker_T3",
+	}
+	local animals = MapGet(true,'UnitAnimal')
+	for _,creature in ipairs(animals) do
+		local decom_check = to_decom[creature.class]
+		if decom_check then
+			creature:ChangeClass(decom_check)
+		end
 	end
 end
---]]
+
 local function add_perks_to_animals(type)
 	if type == 'milk' then
 		local output = ClassDescendantsList("Unit", function (name, classdef)
 			return (classdef.SpeciesGroup == 'species_ulfen' or classdef.SpeciesGroup == 'species_camel' or classdef.SpeciesGroup == 'species_noth') --unit_ent.SpeciesGroup == 'birds'
 		end)
 		for _,animal in ipairs(output) do
-			local def = _G[animal]
+			local def = g_Classes[animal]
 			table.insert_unique(def.AnimalPerks, "MilkProducer")
 		end
 	elseif type == 'eggs' then
@@ -59,12 +83,11 @@ local function add_perks_to_animals(type)
 			return classdef.SpeciesGroup == 'species_gujo' --unit_ent.SpeciesGroup == 'birds'
 		end)
 		for _,animal in ipairs(output) do
-			local def = _G[animal]
+			local def = g_Classes[animal]
 			table.insert_unique(def.AnimalPerks, "EggsProducer")
 		end
 	end
 end
-
 
 function OnMsg.ModsReloaded()
 	if _G.Mods["LH_Milk"] then
@@ -97,7 +120,94 @@ function OnMsg.ModsReloaded()
 	end
 end
 
+local EE_tier_pivot = {}
+local EE_evo_pivot = {}
 
+--Input: evo_pivot[unit_id] output: evo unit list
+function build_evo_pivot()
+	Bkob_Log("Building Evo Pivot")
+	EE_evo_pivot = {}
+	local chains = #Presets.UnitClassChain.Default
+	for i=1, chains do
+		local chain = Presets.UnitClassChain.Default[i]
+		if chain and chain.units then
+			local evo_chain_list = chain.units
+			Bkob_Log("evo pivot entry: ",evo_chain_list)
+			local max_t = chain:get_max_tier()
+			Bkob_Log("Max tier of chain: ",max_t)
+			for _,unit in ipairs(evo_chain_list) do
+				local unit_class = unit.Unit
+				Bkob_Log("Unit: ",unit_class)
+				local evo_tier = unit.Tier or 1
+				Bkob_Log("Tier: ",evo_tier)
+				if evo_tier + 1 <= max_t then
+					local evos = chain:get_units_by_tier(evo_tier + 1)
+					Bkob_Log("evos of this unit: ",evos)
+					EE_evo_pivot[unit_class] = evos
+				else
+					Bkob_Log("No evos for unit")
+					EE_evo_pivot[unit_class] = {}
+				end
+			end
+		end
+	end
+end
+
+--Input: tier_pivot[unit_id] output: tier number
+function build_tier_pivot()
+	Bkob_Log("Building tier pivot table ")
+	EE_tier_pivot = {}
+	local chains = #Presets.UnitClassChain.Default
+	for i=1, chains do
+		local chain = Presets.UnitClassChain.Default[i]
+		if chain and chain.units then
+			Bkob_Log("Reviewing: ",chain.units)
+			for _,unit in ipairs(chain.units) do
+				local unit_class = unit.Unit
+				local tier = unit.Tier or 1
+				Bkob_Log("Adding this unit to pivot table ",unit_class)
+				EE_tier_pivot[unit_class] = tier
+			end
+		end
+	end
+end
+
+function print_pivots()
+	print("EVO PIVOT")
+	print(EE_evo_pivot)
+	print("TIER PIVOT")
+	print(EE_tier_pivot)
+end
+
+function build_pivot_tables()
+	build_evo_pivot()
+	build_tier_pivot()
+end
+
+function get_tier_Table()
+	return EE_tier_pivot
+end
+
+function get_evo_Table()
+	return EE_evo_pivot
+end
+
+function OnMsg.ModsReloaded()
+	build_pivot_tables()
+end
+
+function Get_unit_classes()
+	local to_return = {}
+	local chains = Presets.UnitClassChain.Default
+	for i=1,#chains do
+		if chains[i] then
+			to_return[#to_return+1] = chains[i].id
+		end
+	end
+	return to_return
+end
+
+-- Need this here instead of nest mod because we are defining the robots here
 AppendClass.UnitNesting = {
 	properties = {
 		{ category = "Nest", id = "NestEffectRobo", name = "Nest Proximity Effect", editor = "preset_id", default = "FamiliarGroundRobo", preset_class = "RobotCondition", template = true },
@@ -112,8 +222,96 @@ AppendClass.UnitSpeciesGroup = {
 		{category = "Species", id = "allied_combat_groups", name = "Allied Combat Groups", editor = "string_list", default = {}, help = "Combat groups that should not be attacked",},
 		{category = "Species", id = "nest_class", name = "Species Nest", editor = "choice", default = false, items = function() return ClassDescendantsList('TerritorialNest') end , help = "What nest is related to this species.",},
 		{category = "Species", id = "intelligence", name = "Intelligence", editor = "choice", default = 'primal', items = {"primal","sub-sentient",'sentient','coordinated'} , help = "How complicated this species can behave.",},
+		{category = "Species", id = "evo_chains", name = "Evolution Chains", editor = "string_list", default = false, modifiable = true, items = function() return Get_unit_classes() end, },
 	},
 }
+
+function Get_unit_species_preset()
+	local to_return = {}
+	local entries = #Presets.UnitSpeciesGroup.Default+1
+	for i = 1, entries do
+		local species = Presets.UnitSpeciesGroup.Default[i]
+		if species.primary_combat_group then
+			table.insert_unique(to_return, species.id)
+		end
+	end
+	return to_return
+end
+
+DefineClass.UnitEvoInstance = {
+	__parents = { "PropertyObject" },
+	properties = {
+		{ category = "Unit", id = "Unit", name = "Unit", editor = "choice", default = false, items = function (self) return GetSpawnClasses() end,},
+		{ category = "Unit", id = "Tier", name = "Unit Tier", default = 1, editor = "number", help = "What tier of unit (This is tracked to ensure players can limit the max individual difficulty of a save by limiting based on tier)", },
+	},
+}
+
+-- Specific 
+DefineClass.UnitClassChain = {
+	__parents = {"ListPreset"},
+	properties = {
+		{ category = "Evolution",	id = "units", name = "Units in Chain", editor = "nested_list", default = false, modifiable = true, base_class = "UnitEvoInstance", inclusive = true, auto_expand = true },	
+	},
+}
+
+function UnitClassChain:get_units_by_tier(tier)
+	local to_return = {}
+	for _,unit in ipairs(self.units) do
+		if unit.Tier == tier then
+			to_return[#to_return+1] = unit.Unit
+		end
+	end
+	return to_return
+end
+
+function UnitClassChain:get_correct_evo(ep)
+	local to_return = {}
+	local max_count = MapVarValues['ILU_max']
+	local min_tier = self:get_min_tier()
+	local max_tier = self:get_max_tier()
+	local found = false
+	local retry = 20
+	local cur_tier = min_tier
+	while not found and retry > 0 do
+		retry = retry -1
+		local this_tier_units = self:get_units_by_tier(cur_tier)
+		for _,animal in ipairs(this_tier_units) do
+			if g_Classes[animal].EventProgressValue * max_count > ep then
+				to_return[#to_return+1] = animal
+				found = true
+			end
+		end
+		cur_tier = cur_tier + 1
+		-- if the EP given is more than the highest tier units cap value
+		if cur_tier == max_tier and not found then
+			to_return[#to_return+1] = table.rand(self:get_units_by_tier(cur_tier))
+			found = true
+		end
+	end
+	return to_return
+end
+
+function UnitClassChain:get_min_tier()
+	local to_return = 0
+	for _,unit in ipairs(self.units) do
+		if unit.Tier < to_return then
+			to_return = unit.Tier
+		end
+	end
+	return to_return
+end
+
+function UnitClassChain:get_max_tier()
+	local to_return = 0
+	for _,unit in ipairs(self.units) do
+		if unit.Tier > to_return then
+			to_return = unit.Tier
+		end
+	end
+	return to_return
+end
+
+DefineModItemPreset("UnitClassChain", { EditorName = "Evolution Chain", EditorSubmenu = "Animals" })
 
 function UnitSpeciesGroup:ally_with(combat_group)
 	local found = false
@@ -159,29 +357,29 @@ function combat_units_with_false()
 	return table.append(test_array, combat_units)
 end
 
-DefineClass.UnitEvolution = {
-	__parents = { "UnitComponent" },
-	properties = {
-		{ category = "EE Combat", id = "unit_tier", name = "Unit Tier", editor = "number", help = "What tier of unit (This is tracked to ensure players can limit the max individual difficulty of a save by limiting based on tier)", },
-		{ category = "EE Combat", id = "evolution", name = "Evolved Form", editor = "choice", items = function (self) return combat_units_with_false() end, help = "What exact class this creature evolves into", },
-		{ category = "EE Combat", id = "devolution", name = "Ancestor", editor = "choice", items = function (self) return combat_units_with_false() end, help = "What exact class this creature evolved from.", },
-	},
-	unit_tier = 1,
-	evolution = false,
-	devolution = false
-}
-
 function Find_evolution(classdef)
-	Bkob_Log("Finding evolution for: ",classdef.id)
+	Bkob_Log("Finding evolution for: ",classdef.class)
 	local possible
-	if classdef.is_tameable and classdef.NewbornClass then
-		possible = classdef.NewbornClass or classdef.id
-	else
-		possible = classdef.evolution or classdef.id
-	end
-	if g_Classes[possible].unit_tier > MapVarValues["ILU_Tier_Max"] then
+	local cur_tier = EE_tier_pivot[classdef.class] or 1
+	if cur_tier >= MapVarValues["ILU_Tier_Max"] then
 		Bkob_Log("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
-		possible = classdef.id
+		return classdef.class
+	end
+	if classdef.Tameable and classdef.NewbornClass then
+		Bkob_Log("Unit is tameable and has a newborn class!")
+		possible = classdef.NewbornClass or classdef.class
+	else
+		local possible_ups = EE_evo_pivot[classdef.class]
+		Bkob_Log("Doing it the pivot table way!")
+		if #possible_ups > 0 then
+			possible = table.rand(possible_ups)
+		else
+			possible = classdef.class
+		end
+	end
+	if EE_tier_pivot[possible] > MapVarValues["ILU_Tier_Max"] then
+		Bkob_Log("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
+		possible = classdef.class
 	else
 		Bkob_Log("Giving back this evolution: ",possible)
 	end
@@ -200,7 +398,7 @@ local function is_preg_loaded()
 end
 
 local function build_output(final_full_table)
-	DebugPrint("Building final spawn table\n")
+	Bkob_Log("Building final spawn table\n")
 	local additional_class_list = {}
 	local final_main_name = ''
 	for i = 1, #final_full_table do
@@ -217,7 +415,6 @@ end
 function carrying_capacity(species)
 	Bkob_Log("Getting carrying capacity of a species: ",species)
 	local herd_mod = Presets.UnitSpeciesGroup.Default[species].herd_size_modifier or 100
-	local stop = get_stop(species)
 	local max
 	if MapVarValues["EE_hard_cap"] then
 		max = MapVarValues[species] --get_preg_quota(species)
@@ -234,15 +431,9 @@ end
 function new_preg_rate(specific_species, rate)
 	local species = specific_species.SpeciesGroup
 	if not Presets.UnitSpeciesGroup.Default[species] then return rate end
-	DebugPrint("Preg rate for ")
-	DebugPrint(species)
-	DebugPrint("\n")
-	--local tame_check = MapVarValues['tame_last_refresh'] or 0
-	--if tame_check + (2 * day_duration) < GameTime() then -- refresh every other day
-	--		refresh_tame_counts()
-	--end
-	local base_rate = rate or specific_species.DailyPregnancyChance or 60 -- default to 60 instead of 0
-	--local stop = get_stop(species_class)
+	Bkob_Log("Preg rate for ",specific_species)
+	-- default to 60
+	local base_rate = rate or specific_species.DailyPregnancyChance or 60
 	local count = 0
 	for _,v in ipairs(UIPlayer.labels.TamedAnimals) do
 		if v.SpeciesGroup == species then
@@ -262,7 +453,7 @@ function new_preg_rate(specific_species, rate)
 end
 
 function ILU_update_armor_hcs()
-	DebugPrint("Updating the armor HCs")
+	Bkob_Log("Updating the armor HCs")
 	local combat_type = MapVarValues['ILU_combat_type']
 	local flip_table = {}
 	if not combat_type then
@@ -303,7 +494,7 @@ end
 
 -- classdef UnitEvolution Unit Component + EP based upgrading
 function check_count_and_upgrade(start_animal, additionalClassList, progress_percent)
-	DebugPrint("non-robot attack incoming\n")
+	Bkob_Log("non-robot attack incoming\n")
 	progress_percent = progress_percent or 100
 	local actual_EP_Bank = DivRound((progress_percent * EventProgress), 100)
 	local max_count = MapVarValues['ILU_max']
@@ -328,6 +519,7 @@ function check_count_and_upgrade(start_animal, additionalClassList, progress_per
 		progress_and_weight = progress_and_weight + this_ep * additionalClassList[i][2]
 		temp_class_list[i + 1] = expansion
 	end
+	Bkob_Log('attack wave initial spawning',temp_class_list)
 	local this_defs_avg = DivRound(progress_and_weight, sum_weight)
 	if this_defs_avg > min_average_cost then return build_output(temp_class_list) end
 	local max_loops = 40
@@ -336,32 +528,49 @@ function check_count_and_upgrade(start_animal, additionalClassList, progress_per
 	local i = 0
 	local capped = 0
 	local evolution = false
+	Bkob_Log('Length of spawn list: ',#temp_class_list)
 	while i < max_loops and this_defs_avg < min_average_cost and capped < #temp_class_list do
 		i = i + 1
+		Bkob_Log('Loop: ',i)
+		Bkob_Log('Capped evolutions: ',capped)
 		evolution = false
 		for _, v in ipairs(temp_class_list) do
+			Bkob_Log('Checking this entry: ',v)
 			local v_def = g_Classes[v['now']]
-			local next = Find_evolution(v['now'])
+			-- Find_evolution already detects classes above player option tier cap.
+			-- So if next == v['now'], we should consider this entry maxxed out 
+			local next = Find_evolution(v_def)
 			local maybe_evo = g_Classes[next]
-			local not_this_unit = v['up_count'] ~= up_count_cap
-			local same_creature = maybe_evo.id ~= v_def.id
-			local now_capped = maybe_evo.tier == max_tier
-			local too_high = maybe_evo.unit_tier > max_tier
-			if not (not_this_unit or same_creature or too_high or evolution) then
-				if now_capped then
-					capped = capped + 1
-				end
-				evolution = maybe_evo
-				v['now'] = evolution.id
-				v['up_count'] = v['up_count'] + 1
-				v['ep'] = evolution.EventProgressValue
-				local weighted_ep_old = DivRound(v['weight'] * v_def.EventProgressValue, sum_weight)
-				local weighted_ep_new = DivRound(v['weight'] * evolution.EventProgressValue, sum_weight)
-				this_defs_avg = this_defs_avg - weighted_ep_old + weighted_ep_new
+			local already_loop_capped = v['up_count'] >= up_count_cap
+			if already_loop_capped then
+				Bkob_Log("Entry loop evo capped:")
+				goto continue
 			end
+			local same_creature = v['now'] == next
+			if same_creature then
+				Bkob_Log("Got same creature back from evo code!")
+				capped = capped + 1
+				goto continue
+			end
+			evolution = maybe_evo
+			v['now'] = evolution.class
+			v['up_count'] = v['up_count'] + 1
+			v['ep'] = evolution.EventProgressValue
+			local weighted_ep_old = DivRound(v['weight'] * v_def.EventProgressValue, sum_weight)
+			local weighted_ep_new = DivRound(v['weight'] * evolution.EventProgressValue, sum_weight)
+			this_defs_avg = this_defs_avg - weighted_ep_old + weighted_ep_new
+			Bkob_Log('Entry is now: ',v)
+			-- this checks if the current tier of evo unit is the max option; or we have run out of evos
+			local tier_capped = (EE_tier_pivot[evolution.class] == max_tier) or (Find_evolution(evolution) == evolution.class)
+			if tier_capped then
+				Bkob_Log("This evolution is now capped!")
+				capped = capped + 1
+			end
+			::continue::
 		end
 		if not evolution then
 			up_count_cap = up_count_cap + 1
+			Bkob_Log('Did not find an evolution this loop. Can now evolve each instance this many times: ',up_count_cap)
 		end
 	end
 	return build_output(temp_class_list)
@@ -369,7 +578,7 @@ end
 
 -- robot attack upgrader
 function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit, added_units, progress_mul)
-	DebugPrint("Robot attack incoming\n")
+	Bkob_Log("Robot attack incoming\n")
 	local robot_spawn_def = SpawnDefs[robot_spawndef]
 	if not robot_spawn_def then return end
 	local dropship_spawn_def = SpawnDefs["Attack_Dropship"]
@@ -379,8 +588,6 @@ function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit, added_un
 	local instance = {}
 	instance.spawnClass, addedClassList = check_count_and_upgrade(main_unit, added_units)
 	instance.AdditionalClassList = {}
-	--print("First assault chosen", instance.spawnClass)
-	--print(addedClassList)
 	for i = 1, #addedClassList do
 		instance.AdditionalClassList[#instance.AdditionalClassList + 1] = { addedClassList[i]['id'], addedClassList[i]
 			['weight'] }
@@ -411,7 +618,7 @@ local ProduceResource = ProduceResource
 local PlaceResourcePile = PlaceResourcePile
 local params = { disable_requests = true }
 function UnitAnimal:DoProduceResourcesDiminishingReturns()
-	DebugPrint("EE animal trying to generate limited resources")
+	Bkob_Log("EE animal trying to generate limited resources")
 	if self:IsTamed() then
 		local happiness_pct = Min(self.Happiness / 1000, 100)
 		for _, res_amount in ipairs(self.ProduceResources) do
@@ -435,7 +642,7 @@ function UnitAnimal:DoProduceResourcesDiminishingReturns()
 		end
 	end
 	self:UpdateProductionTime()
-	DebugPrint("EE animal done generating resources (maybe)")
+	Bkob_Log("EE animal done generating resources (maybe)")
 end
 
 function EE_Instantiate()
@@ -456,6 +663,7 @@ function EE_Instantiate()
 	if MapVarValues['EE_hard_cap'] == nil then MapVar("EE_hard_cap",false) end
 	if MapVarValues['nest_awaken_exp_tame'] == nil then MapVar('nest_awaken_exp_tame', false) end
 	if MapVarValues['nest_awaken_tame_name'] == nil then MapVar('nest_awaken_tame_name', false) end
+	if MapVarValues['EE_debug'] == nil then MapVar('EE_debug', false) end
 end
 
 function EE_init_and_set_options(id)
@@ -466,17 +674,17 @@ end
 function EE_set_mod_options(id)
 	id = id or CurrentModId
 	if is_preg_loaded() then
-		DebugPrint("Pregnancy Mod detected!\n")
+		Bkob_Log("Pregnancy Mod detected!\n")
 		AddGameNotification('Preg_mod_conflict')
 	end
 	local options = CurrentModOptions
 	if CurrentModId ~= id or not CurrentModOptions then
 		return
 	end
-	DebugPrint("EE Mod Options applied!\n")
-	DebugPrint('Override tame cap found? ')
-	DebugPrint(options.O_Man_Cap)
-	DebugPrint("\n")
+	Bkob_Log("EE Mod Options applied!\n")
+	Bkob_Log('Override tame cap found? ')
+	Bkob_Log(options.O_Man_Cap)
+	Bkob_Log("\n")
 	--if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap", options.O_Man_Cap) end
 	if options.O_Man_Cap then
 		MapVarValues['EE_hard_cap'] = true
@@ -504,6 +712,117 @@ function EE_set_mod_options(id)
 		MapVarValues["ILU_combat_type"] = 'complex'
 	end
 	ILU_update_armor_hcs()
+end
+
+local function check_evo_counts(init,fin)
+	local found = false
+	local retry = 10
+	while not found or retry > 0 do
+		retry = retry - 1
+		local init_tier = EE_tier_pivot[init] or 1
+		local fin_tier = EE_tier_pivot[fin] or 1
+		return fin_tier - init_tier
+	end
+end
+
+function Find_evo_chain(unit_id)
+	local chains = #Presets.UnitClassChain.Default
+	for i=1, chains do
+		local chain = Presets.UnitClassChain.Default[i]
+		if chain and chain.units then
+			for _,unit in ipairs(chain.units) do
+				if unit.Unit == unit_id then return chain end
+			end
+		end
+	end
+	return false
+end
+
+-- Tests the externally (external from this code file) called functions
+-- loop through all species defined in evo chains
+-- Make sure they can all evolve properly
+-- Then loop through all base game attack species and test their evolutions at various EP levels
+function EE_QA(full_debug)
+	full_debug = full_debug or false
+	EE_Instantiate()
+	-- so logs print to screen
+	MapVarValues['EE_debug'] = full_debug
+	build_pivot_tables()
+	local species = table.keys(EE_evo_pivot)
+	for _,v in ipairs(species) do
+		Find_evolution(g_Classes[v])
+	end
+	CheatPlaceAllUnitAnimals(MapGetFirst('map','LandingCapsuleMarker'))
+	local species = {
+		-- UnitAnimals
+		'Skarabei_Manhunting','Dragonfly','Shrieker_Manhunting','Scissorhands','Juno','Glutch_Manhunting',
+		-- robot units
+		'LightHostileRobot_LVL1','HostileRobot_Scout_LVL1','HeavyHostileRobot_LVL1','Demo_1','HostileCombatQuadcopter_LVL1','HostileCrawler_LaserGun','HostileCrawler_MachineGun'
+	}
+	local EP_nums = {100, 800, 1200, 5000, 15000, 30000, 75000, 140000,300000}
+	local old_EP = EventProgress
+	for _,s in ipairs(species) do
+		local evo_chain = Find_evo_chain(s)
+		for _,no in ipairs(EP_nums) do
+			EventProgress = no
+			Bkob_Log('unit: ',s)
+			Bkob_Log('At this EP: ',no)
+			local main, addl = check_count_and_upgrade(s, {}, 100)
+			local correct_evo = evo_chain:get_correct_evo(no)
+			if correct_evo ~= main then
+				Bkob_Log("Evolved as expected, evolving x time: "..check_evo_counts(s,main))
+			else
+				print(s..' at '..no..' ep ')
+				print("Something went wrong! SpawnDef unit: "..main..' Chain Evo unit: '..correct_evo)
+			end
+		end
+	end
+	EventProgress = old_EP
+	print("Testing animal attack storybits!")
+	MapVarValues['EE_debug'] = true
+	CreateRealTimeThread(function()
+		EP_nums = {800,5000,12000,60000,140000}
+		local sleep_count = 5000
+		for _,no in ipairs(EP_nums) do
+			local spawned = false
+			local deleted = false
+			EventProgress = NA_tutorial
+			local events = {'AnimalAttack_Initial_Scissorhands','AnimalAttack_Initial_Dragonflies','AnimalAttack_Initial_Shriekers',
+				'AnimalAttack_Initial_Junos','AnimalAttack_Initial_ManhuntingGlutch','OrbitalRadio_CamelAttack','OrbitalRadio_GujoAttack',
+				'OrbitalRadio_NothAttack','OrbitalRadio_ScarabAttack','OrbitalRadio_ShoguAttack','OrbitalRadio_TecatliAttack',
+				'OrbitalRadio_UlfenAttack','RobotAttack_Single_EarlyGame','RobotAttack_Single_MidGame','RobotAttack_Single_LateGame'
+			}
+			for _,sb in ipairs(events) do
+				Sleep(sleep_count * 2)
+				EventProgress = no
+				local evo_chain = Find_evo_chain('Glutch_Manhunting')
+				local correct_evo = evo_chain:get_correct_evo(no)
+				local main, addl = check_count_and_upgrade('Glutch_Manhunting', {}, 100)
+				while not spawned and not deleted do
+					Sleep(sleep_count)
+					if not spawned then
+						EventProgress = no
+						ForceActivateStoryBit(sb)
+						spawned = true
+						Sleep(sleep_count)
+					elseif spawned then
+						print("Already spawned this sb")
+					end
+					if spawned and not deleted then
+						local invaders = MapCount("map", "UnitInvader")
+						if invaders > 0 then
+							print("There are invaders! Killing em")
+							MapForEach("map","UnitInvader",function(unit) unit:CheatDelete() end)
+							deleted = true
+						end
+					end
+				end
+				print("Onto the next SB")
+				spawned = false
+				deleted = false
+			end
+		end
+	end)
 end
 
 OnMsg.ApplyModOptions = EE_init_and_set_options

@@ -1,11 +1,12 @@
-UndefineClass('dog_t4')
-DefineClass.dog_t4 = {
+UndefineClass('dog_T4')
+DefineClass.dog_T4 = {
 	__parents = { "DogBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	comment = "T4",
 	object_class = "DogBase",
-	SpeciesGroup = "species_dogs",
+	SpeciesGroup = "dogs",
 	RoamRadius = 15000,
 	RoamIntervalMin = 40000,
 	RoamIntervalMax = 120000,
@@ -41,11 +42,11 @@ DefineClass.dog_t4 = {
 	ObservationDistanceMax = 18000,
 	ForcedApproachPlanning = true,
 	Icon = "UI/Icons/Resources/res_dog_great_dane",
-	DisplayName = T(314875810082, --[[ModItemUnitAnimalCompositeDef dog_t4 DisplayName]] "Glane"),
-	DisplayNamePl = T(892651044937, --[[ModItemUnitAnimalCompositeDef dog_t4 DisplayNamePl]] "Glanes"),
-	DisplayNameUnknown = T(226516325385, --[[ModItemUnitAnimalCompositeDef dog_t4 DisplayNameUnknown]] "Unknown Dog Evolution"),
-	DisplayNameUnknownPL = T(418726405637, --[[ModItemUnitAnimalCompositeDef dog_t4 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-	Description = T(385635065870, --[[ModItemUnitAnimalCompositeDef dog_t4 Description]] "With a bite that causes localized hypothermia and a desire to help our other enemies... This once-friend requires prioritization.  Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+	DisplayName = T(564216556418, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayName]] "Glane"),
+	DisplayNamePl = T(691817128716, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNamePl]] "Glanes"),
+	DisplayNameUnknown = T(513515020593, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknown]] "Unknown Dog Evolution"),
+	DisplayNameUnknownPL = T(436729618055, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+	Description = T(944763298399, --[[ModItemUnitAnimalCompositeDef dog_T4 Description]] "With a bite that causes localized hypothermia and a desire to help our other enemies... This once-friend requires prioritization.  Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
 	BaseMaxHealth = 400000,
 	FoodResources = {
 		"FoodAnimalCarnivore",
@@ -112,10 +113,10 @@ DefineClass.dog_t4 = {
 	BondingChance = 20,
 	ReproductionType = "two sexes",
 	ReproductionGroup = "Dogs",
-	DailyPregnancyChance = 80,
+	DailyPregnancyChance = 75,
 	PregnancyDuration = 1920000,
 	GrowDuration = 1920000,
-	NewbornClass = "dog_t5",
+	NewbornClass = "dog_T5",
 	MinGrownScale = 110,
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,

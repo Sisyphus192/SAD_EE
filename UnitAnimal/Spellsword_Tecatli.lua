@@ -1,0 +1,85 @@
+UndefineClass('Spellsword_Tecatli')
+DefineClass.Spellsword_Tecatli = {
+	__parents = { "TecatliBase" },
+	__generated_by_class = "ModItemUnitAnimalCompositeDef",
+
+
+	comment = "T5",
+	object_class = "TecatliBase",
+	BypassTrapsChance = 90,
+	composite_part_target = "Spellsword_Tecatli",
+	composite_part_groups = {
+		"Tecatli",
+	},
+	EventProgressValue = 1400,
+	SpawnDefWeight = 60,
+	CombatGroup = "Insects",
+	CombatUseCover = true,
+	HitNegationChance = {
+		blunt = 30,
+		energy = 80,
+		gas = 75,
+		pacify = 80,
+		piercing = 40,
+	},
+	HitNegationChance_blunt = 30,
+	HitNegationChance_piercing = 40,
+	HitNegationChance_energy = 80,
+	HitNegationChance_gas = 75,
+	HitNegationChance_pacify = 80,
+	HumanThreat = true,
+	FieldResearchTech = "Field_Tecatli_T4",
+	Icon = "UI/Icons/Resources/res_tecatli",
+	DisplayName = T(604909645287, --[[ModItemUnitAnimalCompositeDef Spellsword_Tecatli DisplayName]] "Spellsword Tecatli"),
+	DisplayNamePl = T(853344926572, --[[ModItemUnitAnimalCompositeDef Spellsword_Tecatli DisplayNamePl]] "Spellsword Tecatli"),
+	DisplayNameUnknown = T(154453256137, --[[ModItemUnitAnimalCompositeDef Spellsword_Tecatli DisplayNameUnknown]] "Tecatli Final Form?"),
+	DisplayNameUnknownPL = T(473628517685, --[[ModItemUnitAnimalCompositeDef Spellsword_Tecatli DisplayNameUnknownPL]] "Tecatli Final Form?"),
+	Description = T(285841718195, --[[ModItemUnitAnimalCompositeDef Spellsword_Tecatli Description]] "When this creature hits you, good luck ever feeling the same! Deals <color TextNegative>Energy</color> and <color TextPositive>Gas</color> damage."),
+	FoodResources = {
+		"FoodAnimalCarnivore",
+		"Slop",
+		"FoodAnimalHerbivore",
+	},
+	DailyEatingAmount = 5000,
+	Diet = "Omnivore",
+	EatingDuration = 4000,
+	ButcherResources = {
+		PlaceObj('ButcherResAmount', {
+			'resource', "RawMeat",
+			'min_amount', 20000,
+			'max_amount', 30000,
+		}),
+	},
+	CmdProduceResources = function (animal)
+		return animal:DoProduceResourcesDiminishingReturns()
+	end,
+	AnimalPerks = {
+		"DraftableAnimal",
+		"AP_StatDamage",
+		"AP_Fortified",
+	},
+	attack_weapon = "tecatli_spellsword",
+	anim_idle = {
+		"idle",
+	},
+	anim_idle_playful = {
+		"idle_Playfull",
+		"idle_Playfull2",
+	},
+	Tameable = true,
+	TamingMinimumSkill = 9,
+	TamingChance = 25,
+	TamingAggressiveChance = 50,
+	TamingDistance = 20000,
+	TamedLifetimeMin = 92160000,
+	TamedLifetimeMax = 138240000,
+	CombatSkillInitial = range(5, 6),
+	BondingChance = 10,
+	ReproductionType = "two sexes",
+	ReproductionGroup = "Tecatli",
+	DailyPregnancyChance = 60,
+	PregnancyDuration = 2880000,
+	GrowDuration = 2880000,
+	NewbornClass = "Spellsword_Tecatli",
+}
+

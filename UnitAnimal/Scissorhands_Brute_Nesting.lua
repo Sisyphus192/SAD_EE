@@ -33,7 +33,7 @@ DefineClass.Scissorhands_Brute_Nesting = {
 		"DraftableAnimal",
 	},
 	attack_weapon = "ScissorhandsMelee_Brute",
-	NewbornClass = "scissorhands_t3",
+	NewbornClass = "Scissorhands_T3",
 	MinNewbornScale = 60,
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,

@@ -1,5 +1,5 @@
-UndefineClass('scarab_t4')
-DefineClass.scarab_t4 = {
+UndefineClass('Scarab_T4')
+DefineClass.Scarab_T4 = {
 	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -48,11 +48,11 @@ DefineClass.scarab_t4 = {
 	ObservationDistanceMax = 1500,
 	can_lead_formation = false,
 	Icon = "UI/Icons/Resources/res_skarabei",
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef scarab_t4 DisplayName]] "Mutated PEx Skarabei Brute"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scarab_t4 DisplayNamePl]] "Mutated PEx Skarabei Brute"),
-	DisplayNameUnknown = T(647760505585, --[[ModItemUnitAnimalCompositeDef scarab_t4 DisplayNameUnknown]] "Unknown Skarabei Evolution"),
-	DisplayNameUnknownPL = T(286154528403, --[[ModItemUnitAnimalCompositeDef scarab_t4 DisplayNameUnknownPL]] "Unknown Skarabei Evolution"),
-	Description = T(669250918824, --[[ModItemUnitAnimalCompositeDef scarab_t4 Description]] "Never thought I would be scared of a single Skarabei, but here we are. Carapace extremely resistant to pierce and energy attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Scarab_T4 DisplayName]] "Mutated PEx Skarabei Brute"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Scarab_T4 DisplayNamePl]] "Mutated PEx Skarabei Brute"),
+	DisplayNameUnknown = T(647760505585, --[[ModItemUnitAnimalCompositeDef Scarab_T4 DisplayNameUnknown]] "Unknown Skarabei Evolution"),
+	DisplayNameUnknownPL = T(286154528403, --[[ModItemUnitAnimalCompositeDef Scarab_T4 DisplayNameUnknownPL]] "Unknown Skarabei Evolution"),
+	Description = T(669250918824, --[[ModItemUnitAnimalCompositeDef Scarab_T4 Description]] "Never thought I would be scared of a single Skarabei, but here we are. Carapace extremely resistant to pierce and energy attacks.  Deals <color TextButton>Blunt</color> and <color TextPositive>Gas</color> damage."),
 	fx_actor_base_class = "Skarabei",
 	BaseMaxHealth = 500000,
 	FoodResources = {

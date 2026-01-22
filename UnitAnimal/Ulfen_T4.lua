@@ -1,5 +1,5 @@
-UndefineClass('Ulfen_t4')
-DefineClass.Ulfen_t4 = {
+UndefineClass('Ulfen_T4')
+DefineClass.Ulfen_T4 = {
 	__parents = { "UlfenBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -44,11 +44,11 @@ DefineClass.Ulfen_t4 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_ulfen",
-	DisplayName = T(436447323614, --[[ModItemUnitAnimalCompositeDef Ulfen_t4 DisplayName]] "GoreBeast"),
-	DisplayNamePl = T(822350190957, --[[ModItemUnitAnimalCompositeDef Ulfen_t4 DisplayNamePl]] "GoreBeasts"),
-	DisplayNameUnknown = T(287211669895, --[[ModItemUnitAnimalCompositeDef Ulfen_t4 DisplayNameUnknown]] "Unknown Ulfen Evolution"),
-	DisplayNameUnknownPL = T(156965739734, --[[ModItemUnitAnimalCompositeDef Ulfen_t4 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
-	Description = T(258615234367, --[[ModItemUnitAnimalCompositeDef Ulfen_t4 Description]] "If not made of flesh, bone, and sinew; it would be considered a weapon of war! An aggressive evolution of the Ulfen."),
+	DisplayName = T(436447323614, --[[ModItemUnitAnimalCompositeDef Ulfen_T4 DisplayName]] "GoreBeast"),
+	DisplayNamePl = T(822350190957, --[[ModItemUnitAnimalCompositeDef Ulfen_T4 DisplayNamePl]] "GoreBeasts"),
+	DisplayNameUnknown = T(287211669895, --[[ModItemUnitAnimalCompositeDef Ulfen_T4 DisplayNameUnknown]] "Unknown Ulfen Evolution"),
+	DisplayNameUnknownPL = T(156965739734, --[[ModItemUnitAnimalCompositeDef Ulfen_T4 DisplayNameUnknownPL]] "Unknown Ulfen Evolutions"),
+	Description = T(258615234367, --[[ModItemUnitAnimalCompositeDef Ulfen_T4 Description]] "If not made of flesh, bone, and sinew; it would be considered a weapon of war! An aggressive evolution of the Ulfen."),
 	BaseMaxHealth = 1400000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
@@ -139,7 +139,7 @@ DefineClass.Ulfen_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2000000,
 	GrowDuration = 2000000,
-	NewbornClass = "Ulfen_t5",
+	NewbornClass = "Ulfen_T5",
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
 	FieldVisibilityCold = 30000,

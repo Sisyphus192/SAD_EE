@@ -1,5 +1,5 @@
-UndefineClass('Draka_t5')
-DefineClass.Draka_t5 = {
+UndefineClass('Draka_T5')
+DefineClass.Draka_T5 = {
 	__parents = { "DrakaBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -52,9 +52,9 @@ DefineClass.Draka_t5 = {
 	ObservationDistanceMin = 15000,
 	ObservationDistanceMax = 20000,
 	Icon = "UI/Icons/Resources/res_draka",
-	DisplayName = T(387009331496, --[[ModItemUnitAnimalCompositeDef Draka_t5 DisplayName]] "DrikaDrekaDrakka"),
-	DisplayNamePl = T(518841717627, --[[ModItemUnitAnimalCompositeDef Draka_t5 DisplayNamePl]] "DrikaDrekaDrakkas"),
-	Description = T(222805768873, --[[ModItemUnitAnimalCompositeDef Draka_t5 Description]] "Aggressive Evolution of the Drakka. More stability means this creature can emit louder and louder sonic booms."),
+	DisplayName = T(387009331496, --[[ModItemUnitAnimalCompositeDef Draka_T5 DisplayName]] "DrikaDrekaDrakka"),
+	DisplayNamePl = T(518841717627, --[[ModItemUnitAnimalCompositeDef Draka_T5 DisplayNamePl]] "DrikaDrekaDrakkas"),
+	Description = T(222805768873, --[[ModItemUnitAnimalCompositeDef Draka_T5 Description]] "Aggressive Evolution of the Drakka. More stability means this creature can emit louder and louder sonic booms."),
 	BaseMaxHealth = 1500000,
 	FoodResources = {
 		"FoodAnimalHerbivore",

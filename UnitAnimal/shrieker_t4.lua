@@ -1,5 +1,5 @@
-UndefineClass('shrieker_t4')
-DefineClass.shrieker_t4 = {
+UndefineClass('Shrieker_T4')
+DefineClass.Shrieker_T4 = {
 	__parents = { "UnitNesting", "Shrieker_Manhunting", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -26,11 +26,11 @@ DefineClass.shrieker_t4 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Shrieker_T2",
 	lead_priority = 6,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef shrieker_t4 DisplayName]] "Plague Sniper Shrieker"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef shrieker_t4 DisplayNamePl]] "Plague Sniper Shrieker"),
-	DisplayNameUnknown = T(632905210618, --[[ModItemUnitAnimalCompositeDef shrieker_t4 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
-	DisplayNameUnknownPL = T(256115533630, --[[ModItemUnitAnimalCompositeDef shrieker_t4 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
-	Description = T(197605412242, --[[ModItemUnitAnimalCompositeDef shrieker_t4 Description]] "Attacks that slow, and longer range than even our upgraded railguns. All while their durability has increased.... Thankfully still weak to energy and gas weapons. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Shrieker_T4 DisplayName]] "Plague Sniper Shrieker"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Shrieker_T4 DisplayNamePl]] "Plague Sniper Shrieker"),
+	DisplayNameUnknown = T(632905210618, --[[ModItemUnitAnimalCompositeDef Shrieker_T4 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
+	DisplayNameUnknownPL = T(256115533630, --[[ModItemUnitAnimalCompositeDef Shrieker_T4 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
+	Description = T(197605412242, --[[ModItemUnitAnimalCompositeDef Shrieker_T4 Description]] "Attacks that slow, and longer range than even our upgraded railguns. All while their durability has increased.... Thankfully still weak to energy and gas weapons. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 600000,
 	DailyEatingAmount = 3000,
 	ButcherResources = {
@@ -47,10 +47,6 @@ DefineClass.shrieker_t4 = {
 		}),
 	},
 	ProduceResInterval = 2400000,
-	CmdProduceResources = function (animal)
-		if not animal:IsTamed() then return animal:UpdateProductionTime() end
-		return animal:DoProduceResourcesDiminishingReturns()
-	end,
 	AnimalPerks = {
 		"StrongAnimal",
 		"SmartPredator",
@@ -61,7 +57,7 @@ DefineClass.shrieker_t4 = {
 	DailyPregnancyChance = 80,
 	PregnancyDuration = 2880000,
 	GrowDuration = 2880000,
-	NewbornClass = "shrieker_t5",
+	NewbornClass = "Shrieker_T5",
 	UnitAreaEffect = true,
 	UnitNesting = true,
 	UnitPerkFrenzy = true,

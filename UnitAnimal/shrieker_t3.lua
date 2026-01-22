@@ -1,5 +1,5 @@
-UndefineClass('shrieker_t3')
-DefineClass.shrieker_t3 = {
+UndefineClass('Shrieker_T3')
+DefineClass.Shrieker_T3 = {
 	__parents = { "UnitNesting", "Shrieker_Manhunting", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -27,11 +27,11 @@ DefineClass.shrieker_t3 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Shrieker_T2",
 	lead_priority = 6,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef shrieker_t3 DisplayName]] "Entropic Shrieker"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef shrieker_t3 DisplayNamePl]] "Entropic Shrieker"),
-	DisplayNameUnknown = T(507956053632, --[[ModItemUnitAnimalCompositeDef shrieker_t3 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
-	DisplayNameUnknownPL = T(458576588964, --[[ModItemUnitAnimalCompositeDef shrieker_t3 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
-	Description = T(322528609672, --[[ModItemUnitAnimalCompositeDef shrieker_t3 Description]] "Shrieker's who have evolved long barbed spikes. Resistant to piercing attacks, the barbs fully pierce and lodge in nearby terrain, lowering movement speed. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Shrieker_T3 DisplayName]] "Entropic Shrieker"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Shrieker_T3 DisplayNamePl]] "Entropic Shrieker"),
+	DisplayNameUnknown = T(507956053632, --[[ModItemUnitAnimalCompositeDef Shrieker_T3 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
+	DisplayNameUnknownPL = T(458576588964, --[[ModItemUnitAnimalCompositeDef Shrieker_T3 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
+	Description = T(322528609672, --[[ModItemUnitAnimalCompositeDef Shrieker_T3 Description]] "Shrieker's who have evolved long barbed spikes. Resistant to piercing attacks, the barbs fully pierce and lodge in nearby terrain, lowering movement speed. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 400000,
 	DailyEatingAmount = 2000,
 	ButcherResources = {
@@ -48,10 +48,6 @@ DefineClass.shrieker_t3 = {
 		}),
 	},
 	ProduceResInterval = 2400000,
-	CmdProduceResources = function (animal)
-		if not animal:IsTamed() then return animal:UpdateProductionTime() end
-		return animal:DoProduceResourcesDiminishingReturns()
-	end,
 	AnimalPerks = {
 		"StrongAnimal",
 		"BloodFrenzy",
@@ -64,7 +60,7 @@ DefineClass.shrieker_t3 = {
 	DailyPregnancyChance = 70,
 	PregnancyDuration = 3840000,
 	GrowDuration = 3840000,
-	NewbornClass = "shrieker_t4",
+	NewbornClass = "Shrieker_T4",
 	UnitAreaEffect = true,
 	UnitNesting = true,
 	UnitPerkFrenzy = true,

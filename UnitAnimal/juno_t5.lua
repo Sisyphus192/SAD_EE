@@ -1,5 +1,5 @@
-UndefineClass('juno_t5')
-DefineClass.juno_t5 = {
+UndefineClass('Juno_T5')
+DefineClass.Juno_T5 = {
 	__parents = { "Juno", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -25,11 +25,11 @@ DefineClass.juno_t5 = {
 	FieldResearchTech = "Field_Juno_T4",
 	ForcedApproachPlanning = true,
 	lead_priority = 6,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef juno_t5 DisplayName]] "Too-Angry-Too-Die Juno"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef juno_t5 DisplayNamePl]] "Too-Angry-Too-Die Juno"),
-	DisplayNameUnknown = T(434314719262, --[[ModItemUnitAnimalCompositeDef juno_t5 DisplayNameUnknown]] "Unknown Juno Evolution"),
-	DisplayNameUnknownPL = T(397893098380, --[[ModItemUnitAnimalCompositeDef juno_t5 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
-	Description = T(967813562361, --[[ModItemUnitAnimalCompositeDef juno_t5 Description]] "Impossible to be knocked unconscious or pacified, our only option is to cause enough damage to render their bodies impossible to move. Deals <color TextButton>Blunt</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Juno_T5 DisplayName]] "Too-Angry-Too-Die Juno"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Juno_T5 DisplayNamePl]] "Too-Angry-Too-Die Juno"),
+	DisplayNameUnknown = T(434314719262, --[[ModItemUnitAnimalCompositeDef Juno_T5 DisplayNameUnknown]] "Unknown Juno Evolution"),
+	DisplayNameUnknownPL = T(397893098380, --[[ModItemUnitAnimalCompositeDef Juno_T5 DisplayNameUnknownPL]] "Unknown Juno Evolution"),
+	Description = T(967813562361, --[[ModItemUnitAnimalCompositeDef Juno_T5 Description]] "Impossible to be knocked unconscious or pacified, our only option is to cause enough damage to render their bodies impossible to move. Deals <color TextButton>Blunt</color> damage."),
 	BaseMaxHealth = 1800000,
 	DailyEatingAmount = 4000,
 	ButcherResources = {
@@ -60,7 +60,7 @@ DefineClass.juno_t5 = {
 	DailyPregnancyChance = 90,
 	PregnancyDuration = 1920000,
 	GrowDuration = 1920000,
-	NewbornClass = "juno_t6",
+	NewbornClass = "Juno_T6",
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

@@ -1,5 +1,5 @@
-UndefineClass('scissorhands_t5')
-DefineClass.scissorhands_t5 = {
+UndefineClass('Scissorhands_T5')
+DefineClass.Scissorhands_T5 = {
 	__parents = { "Scissorhands", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -25,11 +25,11 @@ DefineClass.scissorhands_t5 = {
 	RobotThreat = true,
 	FieldResearchTech = "Field_Scissorhands_T4",
 	lead_priority = 12,
-	DisplayName = T(--[[ModItemUnitAnimalCompositeDef scissorhands_t5 DisplayName]] "Rage Focused Scissorhands"),
-	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef scissorhands_t5 DisplayNamePl]] "Rage Focused Scissorhands"),
-	DisplayNameUnknown = T(880517562689, --[[ModItemUnitAnimalCompositeDef scissorhands_t5 DisplayNameUnknown]] "Scissorhands Final Form?"),
-	DisplayNameUnknownPL = T(561720327903, --[[ModItemUnitAnimalCompositeDef scissorhands_t5 DisplayNameUnknownPL]] "Scissorhands Final Form?"),
-	Description = T(992494208410, --[[ModItemUnitAnimalCompositeDef scissorhands_t5 Description]] "The blades have been honed to near perfection. If our armour does not block the attack; it will surely cut through our body like a hot knife through butter. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
+	DisplayName = T(--[[ModItemUnitAnimalCompositeDef Scissorhands_T5 DisplayName]] "Rage Focused Scissorhands"),
+	DisplayNamePl = T(--[[ModItemUnitAnimalCompositeDef Scissorhands_T5 DisplayNamePl]] "Rage Focused Scissorhands"),
+	DisplayNameUnknown = T(880517562689, --[[ModItemUnitAnimalCompositeDef Scissorhands_T5 DisplayNameUnknown]] "Scissorhands Final Form?"),
+	DisplayNameUnknownPL = T(561720327903, --[[ModItemUnitAnimalCompositeDef Scissorhands_T5 DisplayNameUnknownPL]] "Scissorhands Final Form?"),
+	Description = T(992494208410, --[[ModItemUnitAnimalCompositeDef Scissorhands_T5 Description]] "The blades have been honed to near perfection. If our armour does not block the attack; it will surely cut through our body like a hot knife through butter. Able to deftly dodge blunt force, and dissapates any energy attacks with ease. Deals <color TextSubtitleBlue>Piercing</color> damage."),
 	BaseMaxHealth = 1300000,
 	DailyEatingAmount = 5000,
 	ButcherResources = {

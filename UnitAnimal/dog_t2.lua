@@ -1,5 +1,5 @@
-UndefineClass('dog_t2')
-DefineClass.dog_t2 = {
+UndefineClass('Dog_T2')
+DefineClass.Dog_T2 = {
 	__parents = { "DogBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
@@ -40,11 +40,11 @@ DefineClass.dog_t2 = {
 	ObservationDistanceMin = 12000,
 	ObservationDistanceMax = 18000,
 	Icon = "UI/Icons/Resources/res_dog_great_dane",
-	DisplayName = T(553816104696, --[[ModItemUnitAnimalCompositeDef dog_t2 DisplayName]] "Cold Dog"),
-	DisplayNamePl = T(467328078820, --[[ModItemUnitAnimalCompositeDef dog_t2 DisplayNamePl]] "Cold Dog"),
-	DisplayNameUnknown = T(156975547716, --[[ModItemUnitAnimalCompositeDef dog_t2 DisplayNameUnknown]] "Unknown Dog Evolution"),
-	DisplayNameUnknownPL = T(170552264066, --[[ModItemUnitAnimalCompositeDef dog_t2 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-	Description = T(200804568501, --[[ModItemUnitAnimalCompositeDef dog_t2 Description]] "A more aggressive and larger dog. This special species is usually only seen with other species. Unknown the implications or reasons... Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+	DisplayName = T(553816104696, --[[ModItemUnitAnimalCompositeDef Dog_T2 DisplayName]] "Cold Dog"),
+	DisplayNamePl = T(467328078820, --[[ModItemUnitAnimalCompositeDef Dog_T2 DisplayNamePl]] "Cold Dog"),
+	DisplayNameUnknown = T(156975547716, --[[ModItemUnitAnimalCompositeDef Dog_T2 DisplayNameUnknown]] "Unknown Dog Evolution"),
+	DisplayNameUnknownPL = T(170552264066, --[[ModItemUnitAnimalCompositeDef Dog_T2 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+	Description = T(200804568501, --[[ModItemUnitAnimalCompositeDef Dog_T2 Description]] "A more aggressive and larger dog. This special species is usually only seen with other species. Unknown the implications or reasons... Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
 	FoodResources = {
 		"FoodAnimalCarnivore",
 		"Slop",
@@ -113,7 +113,7 @@ DefineClass.dog_t2 = {
 	DailyPregnancyChance = 60,
 	PregnancyDuration = 4800000,
 	GrowDuration = 4800000,
-	NewbornClass = "dog_t3",
+	NewbornClass = "dog_T3",
 	MinGrownScale = 110,
 	FieldVisibilityCold = 0,
 	FieldVisibilityWarm = 0,
