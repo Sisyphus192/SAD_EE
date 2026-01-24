@@ -1,11 +1,12 @@
 UndefineClass('Scissorhands_Brute_Nesting')
 DefineClass.Scissorhands_Brute_Nesting = {
-	__parents = { "UnitNesting", "Scissorhands" },
+	__parents = { "Scissorhands" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
 	comment = "base unit, T2",
 	object_class = "Scissorhands",
+	CanBeNestGuardian = "always",
 	composite_part_target = "Scissorhands_Brute",
 	EventProgressValue = 180,
 	lead_priority = 12,
@@ -38,7 +39,5 @@ DefineClass.Scissorhands_Brute_Nesting = {
 	MaxNewbornScale = 60,
 	MinGrownScale = 115,
 	MaxGrownScale = 120,
-	UnitNesting = true,
-	CanBeNestGuardian = "always",
 }
 

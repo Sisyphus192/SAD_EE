@@ -1,6 +1,6 @@
 UndefineClass('Scissorhands')
 DefineClass.Scissorhands = {
-	__parents = { "GroundAnimal" },
+	__parents = { "UnitNesting", "GroundAnimal" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -111,5 +111,6 @@ DefineClass.Scissorhands = {
 	NewbornClass = "Scissorhands_Brute",
 	MinGrownScale = 100,
 	MaxGrownScale = 110,
+	UnitNesting = true,
 }
 

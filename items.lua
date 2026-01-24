@@ -102,6 +102,12 @@ PlaceObj('ModItemFolder', {
 		'DisplayName', "Junos",
 		'DefaultValue', 10,
 	}),
+	PlaceObj('ModItemOptionNumber', {
+		'name', "preg_evo_chance",
+		'DisplayName', "Pregnancy Evolve Chance",
+		'DefaultValue', 20,
+		'StepSize', 5,
+	}),
 	PlaceObj('ModItemConstDef', {
 		group = "Gameplay",
 		id = "MaxAttackDropshipsCount",
@@ -5505,12 +5511,6 @@ PlaceObj('ModItemFolder', {
 			ManipulationModifier = 30000,
 			ManipulationModifierOpt = 30000,
 			MistreatmentChance = 15,
-			MistreatmentCond = {
-				PlaceObj('HealthConditionOption', {
-					effect = "Hypothermia_1_Mild",
-					param_bindings = false,
-				}),
-			},
 			PainModifier = 10000,
 			TreatmentCond = {
 				PlaceObj('HealthConditionOption', {
@@ -5870,7 +5870,7 @@ PlaceObj('ModItemFolder', {
 				local spawn_def = SpawnDefs["BabySpawn"]
 				if spawn_def then
 					local instance = {}
-					instance.SpawnClass = owner.NewbornClass or owner.class
+					instance.SpawnClass = find_newborn_class(owner)--owner.NewbornClass or owner.class
 					spawn_def = spawn_def:CreateInstance(instance)
 					spawn_def:ActivateSpawn(owner)
 				end
@@ -6391,6 +6391,38 @@ PlaceObj('ModItemFolder', {
 			Type = "Buff",
 			id = "tamed_constipated",
 			save_in = "Mod/rtw6tLg",
+		}),
+		PlaceObj('ModItemHealthCondition', {
+			AffectableBodyParts = {
+				PlaceObj('HealthConditionBodyParts', {
+					BodyPart = "All",
+					BodyPartGroup = "WholeBody",
+					param_bindings = false,
+				}),
+			},
+			ConsciousnessModifier = -5000,
+			DisplayName = T(862663133333, --[[ModItemHealthCondition Hypothermia_1_Mild DisplayName]] "Hypothermia (mild)"),
+			FloatingTextType = "Display name",
+			ManipulationModifier = -5000,
+			Threshold = -1000,
+			Type = "Disease",
+			group = "Temperature",
+			id = "Hypothermia_1_Mild",
+			save_in = "Mod/rtw6tLg",
+			unit_reactions = {
+				PlaceObj('UnitReaction', {
+					Event = "OnObjUpdate",
+					Handler = function (self, target, time, update_interval)
+						if not IsKindOf(target,'UnitTemperature') then
+							self:RemoveFromOwner(target)
+						end
+						if target:GetBodyTemperature() > target.TemperatureLow then
+							self:RemoveFromOwner(target)
+						end
+					end,
+					param_bindings = false,
+				}),
+			},
 		}),
 		}),
 	PlaceObj('ModItemFolder', {
@@ -18540,6 +18572,7 @@ PlaceObj('ModItemFolder', {
 			'Id', "Scissorhands_Brute_Nesting",
 			'comment', "base unit, T2",
 			'object_class', "Scissorhands",
+			'CanBeNestGuardian', "always",
 			'composite_part_target', "Scissorhands_Brute",
 			'EventProgressValue', 180,
 			'lead_priority', 12,
@@ -18572,8 +18605,6 @@ PlaceObj('ModItemFolder', {
 			'MaxNewbornScale', 60,
 			'MinGrownScale', 115,
 			'MaxGrownScale', 120,
-			'UnitNesting', true,
-			'CanBeNestGuardian', "always",
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "Scissorhands",
@@ -18685,6 +18716,7 @@ PlaceObj('ModItemFolder', {
 			'NewbornClass', "Scissorhands_Brute",
 			'MinGrownScale', 100,
 			'MaxGrownScale', 110,
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "Scissorhands",

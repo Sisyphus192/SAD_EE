@@ -47,6 +47,12 @@ function SavegameFixups.ILU_Decom_fixes()
 	rebuild_animals()
 end
 
+function SavegameFixups.mass_animal_clean()
+	Bkob_Log("Cleaning the map of mass units, and units outside the map!")
+	clean_outside_map()
+	rebuild_animals()
+end
+
 function SavegameFixups.ILU_id_change_fix()
 	local to_decom = {
 		GujoT5="Gujo_T5",GujoT4="Gujo_T4",GujoT3="Gujo_T3",GujoT2="Gujo_T2",
@@ -67,6 +73,57 @@ function SavegameFixups.ILU_id_change_fix()
 			creature:ChangeClass(decom_check)
 		end
 	end
+end
+
+function clean_outside_map()
+	MapForEach(true, "Unit", function(unit, play_box)
+		local check1, check2, check3
+		check1 = play_box:Dist2(unit:GetPosXYZ()) == 0
+		check2 = unit:CanBeOutsideMap()
+		check3 = IsValid(unit)
+		-- inside helper functions def of map
+		if (check1 and not check2) and check3 then return	end
+		print("Deleting unit!")
+		print(check1)
+		print(check2)
+		print(check3)
+		unit:CheatDelete()
+	end, GetPlayBox())
+end
+
+
+function clean_mass_animals()
+	local chains = #Presets.UnitClassChain.Default
+	for i=1, chains do
+		local units_check = {}
+		local chain = Presets.UnitClassChain.Default[i]
+		if chain and chain.units then
+			for _,unit in ipairs(chain.units) do
+				units_check[unit.Unit] = true
+			end
+			local count = MapCount(true,'UnitAnimal',function(unit,ids)
+				if ids[unit.class] then
+					return true
+				else
+					return false
+				end
+			end,units_check)
+			if count > 500 then
+				Bkob_Log("Need to delete units in this chain because there are over 500 on the map!",chain.id)
+				MapForEach(true,'UnitAnimal',function(unit,ids)
+					if ids[unit.class] and not unit.is_tamed then
+						unit:CheatDelete()
+					end
+				end,units_check)
+			end
+		end
+	end
+end
+
+-- lag avoider......
+function OnMsg.NewDayStarted(year, day)
+	clean_outside_map()
+	clean_mass_animals()
 end
 
 local function add_perks_to_animals(type)
@@ -132,44 +189,40 @@ function build_evo_pivot()
 		local chain = Presets.UnitClassChain.Default[i]
 		if chain and chain.units then
 			local evo_chain_list = chain.units
-			Bkob_Log("evo pivot entry: ",evo_chain_list)
 			local max_t = chain:get_max_tier()
-			Bkob_Log("Max tier of chain: ",max_t)
-			for _,unit in ipairs(evo_chain_list) do
-				local unit_class = unit.Unit
-				Bkob_Log("Unit: ",unit_class)
-				local evo_tier = unit.Tier or 1
-				Bkob_Log("Tier: ",evo_tier)
+			for _,v in ipairs(evo_chain_list) do
+				local unit_class = v.Unit
+				local evo_tier = v.Tier or 1
 				if evo_tier + 1 <= max_t then
 					local evos = chain:get_units_by_tier(evo_tier + 1)
-					Bkob_Log("evos of this unit: ",evos)
 					EE_evo_pivot[unit_class] = evos
 				else
-					Bkob_Log("No evos for unit")
 					EE_evo_pivot[unit_class] = {}
 				end
 			end
 		end
 	end
+	Bkob_Log("Done building evo pivot table")
 end
 
 --Input: tier_pivot[unit_id] output: tier number
 function build_tier_pivot()
-	Bkob_Log("Building tier pivot table ")
+	Bkob_Log("Building tier tier pivot table ")
 	EE_tier_pivot = {}
 	local chains = #Presets.UnitClassChain.Default
 	for i=1, chains do
 		local chain = Presets.UnitClassChain.Default[i]
 		if chain and chain.units then
-			Bkob_Log("Reviewing: ",chain.units)
+			--Bkob_Log("Reviewing: ",chain.units)
 			for _,unit in ipairs(chain.units) do
 				local unit_class = unit.Unit
 				local tier = unit.Tier or 1
-				Bkob_Log("Adding this unit to pivot table ",unit_class)
+				--Bkob_Log("Adding this unit to tier pivot table ",unit_class)
 				EE_tier_pivot[unit_class] = tier
 			end
 		end
 	end
+	Bkob_Log("Done building tier pivot table")
 end
 
 function print_pivots()
@@ -646,6 +699,7 @@ function UnitAnimal:DoProduceResourcesDiminishingReturns()
 end
 
 function EE_Instantiate()
+	build_pivot_tables()
 	if MapVarValues['ILU_max'] == nil then MapVar('ILU_max', 150) end
 	if MapVarValues['ILU_Tier_Max'] == nil then MapVar('ILU_Tier_Max', 6) end
 	if MapVarValues['ILU_combat_type'] == nil then MapVar('ILU_combat_type',"complex") end
@@ -664,6 +718,7 @@ function EE_Instantiate()
 	if MapVarValues['nest_awaken_exp_tame'] == nil then MapVar('nest_awaken_exp_tame', false) end
 	if MapVarValues['nest_awaken_tame_name'] == nil then MapVar('nest_awaken_tame_name', false) end
 	if MapVarValues['EE_debug'] == nil then MapVar('EE_debug', false) end
+	if MapVarValues['preg_evo_chance'] == nil then MapVar('preg_evo_chance', 20) end
 end
 
 function EE_init_and_set_options(id)
@@ -704,6 +759,7 @@ function EE_set_mod_options(id)
 	end
 	MapVarValues["ILU_max"] = options.O_ILU_max or 150
 	MapVarValues["ILU_Tier_Max"] = options.O_ILU_max_tier or 6
+	MapVarValues["preg_evo_chance"] = options.preg_evo_chance or 20
 	if options.O_simple_combat == true then
 		MapVarValues["ILU_combat_type"] = 'simple'
 	elseif options.O_simple_combat == false then
@@ -738,6 +794,16 @@ function Find_evo_chain(unit_id)
 	return false
 end
 
+function find_newborn_class(unit)
+	local evo = unit.NewbornClass
+	local chance = MapVarValues['preg_evo_chance'] or 100
+	if evo and AsyncRand(100) < chance then
+		return evo
+	else
+		return unit.class
+	end
+end
+
 -- Tests the externally (external from this code file) called functions
 -- loop through all species defined in evo chains
 -- Make sure they can all evolve properly
@@ -752,7 +818,7 @@ function EE_QA(full_debug)
 	for _,v in ipairs(species) do
 		Find_evolution(g_Classes[v])
 	end
-	CheatPlaceAllUnitAnimals(MapGetFirst('map','LandingCapsuleMarker'))
+	--CheatPlaceAllUnitAnimals(MapGetFirst('map','LandingCapsuleMarker'))
 	local species = {
 		-- UnitAnimals
 		'Skarabei_Manhunting','Dragonfly','Shrieker_Manhunting','Scissorhands','Juno','Glutch_Manhunting',
