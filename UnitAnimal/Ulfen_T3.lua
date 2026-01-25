@@ -81,10 +81,10 @@ DefineClass.Ulfen_T3 = {
 	CmdProduceResources = function (animal)
 		if not animal:IsTamed() then
 			if animal:Random(100, "no produce chance") > 40 then
-				return animal:DoProduceResourcesDiminishingReturns()
+				return animal:DoProduceResources()
 			end
 		end
-		return animal:DoProduceResources()
+		return animal:DoProduceResourcesDiminishingReturns()
 	end,
 	AnimalPerks = {
 		"ManureProducer",

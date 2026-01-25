@@ -35,6 +35,162 @@ function SavegameFixups.ILU_Gujo_fixes()
 	end
 end
 
+
+function TrySpawnSurvivor(spawn_params, obj)
+	local player = IsKindOf(obj, "PlayerObject") and obj.player or UIPlayer
+	local survivor_def, survivor_id = PickCharacterToSpawn(player, spawn_params)
+	if not survivor_def then return end
+	
+	local radius = obj and obj:GetRadius() or 0
+	
+	local pos
+	local board_balloon = spawn_params.BoardBalloon
+	local balloon = obj and obj.in_balloon
+	if board_balloon then
+		assert(IsValid(balloon))
+		if not IsValid(balloon) then
+			return
+		end
+	elseif spawn_params.SpawnNextToObject or spawn_params.SpawnNearPos then
+		pos = spawn_params.SpawnNextToObject and obj or spawn_params.SpawnNearPos
+		assert(IsValidPos(pos))
+		if not IsValidPos(pos) then return end
+		local max_radius = const.Gameplay.SurvivorSpawnNearObjMaxRadius
+		pos = terrain.FindReachable(pos,
+			const.tfrPassClass, Human.pfclass,
+			const.tfrRandom, InteractionRand(nil, "LandHuman"),
+			const.tfrCenterRadius, max_radius + radius, radius, false,
+			const.tfrWeightRadius, 1, 1000, 3)
+		assert(pos)
+		if not pos then return end
+	else
+		-- find a flat place on the map far enough from shrieker nests
+		local nests = MapGet("map", "TerritorialNest")
+		local InvalidZ = const.InvalidZ
+		local function filter_far_from_nest(x, y)
+			-- check for distance to shrieker nests
+			for _, nest in ipairs(nests or empty_table) do
+				if nest:IsCloser2D(x, y, nest.territorial_range) then
+					return false
+				end
+			end
+			return true
+		end
+		local function filter(x, y)
+			-- first make sure that the survivor will have a point to spawn on
+			if not terrain.AreaPassable(x, y, InvalidZ, 1024, Human.pfclass) then
+				return false
+			end
+			return filter_far_from_nest(x, y)
+		end
+		local x, y
+		local seed = InteractionRand(nil, "LandHuman")
+		if spawn_params.SpawnNearBase then
+			local max_dist, min_dist = const.Gameplay.SurvivorSpawnNearBaseMaxRadius, const.Gameplay.SurvivorSpawnNearBaseMinRadius
+			local origin = terrain.FindAreaPassable(GameStartPos, 4096, 64*guim, Human.pfclass)
+			local retries = 4096
+			local result = ConnectivityRandomTile(seed, origin, GameStartPos, max_dist, min_dist, Human.pfclass, retries, filter_far_from_nest)
+			if result then
+				x, y = result:xy()
+			else
+				x, y = GetRandomPlayablePos(GameStartPos, max_dist, min_dist, seed, Human.pfclass, Human.radius, filter)
+			end
+		else
+			x, y = GetRandomPlayablePos(seed, Human.pfclass, Human.radius, filter)
+		end
+		assert(x)
+		if not x then
+			return
+		end
+		pos = point(x, y)
+	end
+
+	local survivor
+	local from_rescued = spawn_params.FromRescued
+	if from_rescued then
+		for _, rescued_survior in ipairs(table.get(player.labels, "RescuedSurvivors")) do
+			if rescued_survior.id == survivor_id then
+				survivor = rescued_survior
+				survivor:OnReturnFromRescued()
+				break
+			end
+		end
+	else
+		survivor = SpawnHumanFromDef(survivor_def, player)
+	end
+	
+	if not IsValid(survivor) then return end
+	
+	if board_balloon and IsValid(balloon) then
+		balloon:Embark(survivor)
+		pos = survivor:GetPos()
+	elseif spawn_params.FollowLeader then
+		survivor:TrySetLeader(obj)
+	end
+	
+	survivor.adjust_clothes = spawn_params.AdjustClothes
+	survivor:OnLanded(pos)
+	if from_rescued then
+		-- reinit rescued survivor
+		survivor:OnHumanInited()
+	end
+	if spawn_params.DeadOnArrival then
+		survivor:TrySetCommand("CmdDie", spawn_params.DieReason, "instant")
+	elseif spawn_params.SpawnNearBase then
+		local walk_to = terrain.FindPassableTile(GameStartPos) or GameStartPos
+		survivor:TrySetCommand("Goto", walk_to, 16*guim, 0)
+	end
+	
+	-- obj is the rescuer if such exists
+	Msg("SurvivorSpawned", survivor, obj, player)
+	return survivor
+end
+
+function Building:EE_SpawnAround(class,who,name)
+	print("Starting to spawn a unit around a building!")
+    local spawn_def = SpawnDefs['spawn_nearby']
+	local def = class and g_Classes[class]
+	local instance = {}
+	instance.SpawnClass = class
+	instance.location = self
+	instance.name = name or def.DisplayName
+	if who and IsKindOf(def,'UnitAnimal') then
+		instance.PostSpawn = function(self,obj,target,context)
+				if not obj.Tameable then
+					print("Animal can't be tamed")
+					return
+				end
+				obj:CheatResearch()
+				obj:Tame()
+				Msg("AnimalTamed", nil, obj, true)
+				if instance.name then
+					obj.DisplayName = instance.name
+				end
+			end
+	end
+	spawn_def = spawn_def:CreateInstance(instance)
+	local t = spawn_def:ResolveTarget()
+	spawn_def:ActivateSpawn(t,{},100)
+end
+
+function SavegameFixups.EveryoneLives()
+	Bkob_Log("Fixing up a save game due cheat killing a human on an expedition\n")
+	for _,exp in ipairs(ExpeditionSites) do
+		local survivors = GetValidSurvivorsOnMap()
+		if exp.assigned_unit and not MapGetFirst(true, "Human", function(survivor, self) return (survivor.id == "Emily") end) then
+			local center = AveragePoint2D(survivors)
+			local pos = terrain.FindReachable(center,
+				const.tfrPassClass, Human.pfclass,
+				const.tfrRandom, InteractionRand(nil, "LandHuman"),
+				const.tfrCenterRadius, const.Gameplay.SurvivorSpawnNearObjMaxRadius, 0, false,
+				const.tfrWeightRadius, 1, 1000, 3)
+			local survivor_def = CharacterDefs[exp.assigned_unit.id]
+			local survivor_obj = SpawnHumanFromDef(survivor_def,UIPlayer,pos)
+			exp.assigned_unit = false
+		end
+	end
+end
+
 function rebuild_animals()
 	MapForEach("map",'UnitAnimal', function(obj)
 		obj:ComposeBodyParts()
@@ -76,17 +232,14 @@ function SavegameFixups.ILU_id_change_fix()
 end
 
 function clean_outside_map()
-	MapForEach(true, "Unit", function(unit, play_box)
+	MapForEach(true, "UnitAnimal", function(unit, play_box)
 		local check1, check2, check3
-		check1 = play_box:Dist2(unit:GetPosXYZ()) == 0
-		check2 = unit:CanBeOutsideMap()
-		check3 = IsValid(unit)
+		 if play_box:Dist2(unit:GetPosXYZ()) == 0 or unit:CanBeOutsideMap() then return end
 		-- inside helper functions def of map
-		if (check1 and not check2) and check3 then return	end
-		print("Deleting unit!")
-		print(check1)
-		print(check2)
-		print(check3)
+		unit:CheatDelete()
+	end, GetPlayBox())
+	MapForEach(true, "Robot", function(unit, play_box)
+		 if play_box:Dist2(unit:GetPosXYZ()) == 0 or unit:CanBeOutsideMap() then return end
 		unit:CheatDelete()
 	end, GetPlayBox())
 end
