@@ -17,7 +17,7 @@ DefineClass.Gujo_T3 = {
 	},
 	EventProgressValue = 200,
 	turn_before_sharp_move = 0,
-	CombatGroup = "Insects",
+	CombatGroup = "Gujo",
 	EnrageChance = 5,
 	AttackMemory = 10000,
 	CombatRageTime = 10000,

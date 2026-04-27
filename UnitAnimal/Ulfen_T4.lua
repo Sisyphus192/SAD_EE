@@ -1,6 +1,6 @@
 UndefineClass('Ulfen_T4')
 DefineClass.Ulfen_T4 = {
-	__parents = { "UlfenBase", "UnitAreaEffect", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "UlfenBase", "UnitAreaEffect", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -148,6 +148,7 @@ DefineClass.Ulfen_T4 = {
 	PlantsToEatMin = 40,
 	PlantsToEatMax = 60,
 	UnitAreaEffect = true,
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	AffectClass = "UnitAnimal",
 	Effects = {

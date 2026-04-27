@@ -8,6 +8,7 @@ DefineClass.Shrieker_T5 = {
 	SpeciesGroup = "species_shrieker",
 	EventProgressValue = 2000,
 	SpawnDefWeight = 30,
+	CombatGroup = "Shriekers",
 	CombatHostile = false,
 	CombatUseCover = true,
 	HitNegationChance = {

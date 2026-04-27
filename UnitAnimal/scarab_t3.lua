@@ -1,6 +1,6 @@
 UndefineClass('Scarab_T3')
 DefineClass.Scarab_T3 = {
-	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -15,7 +15,7 @@ DefineClass.Scarab_T3 = {
 	SpecialOrientation = 1,
 	EventProgressValue = 155,
 	SightRange = 15000,
-	CombatGroup = "Insects",
+	CombatGroup = "Skarabei",
 	HitNegationChance = {
 		blunt = 20,
 		energy = 35,
@@ -98,6 +98,7 @@ DefineClass.Scarab_T3 = {
 	SleepEndAnim = "faint_To_Standing",
 	SleepInterruptedAnim = "faint_To_Standing",
 	ReproductionType = "two sexes",
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

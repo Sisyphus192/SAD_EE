@@ -1,6 +1,6 @@
 UndefineClass('Camel')
 DefineClass.Camel = {
-	__parents = { "CamelBase" },
+	__parents = { "UnitNesting", "CamelBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -111,5 +111,6 @@ DefineClass.Camel = {
 	PlantsToEatMin = 40,
 	PlantsToEatMax = 60,
 	HerdMergeClass = "Camel",
+	UnitNesting = true,
 }
 

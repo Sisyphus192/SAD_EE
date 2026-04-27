@@ -1,6 +1,6 @@
 UndefineClass('Juno_T6')
 DefineClass.Juno_T6 = {
-	__parents = { "UnitAnimal", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "UnitAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -17,7 +17,7 @@ DefineClass.Juno_T6 = {
 	EventProgressValue = 3000,
 	SpawnDefWeight = 30,
 	SightRange = 50000,
-	CombatGroup = "Insects",
+	CombatGroup = "Juno",
 	HitNegationChance = {
 		blunt = 60,
 		energy = 60,
@@ -131,6 +131,7 @@ DefineClass.Juno_T6 = {
 	GrowDuration = 1920000,
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

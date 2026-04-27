@@ -1,6 +1,6 @@
 UndefineClass('Glutch_T3')
 DefineClass.Glutch_T3 = {
-	__parents = { "GroundAnimal", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "GroundAnimal", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -19,7 +19,7 @@ DefineClass.Glutch_T3 = {
 	SpecialOrientation = 2,
 	EventProgressValue = 390,
 	SightRange = 10000,
-	CombatGroup = "Insects",
+	CombatGroup = "Glutch",
 	HitNegationChance = {
 		blunt = 60,
 		energy = 20,
@@ -94,6 +94,7 @@ DefineClass.Glutch_T3 = {
 	SleepInterruptedAnim = "sleep_Interupted",
 	MinGrownScale = 70,
 	MaxGrownScale = 100,
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

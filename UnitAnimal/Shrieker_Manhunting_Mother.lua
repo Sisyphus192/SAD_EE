@@ -11,6 +11,7 @@ DefineClass.Shrieker_Manhunting_Mother = {
 	pfclass = 3,
 	EventProgressValue = 250,
 	SpawnDefWeight = 5,
+	CombatGroup = "Shriekers",
 	HitNegationChance = {
 		piercing = 33,
 	},
@@ -54,7 +55,7 @@ DefineClass.Shrieker_Manhunting_Mother = {
 	IntimidationRange = 25000,
 	TamedLifetimeMin = 184320000,
 	TamedLifetimeMax = 322560000,
-	NewbornClass = "Shrieker_T2",
+	NewbornClass = "Shrieker_T3",
 	MinGrownScale = 140,
 	MaxGrownScale = 150,
 	UnitAreaEffect = true,

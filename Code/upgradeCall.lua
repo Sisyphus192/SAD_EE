@@ -1,10 +1,81 @@
 AllSpeciesUpgrades = _G.Mods["rtw6tLg"] or false
-local title = "Insects Level up All Species"
-local separator = " :: "
-local debugMSG = { "New Game", "Game Started" }
 local hour_duration = const.HourDuration
 local day_duration = const.DayDuration
 local resource_scale = const.ResourceScale
+
+MapVar('ILU_max', 150)
+MapVar('ILU_Tier_Max', 6)
+MapVar('ILU_combat_type',"complex")
+MapVar("Species_shrieker_cap",20)
+MapVar("Species_scissorhands_cap",10)
+MapVar("Species_draka_cap",20)
+MapVar("Species_ulfen_cap",20)
+MapVar("Species_noth_cap",20)
+MapVar("Species_shogu_cap",10)
+MapVar("Species_camel_cap",20)
+MapVar("Species_gujo_cap",10)
+MapVar("Species_dogs_cap",20)
+MapVar("Species_tecatli_cap",10)
+MapVar("Species_juno_cap",10)
+MapVar("EE_hard_cap",false)
+MapVar('EE_debug', false)
+MapVar('Preg_evo_chance', 20)
+MapVar('EE_tier_pivot', {})
+MapVar('EE_evo_pivot', {})
+
+
+local function is_preg_loaded()
+	for _, mod in ipairs(ModsLoaded) do
+		if mod.id == 'hy8RluH' then
+			return true
+		end
+	end
+	return false
+end
+
+function EE_set_mod_options(id)
+	id = id or CurrentModId
+	if is_preg_loaded() then
+		Bkob_Log("Pregnancy Mod detected!\n")
+		AddGameNotification('Preg_mod_conflict')
+	end
+	local options = CurrentModOptions
+	if CurrentModId ~= id or not CurrentModOptions then
+		return
+	end
+	Bkob_Log("EE Mod Options applied!\n")
+	Bkob_Log('Override tame cap found? ')
+	Bkob_Log(options.O_Man_Cap)
+	Bkob_Log("\n")
+	--if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap", options.O_Man_Cap) end
+	if options.O_Man_Cap then
+		EE_hard_cap = true
+		Species_shrieker_cap=options.ShriekersQuota or 20
+		Species_scissorhands_cap=options.ScissorQuota or 10
+		Species_draka_cap=options.DrakaQuota or 20
+		Species_ulfen_cap=options.UlfenQuota or 20
+		Species_noth_cap=options.NothQuota or 20
+		Species_shogu_cap=options.ShoguQuota or 10
+		Species_camel_cap=options.CamelQuota or 20
+		Species_gujo_cap=options.GujoQuota or 10
+		Species_dogs_cap=options.DogQuota or 20
+		Species_tecatli_cap=options.TecatliQuota or 10
+		Species_juno_cap=options.JunoQuota or 10
+	else
+		EE_hard_cap = false
+	end
+	ILU_max = options.O_ILU_max or 150
+	ILU_Tier_Max = options.O_ILU_max_tier or 6
+	Preg_evo_chance = options.preg_evo_chance or 20
+	if options.O_simple_combat == true then
+		ILU_combat_type = 'simple'
+	elseif options.O_simple_combat == false then
+		ILU_combat_type = 'complex'
+	else
+		ILU_combat_type = 'complex'
+	end
+	ILU_update_armor_hcs()
+end
 
 function Bkob_Log(hard_string,var)
 	DebugPrint(hard_string)
@@ -12,9 +83,120 @@ function Bkob_Log(hard_string,var)
 		DebugPrint(var)
 	end
 	DebugPrint("\n")
-	if MapVarValues['EE_debug'] == 'all' then
+	if EE_debug == 'all' then
 		print(hard_string)
 		print(var)
+	end
+end
+
+
+function SavegameFixups.EveryoneLives()
+	Bkob_Log("Fixing up a save game due cheat killing a human on an expedition\n")
+	for _,exp in ipairs(ExpeditionSites) do
+		local survivors = GetValidSurvivorsOnMap()
+		if exp.assigned_unit and not MapGetFirst(true, "Human", function(survivor, self) return (survivor.id == "Emily") end) then
+			local center = AveragePoint2D(survivors)
+			local pos = terrain.FindReachable(center,
+				const.tfrPassClass, Human.pfclass,
+				const.tfrRandom, InteractionRand(nil, "LandHuman"),
+				const.tfrCenterRadius, const.Gameplay.SurvivorSpawnNearObjMaxRadius, 0, false,
+				const.tfrWeightRadius, 1, 1000, 3)
+			local survivor_def = CharacterDefs[exp.assigned_unit.id]
+			local survivor_obj = SpawnHumanFromDef(survivor_def,UIPlayer,pos)
+			exp.assigned_unit = false
+		end
+	end
+end
+
+function SavegameFixups.MapVarCleanup()
+	local flag = false
+	if MapVarValues["ILU_max"] ~= 150 then
+		ILU_max = MapVarValues["ILU_max"]
+		MapVarValues["ILU_max"] = 150
+		flag = true
+	end
+	if MapVarValues["ILU_Tier_Max"] ~= 6 then
+		ILU_Tier_Max = MapVarValues["ILU_Tier_Max"]
+		MapVarValues["ILU_Tier_Max"] = 6
+		flag = true
+	end
+	if MapVarValues["ILU_combat_type"] ~= "complex" then
+		ILU_combat_type = MapVarValues["ILU_combat_type"]
+		MapVarValues["ILU_combat_type"] = "complex"
+		flag = true
+	end
+	if MapVarValues["species_shrieker_cap"] ~= 20 then
+		Species_shrieker_cap = MapVarValues["species_shrieker_cap"]
+		MapVarValues["species_shrieker_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_scissorhands_cap"] ~= 10 then
+		Species_scissorhands_cap = MapVarValues["species_scissorhands_cap"]
+		MapVarValues["species_scissorhands_cap"] = 10
+		flag = true
+	end
+	if MapVarValues["species_draka_cap"] ~= 20 then
+		Species_draka_cap = MapVarValues["species_draka_cap"]
+		MapVarValues["species_draka_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_ulfen_cap"] ~= 20 then
+		Species_ulfen_cap = MapVarValues["species_ulfen_cap"]
+		MapVarValues["species_ulfen_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_noth_cap"] ~= 20 then
+		Species_noth_cap = MapVarValues["species_noth_cap"]
+		MapVarValues["species_noth_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_shogu_cap"] ~= 10 then
+		Species_shogu_cap = MapVarValues["species_shogu_cap"]
+		MapVarValues["species_shogu_cap"] = 10
+		flag = true
+	end
+	if MapVarValues["species_camel_cap"] ~= 20 then
+		Species_camel_cap = MapVarValues["species_camel_cap"]
+		MapVarValues["species_camel_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_gujo_cap"] ~= 10 then
+		Species_gujo_cap = MapVarValues["species_gujo_cap"]
+		MapVarValues["species_gujo_cap"] = 10
+		flag = true
+	end
+	if MapVarValues["species_dogs_cap"] ~= 20 then
+		Species_dogs_cap = MapVarValues["species_dogs_cap"]
+		MapVarValues["species_dogs_cap"] = 20
+		flag = true
+	end
+	if MapVarValues["species_tecatli_cap"] ~= 10 then
+		Species_tecatli_cap = MapVarValues["species_tecatli_cap"]
+		MapVarValues["species_tecatli_cap"] = 10
+		flag = true
+	end
+	if MapVarValues["species_juno_cap"] ~= 10 then
+		Species_juno_cap = MapVarValues["species_juno_cap"]
+		MapVarValues["species_juno_cap"] = 10
+		flag = true
+	end
+	if MapVarValues["EE_hard_cap"] ~= false then
+		EE_hard_cap = MapVarValues["EE_hard_cap"]
+		MapVarValues["EE_hard_cap"] = false
+		flag = true
+	end
+	if MapVarValues["EE_debug"] ~= false then
+		EE_debug = MapVarValues["EE_debug"]
+		MapVarValues["EE_debug"] = false
+		flag = true
+	end
+	if MapVarValues["preg_evo_chance"] ~= 20 then
+		Preg_evo_chance = MapVarValues["preg_evo_chance"]
+		MapVarValues["preg_evo_chance"] = 20
+		flag = true
+	end
+	if flag then
+		Bkob_Log("EE had to clean up some vars!")
 	end
 end
 
@@ -32,162 +214,6 @@ function SavegameFixups.ILU_Gujo_fixes()
 			CompleteResearch(animal['FieldResearchTech'])
 		end
 		animal:InitEntity()
-	end
-end
-
-
-function TrySpawnSurvivor(spawn_params, obj)
-	local player = IsKindOf(obj, "PlayerObject") and obj.player or UIPlayer
-	local survivor_def, survivor_id = PickCharacterToSpawn(player, spawn_params)
-	if not survivor_def then return end
-	
-	local radius = obj and obj:GetRadius() or 0
-	
-	local pos
-	local board_balloon = spawn_params.BoardBalloon
-	local balloon = obj and obj.in_balloon
-	if board_balloon then
-		assert(IsValid(balloon))
-		if not IsValid(balloon) then
-			return
-		end
-	elseif spawn_params.SpawnNextToObject or spawn_params.SpawnNearPos then
-		pos = spawn_params.SpawnNextToObject and obj or spawn_params.SpawnNearPos
-		assert(IsValidPos(pos))
-		if not IsValidPos(pos) then return end
-		local max_radius = const.Gameplay.SurvivorSpawnNearObjMaxRadius
-		pos = terrain.FindReachable(pos,
-			const.tfrPassClass, Human.pfclass,
-			const.tfrRandom, InteractionRand(nil, "LandHuman"),
-			const.tfrCenterRadius, max_radius + radius, radius, false,
-			const.tfrWeightRadius, 1, 1000, 3)
-		assert(pos)
-		if not pos then return end
-	else
-		-- find a flat place on the map far enough from shrieker nests
-		local nests = MapGet("map", "TerritorialNest")
-		local InvalidZ = const.InvalidZ
-		local function filter_far_from_nest(x, y)
-			-- check for distance to shrieker nests
-			for _, nest in ipairs(nests or empty_table) do
-				if nest:IsCloser2D(x, y, nest.territorial_range) then
-					return false
-				end
-			end
-			return true
-		end
-		local function filter(x, y)
-			-- first make sure that the survivor will have a point to spawn on
-			if not terrain.AreaPassable(x, y, InvalidZ, 1024, Human.pfclass) then
-				return false
-			end
-			return filter_far_from_nest(x, y)
-		end
-		local x, y
-		local seed = InteractionRand(nil, "LandHuman")
-		if spawn_params.SpawnNearBase then
-			local max_dist, min_dist = const.Gameplay.SurvivorSpawnNearBaseMaxRadius, const.Gameplay.SurvivorSpawnNearBaseMinRadius
-			local origin = terrain.FindAreaPassable(GameStartPos, 4096, 64*guim, Human.pfclass)
-			local retries = 4096
-			local result = ConnectivityRandomTile(seed, origin, GameStartPos, max_dist, min_dist, Human.pfclass, retries, filter_far_from_nest)
-			if result then
-				x, y = result:xy()
-			else
-				x, y = GetRandomPlayablePos(GameStartPos, max_dist, min_dist, seed, Human.pfclass, Human.radius, filter)
-			end
-		else
-			x, y = GetRandomPlayablePos(seed, Human.pfclass, Human.radius, filter)
-		end
-		assert(x)
-		if not x then
-			return
-		end
-		pos = point(x, y)
-	end
-
-	local survivor
-	local from_rescued = spawn_params.FromRescued
-	if from_rescued then
-		for _, rescued_survior in ipairs(table.get(player.labels, "RescuedSurvivors")) do
-			if rescued_survior.id == survivor_id then
-				survivor = rescued_survior
-				survivor:OnReturnFromRescued()
-				break
-			end
-		end
-	else
-		survivor = SpawnHumanFromDef(survivor_def, player)
-	end
-	
-	if not IsValid(survivor) then return end
-	
-	if board_balloon and IsValid(balloon) then
-		balloon:Embark(survivor)
-		pos = survivor:GetPos()
-	elseif spawn_params.FollowLeader then
-		survivor:TrySetLeader(obj)
-	end
-	
-	survivor.adjust_clothes = spawn_params.AdjustClothes
-	survivor:OnLanded(pos)
-	if from_rescued then
-		-- reinit rescued survivor
-		survivor:OnHumanInited()
-	end
-	if spawn_params.DeadOnArrival then
-		survivor:TrySetCommand("CmdDie", spawn_params.DieReason, "instant")
-	elseif spawn_params.SpawnNearBase then
-		local walk_to = terrain.FindPassableTile(GameStartPos) or GameStartPos
-		survivor:TrySetCommand("Goto", walk_to, 16*guim, 0)
-	end
-	
-	-- obj is the rescuer if such exists
-	Msg("SurvivorSpawned", survivor, obj, player)
-	return survivor
-end
-
-function Building:EE_SpawnAround(class,who,name)
-	print("Starting to spawn a unit around a building!")
-    local spawn_def = SpawnDefs['spawn_nearby']
-	local def = class and g_Classes[class]
-	local instance = {}
-	instance.SpawnClass = class
-	instance.location = self
-	instance.name = name or def.DisplayName
-	if who and IsKindOf(def,'UnitAnimal') then
-		instance.PostSpawn = function(self,obj,target,context)
-				if not obj.Tameable then
-					print("Animal can't be tamed")
-					return
-				end
-				obj:CheatResearch()
-				obj:Tame()
-				Msg("AnimalTamed", nil, obj, true)
-				if instance.name then
-					obj.DisplayName = instance.name
-				end
-			end
-	end
-	spawn_def = spawn_def:CreateInstance(instance)
-	local t = spawn_def:ResolveTarget()
-	spawn_def:ActivateSpawn(t,{},100)
-end
-
-function SavegameFixups.EveryoneLives()
-	Bkob_Log("Fixing up a save game due cheat killing a human on an expedition\n")
-	for _,exp in ipairs(ExpeditionSites) do
-		local survivors = GetValidSurvivorsOnMap()
-		if exp.assigned_unit and not MapGetFirst(true, "Human", function(survivor, self) return (survivor.id == "Emily") end) then
-			local center = AveragePoint2D(survivors)
-			local pos = terrain.FindReachable(center,
-				const.tfrPassClass, Human.pfclass,
-				const.tfrRandom, InteractionRand(nil, "LandHuman"),
-				const.tfrCenterRadius, const.Gameplay.SurvivorSpawnNearObjMaxRadius, 0, false,
-				const.tfrWeightRadius, 1, 1000, 3)
-			local survivor_def = CharacterDefs[exp.assigned_unit.id]
-			local survivor_obj = SpawnHumanFromDef(survivor_def,UIPlayer,pos)
-			exp.assigned_unit = false
-		end
 	end
 end
 
@@ -220,7 +246,7 @@ function SavegameFixups.ILU_id_change_fix()
 		Spellsword_Tecatli="Tecatli_T5",Intelligent_Tecatli="Tecatli_T4",Heat_Reinforced_Tecatli="Tecatli_T3",Entombed_Tecatli="Tecatli_T2",VenomousRaptors="Tecatli_T1_venom",
 		Rage_Focused_Scissorhands="Scissorhands_T5",Rage_Fueled_Scissorhand_Duelist="Scissorhands_T4",Brutal_Duelist_Scissorhands="Scissorhands_T3",
 		Junoskar="Juno_T6",Too_Angry_Too_Die_Juno="Juno_T5",Hulk_Juno="Juno_T4",Angry_Juno="Juno_T3",
-		Sniping_Entropy_Shielded_Shrieker="Shrieker_T5",Plague_Sniper_Shrieker="Shrieker_T4",Entropic_Shrieker="Shrieker_T3",
+		Sniping_Entropy_Shielded_Shrieker="Shrieker_T5",Plague_Sniper_Shrieker="Shrieker_T4",Entropic_Shrieker="Shrieker_T3",Shrieker_T2="Shrieker_T3"
 	}
 	local animals = MapGet(true,'UnitAnimal')
 	for _,creature in ipairs(animals) do
@@ -245,29 +271,45 @@ function clean_outside_map()
 end
 
 
-function clean_mass_animals()
+function Coalesce_mass_animals()
 	local chains = #Presets.UnitClassChain.Default
 	for i=1, chains do
 		local units_check = {}
 		local chain = Presets.UnitClassChain.Default[i]
+		local tier_1 = chain:get_units_by_tier(1)
 		if chain and chain.units then
 			for _,unit in ipairs(chain.units) do
 				units_check[unit.Unit] = true
 			end
 			local count = MapCount(true,'UnitAnimal',function(unit,ids)
-				if ids[unit.class] then
+				if ids[unit.class] and unit.forced_aggression_until then
 					return true
 				else
 					return false
 				end
 			end,units_check)
+			local total_EP_scrubbed = 0
 			if count > 500 then
 				Bkob_Log("Need to delete units in this chain because there are over 500 on the map!",chain.id)
-				MapForEach(true,'UnitAnimal',function(unit,ids)
-					if ids[unit.class] and not unit.is_tamed then
+				total_EP_scrubbed = MapForEach(true,'UnitAnimal',function(unit,ids,EP)
+					if ids[unit.class] and not unit.is_tamed and not unit:IsDead() then
 						unit:CheatDelete()
+						EP = EP + unit.EventProgressValue
 					end
-				end,units_check)
+					return EP
+				end,units_check,total_EP_scrubbed)
+			end
+			if total_EP_scrubbed > 0 then
+				local percent = MulDivRound(total_EP_scrubbed*100,EventProgress)
+				Bkob_Log("Coalescing some EP from deleted units into a singel EE attack")
+    			local spawn_def = SpawnDefs['Single']
+				local instance = {}
+				-- the attack code will upgrade these to spawn below whatever the mod option cap is
+				instance.SpawnClass = tier_1[1]
+				spawn_def = spawn_def:CreateInstance(instance)
+				local t = spawn_def:ResolveTarget()
+				-- Note this _can_ lead to attacks that are WILDLY stronger than the current player score
+				spawn_def:ActivateSpawn(t,{},percent)
 			end
 		end
 	end
@@ -276,7 +318,34 @@ end
 -- lag avoider......
 function OnMsg.NewDayStarted(year, day)
 	clean_outside_map()
-	clean_mass_animals()
+	Coalesce_mass_animals()
+end
+
+function Building:EE_SpawnAround(class,who,name)
+	--print("Starting to spawn a unit around a building!")
+    local spawn_def = SpawnDefs['spawn_nearby']
+	local def = class and g_Classes[class]
+	local instance = {}
+	instance.SpawnClass = class
+	instance.location = self
+	instance.name = name or def.DisplayName
+	if who and IsKindOf(def,'UnitAnimal') then
+		instance.PostSpawn = function(self,obj,target,context)
+				if not obj.Tameable then
+					--print("Animal can't be tamed")
+					return
+				end
+				obj:CheatResearch()
+				obj:Tame()
+				Msg("AnimalTamed", nil, obj, true)
+				if instance.name then
+					obj.DisplayName = instance.name
+				end
+			end
+	end
+	spawn_def = spawn_def:CreateInstance(instance)
+	local t = spawn_def:ResolveTarget()
+	spawn_def:ActivateSpawn(t,{},100)
 end
 
 local function add_perks_to_animals(type)
@@ -330,11 +399,8 @@ function OnMsg.ModsReloaded()
 	end
 end
 
-local EE_tier_pivot = {}
-local EE_evo_pivot = {}
-
 --Input: evo_pivot[unit_id] output: evo unit list
-function build_evo_pivot()
+function Build_evo_pivot()
 	Bkob_Log("Building Evo Pivot")
 	EE_evo_pivot = {}
 	local chains = #Presets.UnitClassChain.Default
@@ -359,7 +425,7 @@ function build_evo_pivot()
 end
 
 --Input: tier_pivot[unit_id] output: tier number
-function build_tier_pivot()
+function Build_tier_pivot()
 	Bkob_Log("Building tier tier pivot table ")
 	EE_tier_pivot = {}
 	local chains = #Presets.UnitClassChain.Default
@@ -378,6 +444,21 @@ function build_tier_pivot()
 	Bkob_Log("Done building tier pivot table")
 end
 
+
+function EE_get_evo(unit_class)
+	if #EE_evo_pivot == 0 then
+		Build_evo_pivot()
+	end
+	return EE_evo_pivot[unit_class]
+end
+
+function EE_get_tier(unit_class)
+	if #EE_tier_pivot == 0 then
+		Build_tier_pivot()
+	end
+	return EE_tier_pivot[unit_class]
+end
+
 function print_pivots()
 	print("EVO PIVOT")
 	print(EE_evo_pivot)
@@ -386,8 +467,8 @@ function print_pivots()
 end
 
 function build_pivot_tables()
-	build_evo_pivot()
-	build_tier_pivot()
+	Build_evo_pivot()
+	Build_tier_pivot()
 end
 
 function get_tier_Table()
@@ -413,7 +494,7 @@ function Get_unit_classes()
 	return to_return
 end
 
--- Need this here instead of nest mod because we are defining the robots here
+-- Need this here instead of my nest mod because we are re-defining robots in this mod
 AppendClass.UnitNesting = {
 	properties = {
 		{ category = "Nest", id = "NestEffectRobo", name = "Nest Proximity Effect", editor = "preset_id", default = "FamiliarGroundRobo", preset_class = "RobotCondition", template = true },
@@ -472,7 +553,7 @@ end
 
 function UnitClassChain:get_correct_evo(ep)
 	local to_return = {}
-	local max_count = MapVarValues['ILU_max']
+	local max_count = ILU_max
 	local min_tier = self:get_min_tier()
 	local max_tier = self:get_max_tier()
 	local found = false
@@ -564,44 +645,39 @@ function combat_units_with_false()
 end
 
 function Find_evolution(classdef)
-	Bkob_Log("Finding evolution for: ",classdef.class)
+	--print("Finding evolution for: ",classdef.class)
 	local possible
-	local cur_tier = EE_tier_pivot[classdef.class] or 1
-	if cur_tier >= MapVarValues["ILU_Tier_Max"] then
-		Bkob_Log("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
+	local cur_tier = EE_get_tier(classdef.class) or 1
+	if cur_tier >= ILU_Tier_Max then
+		--print("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
 		return classdef.class
 	end
 	if classdef.Tameable and classdef.NewbornClass then
-		Bkob_Log("Unit is tameable and has a newborn class!")
+		--print("Unit is tameable and has a newborn class!")
 		possible = classdef.NewbornClass or classdef.class
 	else
-		local possible_ups = EE_evo_pivot[classdef.class]
-		Bkob_Log("Doing it the pivot table way!")
+		local possible_ups = EE_get_evo(classdef.class)
+		--print("Doing it the pivot table way!")
 		if #possible_ups > 0 then
 			possible = table.rand(possible_ups)
 		else
 			possible = classdef.class
 		end
 	end
-	if EE_tier_pivot[possible] > MapVarValues["ILU_Tier_Max"] then
-		Bkob_Log("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
+	--print(EE_get_tier(possible))
+	--print(ILU_Tier_Max)
+	if EE_get_tier(possible) > ILU_Tier_Max then
+		--print("evolution not allowed to spawn. Reverting evolution to what we where given!",'')
 		possible = classdef.class
 	else
-		Bkob_Log("Giving back this evolution: ",possible)
+		--print("Giving back this evolution: ",possible)
 	end
 	return possible
 end
 
 -------------------------- Mini FUNCTIONS ----------------------------------
 
-local function is_preg_loaded()
-	for _, mod in ipairs(ModsLoaded) do
-		if mod.id == 'hy8RluH' then
-			return true
-		end
-	end
-	return false
-end
+
 
 local function build_output(final_full_table)
 	Bkob_Log("Building final spawn table\n")
@@ -622,11 +698,11 @@ function carrying_capacity(species)
 	Bkob_Log("Getting carrying capacity of a species: ",species)
 	local herd_mod = Presets.UnitSpeciesGroup.Default[species].herd_size_modifier or 100
 	local max
-	if MapVarValues["EE_hard_cap"] then
+	if EE_hard_cap then
 		max = MapVarValues[species] --get_preg_quota(species)
 	end
 	if not max then
-		max = DivRound(DivRound(MapVarValues['ILU_max'] or 150, 6) * herd_mod, 100)
+		max = DivRound(DivRound(ILU_max or 150, 6) * herd_mod, 100)
 	end
 	Bkob_Log("The maxx for this species is: ", max)
 	return max or 30 -- just in case we **** a brick
@@ -647,7 +723,7 @@ function new_preg_rate(specific_species, rate)
 		end
 	end
 	if count < 2 then return rate or 60 end
-	local no = MapVarValues[stop] or 0
+	local no = count or 0
 	local cc = carrying_capacity(species)
 	local fin_mod = 100 * (cc - no) / cc
 	local to_return = fin_mod * base_rate / 100
@@ -660,7 +736,7 @@ end
 
 function ILU_update_armor_hcs()
 	Bkob_Log("Updating the armor HCs")
-	local combat_type = MapVarValues['ILU_combat_type']
+	local combat_type = ILU_combat_type
 	local flip_table = {}
 	if not combat_type then
 		return
@@ -703,9 +779,9 @@ function check_count_and_upgrade(start_animal, additionalClassList, progress_per
 	Bkob_Log("non-robot attack incoming\n")
 	progress_percent = progress_percent or 100
 	local actual_EP_Bank = DivRound((progress_percent * EventProgress), 100)
-	local max_count = MapVarValues['ILU_max']
+	local max_count = ILU_max
 	if not max_count then ILU_set_mod_options("rtw6tLg") end
-	local max_count = MapVarValues['ILU_max']
+	local max_count = ILU_max
 	local min_average_cost = DivRound(actual_EP_Bank, max_count)
 	local start_ep = g_Classes[start_animal].EventProgressValue --lookupEP(start_animal)
 	local temp_class_list = {
@@ -730,7 +806,7 @@ function check_count_and_upgrade(start_animal, additionalClassList, progress_per
 	if this_defs_avg > min_average_cost then return build_output(temp_class_list) end
 	local max_loops = 40
 	local up_count_cap = 1
-	local max_tier = GameVarValues['ILU_Tier_Max'] or 6
+	local max_tier = ILU_Tier_Max or 6
 	local i = 0
 	local capped = 0
 	local evolution = false
@@ -767,7 +843,7 @@ function check_count_and_upgrade(start_animal, additionalClassList, progress_per
 			this_defs_avg = this_defs_avg - weighted_ep_old + weighted_ep_new
 			Bkob_Log('Entry is now: ',v)
 			-- this checks if the current tier of evo unit is the max option; or we have run out of evos
-			local tier_capped = (EE_tier_pivot[evolution.class] == max_tier) or (Find_evolution(evolution) == evolution.class)
+			local tier_capped = (EE_get_tier(evolution.class) == max_tier) or (Find_evolution(evolution) == evolution.class)
 			if tier_capped then
 				Bkob_Log("This evolution is now capped!")
 				capped = capped + 1
@@ -851,85 +927,13 @@ function UnitAnimal:DoProduceResourcesDiminishingReturns()
 	Bkob_Log("EE animal done generating resources (maybe)")
 end
 
-function EE_Instantiate()
-	build_pivot_tables()
-	if MapVarValues['ILU_max'] == nil then MapVar('ILU_max', 150) end
-	if MapVarValues['ILU_Tier_Max'] == nil then MapVar('ILU_Tier_Max', 6) end
-	if MapVarValues['ILU_combat_type'] == nil then MapVar('ILU_combat_type',"complex") end
-	if MapVarValues['species_shrieker_cap'] == nil then MapVar("species_shrieker_cap",20) end
-	if MapVarValues['species_scissorhands_cap'] == nil then MapVar("species_scissorhands_cap",10) end
-	if MapVarValues['species_draka_cap'] == nil then MapVar("species_draka_cap",20) end
-	if MapVarValues['species_ulfen_cap'] == nil then MapVar("species_ulfen_cap",20) end
-	if MapVarValues['species_noth_cap'] == nil then MapVar("species_noth_cap",20) end
-	if MapVarValues['species_shogu_cap'] == nil then MapVar("species_shogu_cap",10) end
-	if MapVarValues['species_camel_cap'] == nil then MapVar("species_camel_cap",20) end
-	if MapVarValues['species_gujo_cap'] == nil then MapVar("species_gujo_cap",10) end
-	if MapVarValues['species_dogs_cap'] == nil then MapVar("species_dogs_cap",20) end
-	if MapVarValues['species_tecatli_cap'] == nil then MapVar("species_tecatli_cap",10) end
-	if MapVarValues['species_juno_cap'] == nil then MapVar("species_juno_cap",10) end
-	if MapVarValues['EE_hard_cap'] == nil then MapVar("EE_hard_cap",false) end
-	if MapVarValues['nest_awaken_exp_tame'] == nil then MapVar('nest_awaken_exp_tame', false) end
-	if MapVarValues['nest_awaken_tame_name'] == nil then MapVar('nest_awaken_tame_name', false) end
-	if MapVarValues['EE_debug'] == nil then MapVar('EE_debug', false) end
-	if MapVarValues['preg_evo_chance'] == nil then MapVar('preg_evo_chance', 20) end
-end
-
-function EE_init_and_set_options(id)
-	EE_Instantiate()
-	EE_set_mod_options(id)
-end
-
-function EE_set_mod_options(id)
-	id = id or CurrentModId
-	if is_preg_loaded() then
-		Bkob_Log("Pregnancy Mod detected!\n")
-		AddGameNotification('Preg_mod_conflict')
-	end
-	local options = CurrentModOptions
-	if CurrentModId ~= id or not CurrentModOptions then
-		return
-	end
-	Bkob_Log("EE Mod Options applied!\n")
-	Bkob_Log('Override tame cap found? ')
-	Bkob_Log(options.O_Man_Cap)
-	Bkob_Log("\n")
-	--if not table.find(MapVars, 'O_Man_Cap') then MapVar("O_Man_Cap", options.O_Man_Cap) end
-	if options.O_Man_Cap then
-		MapVarValues['EE_hard_cap'] = true
-		MapVarValues["species_shrieker_cap"]=options.ShriekersQuota or 20
-		MapVarValues["species_scissorhands_cap"]=options.ScissorQuota or 10
-		MapVarValues["species_draka_cap"]=options.DrakaQuota or 20
-		MapVarValues["species_ulfen_cap"]=options.UlfenQuota or 20
-		MapVarValues["species_noth_cap"]=options.NothQuota or 20
-		MapVarValues["species_shogu_cap"]=options.ShoguQuota or 10
-		MapVarValues["species_camel_cap"]=options.CamelQuota or 20
-		MapVarValues["species_gujo_cap"]=options.GujoQuota or 10
-		MapVarValues["species_dogs_cap"]=options.DogQuota or 20
-		MapVarValues["species_tecatli_cap"]=options.TecatliQuota or 10
-		MapVarValues["species_juno_cap"]=options.JunoQuota or 10
-	else
-		MapVarValues['EE_hard_cap'] = false
-	end
-	MapVarValues["ILU_max"] = options.O_ILU_max or 150
-	MapVarValues["ILU_Tier_Max"] = options.O_ILU_max_tier or 6
-	MapVarValues["preg_evo_chance"] = options.preg_evo_chance or 20
-	if options.O_simple_combat == true then
-		MapVarValues["ILU_combat_type"] = 'simple'
-	elseif options.O_simple_combat == false then
-		MapVarValues["ILU_combat_type"] = 'complex'
-	else
-		MapVarValues["ILU_combat_type"] = 'complex'
-	end
-	ILU_update_armor_hcs()
-end
-
 local function check_evo_counts(init,fin)
 	local found = false
 	local retry = 10
 	while not found or retry > 0 do
 		retry = retry - 1
-		local init_tier = EE_tier_pivot[init] or 1
-		local fin_tier = EE_tier_pivot[fin] or 1
+		local init_tier = EE_get_tier(init) or 1
+		local fin_tier = EE_get_tier(fin) or 1
 		return fin_tier - init_tier
 	end
 end
@@ -949,7 +953,7 @@ end
 
 function find_newborn_class(unit)
 	local evo = unit.NewbornClass
-	local chance = MapVarValues['preg_evo_chance'] or 100
+	local chance = Preg_evo_chance or 100
 	if evo and AsyncRand(100) < chance then
 		return evo
 	else
@@ -965,7 +969,7 @@ function EE_QA(full_debug)
 	full_debug = full_debug or false
 	EE_Instantiate()
 	-- so logs print to screen
-	MapVarValues['EE_debug'] = full_debug
+	EE_debug = full_debug
 	build_pivot_tables()
 	local species = table.keys(EE_evo_pivot)
 	for _,v in ipairs(species) do
@@ -991,14 +995,14 @@ function EE_QA(full_debug)
 			if correct_evo ~= main then
 				Bkob_Log("Evolved as expected, evolving x time: "..check_evo_counts(s,main))
 			else
-				print(s..' at '..no..' ep ')
-				print("Something went wrong! SpawnDef unit: "..main..' Chain Evo unit: '..correct_evo)
+				--print(s..' at '..no..' ep ')
+				--print("Something went wrong! SpawnDef unit: "..main..' Chain Evo unit: '..correct_evo)
 			end
 		end
 	end
 	EventProgress = old_EP
-	print("Testing animal attack storybits!")
-	MapVarValues['EE_debug'] = true
+	--print("Testing animal attack storybits!")
+	EE_debug = true
 	CreateRealTimeThread(function()
 		EP_nums = {800,5000,12000,60000,140000}
 		local sleep_count = 5000
@@ -1025,23 +1029,32 @@ function EE_QA(full_debug)
 						spawned = true
 						Sleep(sleep_count)
 					elseif spawned then
-						print("Already spawned this sb")
+						--print("Already spawned this sb")
 					end
 					if spawned and not deleted then
 						local invaders = MapCount("map", "UnitInvader")
 						if invaders > 0 then
-							print("There are invaders! Killing em")
+							--print("There are invaders! Killing em")
 							MapForEach("map","UnitInvader",function(unit) unit:CheatDelete() end)
 							deleted = true
 						end
 					end
 				end
-				print("Onto the next SB")
+				--print("Onto the next SB")
 				spawned = false
 				deleted = false
 			end
 		end
 	end)
+end
+
+function EE_Instantiate()
+	build_pivot_tables()
+end
+
+function EE_init_and_set_options(id)
+	EE_Instantiate()
+	EE_set_mod_options(id)
 end
 
 OnMsg.ApplyModOptions = EE_init_and_set_options

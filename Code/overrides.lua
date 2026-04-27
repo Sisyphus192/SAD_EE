@@ -6,13 +6,20 @@ function CombatGroupsSetItems()
 		groups[def.CombatGroup or def_group] = true
 	end, groups)
 	groups['Robots']=true
+	groups['Shriekers']=true
+	groups['Scissorhands']=true
+	groups['Gujos']=true
+	groups['Tecatlis']=true
+	groups['Skarabeis']=true
 	return table.keys(groups, true)
 end
 
 -- Gujo (and Tecatli) override so they are more aggressive after 2 years of game time
 function GujoBase:IsAttackTarget(target)
+	--print("Checking if I should atttack:",target.class)
 	local human_group = Human.CombatGroup
-	if target.CombatGroup == human_group and GameTime() > (const.YearDuration * 2) then
+	--print("Do they appear human?: ",target.CombatGroup == human_group)
+	if target.CombatGroup == human_group and GameTime() < (const.YearDuration * 2) then
 		--Gujo never attack Humans, unless enraged (by Human) or forced by storybit
 		if self:IsForcedAttackTarget(target) then
 			return true

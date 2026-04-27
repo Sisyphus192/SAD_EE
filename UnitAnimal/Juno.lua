@@ -1,6 +1,6 @@
 UndefineClass('Juno')
 DefineClass.Juno = {
-	__parents = { "GroundAnimal" },
+	__parents = { "UnitNesting", "GroundAnimal" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -18,7 +18,7 @@ DefineClass.Juno = {
 	EventProgressValue = 250,
 	SpawnDefWeight = 5,
 	SpawnTags = set( "Boss" ),
-	CombatGroup = "Insects",
+	CombatGroup = "Juno",
 	CombatHostile = true,
 	AttackMemory = 45000,
 	CombatGiveUpNoHit = 30000,
@@ -117,5 +117,6 @@ DefineClass.Juno = {
 	NewbornClass = "Juno_Brute",
 	MinGrownScale = 70,
 	MaxGrownScale = 90,
+	UnitNesting = true,
 }
 

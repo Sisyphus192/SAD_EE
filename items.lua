@@ -217,41 +217,6 @@ PlaceObj('ModItemBuildingCompositeDef', {
 	soil_form = "circle",
 	terrain_change = "soil",
 }),
-PlaceObj('ModItemSpawnDef', {
-	FindSpawnLoc = function (self, spawn_class, target, context)
-		local retry = 8
-		local center = MapGetFirst(true,'HotairBalloon')
-		local pf = g_Classes[spawn_class]
-		local rand = InteractionRandCreate('expedition_tame')
-		local radius = 14*guim
-		local near_balloon = terrain.FindPassable(center,pf,radius)
-		if not near_balloon then -- slowly increase radius finding first passable spot
-			for i=1, retry do
-				radius = radius + (10*guim)
-				near_balloon = terrain.FindPassable(center,pf,radius)
-				if near_balloon then return near_balloon end
-			end
-		else
-			return near_balloon
-		end
-	end,
-	PostSpawn = function (self, obj, target, context)
-		if IsKindOf(obj,'animal') then
-			obj:Tame()
-			obj.CombatHostile = false
-		elseif IsKindOf(obj,'ActivityInvaderRobotBase') then
-			if self.Invader then obj:CheatToggleInvader() end
-		end
-		if MapVarValues['nest_awaken_exp_tame'] and MapVarValues['nest_awaken_exp_tame'] ~= 'N/A' then
-			obj.DisplayName = T{987656789,MapVarValues['nest_awaken_exp_tame'],}
-			MapVarValues['nest_awaken_exp_tame'] = 'N/A'
-		end
-	end,
-	SpawnClass = "Camel",
-	SpawnTimeLimit = false,
-	id = "tamed_on_expedition",
-	save_in = "Mod/rtw6tLg",
-}),
 PlaceObj('ModItemFolder', {
 	'name', "new tags",
 	'NameColor', RGBA(184, 46, 46, 255),
@@ -5725,7 +5690,7 @@ PlaceObj('ModItemFolder', {
 				PlaceObj('UnitReaction', {
 					Event = "ModifyDamageReceived",
 					Handler = function (self, target, damage, weapon_def, attacker)
-						return damage / 20
+						return damage- DivRound(damage,20)
 					end,
 					param_bindings = false,
 				}),
@@ -5984,14 +5949,14 @@ PlaceObj('ModItemFolder', {
 					Event = "OnObjUpdate",
 					Handler = function (self, target, time, update_interval)
 						if not self.calm then
-							owner:RemoveHealthCondition(self)
+							target:RemoveHealthCondition(self)
 							return
 						end
 						if self.calm > GameTime() then
 							target.anger = target.anger - 1
 							self.calm = GameTime() + 60000 -- every 60 seconds it calms down
 							if target.anger < 1 then
-								owner:RemoveHealthCondition(self)
+								target:RemoveHealthCondition(self)
 							end
 						end
 					end,
@@ -6938,6 +6903,14 @@ PlaceObj('ModItemFolder', {
 		PlaceObj('ModItemRobotCondition', {
 			Description = T(244176980595, --[[ModItemRobotCondition Heavy_Boombox_T1 Description]] "Let the music play! Wait not Neon Cat on full blast repeat! <color TextEmphesis>NOOOOO</color>\nBlasts organic matter targets with incredibly loud annoying songs.\nOr tries to interfere with enemy robots by via it's onboard jammer. "),
 			DisplayName = T(809084273585, --[[ModItemRobotCondition Heavy_Boombox_T1 DisplayName]] "Boombox and a Special Radio!"),
+			Modifiers = {
+				PlaceObj('ModifyRobot', {
+					Id = "autoid_rtw6tLg_MhTnxv7",
+					add = -1000,
+					param_bindings = false,
+					prop = "Regeneration",
+				}),
+			},
 			Polarity = "positive",
 			StackLimit = 1,
 			UnitTags = set( "Heavy_Slow_T1" ),
@@ -7561,7 +7534,7 @@ PlaceObj('ModItemFolder', {
 					local rand = BraidRandomCreate(seed)
 					local minions = GetUnlockedMinions()
 					local bosses = GetUnlockedBosses()
-					bosses[#bosses+1]='dog_T1'
+					bosses[#bosses+1]='Dog_T2'
 					local minion = table.rand(minions, rand())
 					--print("Main animal selected: ",minion)
 					local boss1 = table.rand(bosses, rand())
@@ -10309,6 +10282,187 @@ PlaceObj('ModItemFolder', {
 		TargetDistMin = 100000,
 		group = "StoryBits",
 		id = "PassiveAttack",
+		save_in = "Mod/rtw6tLg",
+	}),
+	PlaceObj('ModItemInvaderSpawnDef', {
+		Behaviours = {
+			PlaceObj('InvaderBehaviourRoam', {
+				'Duration', 0,
+				'RoamRadius', 15000,
+				'RoamMinDist', 4500,
+				'RoamMaxDist', 9000,
+			}),
+			PlaceObj('InvaderBehaviourIdle', {
+				'Duration', 240000,
+				'DurationMod', function (self, unit) return MoonInstance.AttackDelayMod end,
+			}),
+			PlaceObj('InvaderBehaviourAggressive', {
+				'Duration', 840000,
+			}),
+			PlaceObj('InvaderBehaviourDespawn', {
+				'Wait', false,
+			}),
+		},
+		CheckConnectivity = true,
+		ClearArea = 256,
+		ClearRadius = 1000,
+		CountMod = function (self, target, progress) return self:CalculateInvadersCountMod(self, progress) end,
+		DistFromOthers = 1000,
+		PostSpawn = function (self, obj, target, context)
+			obj.CombatHostile = true
+			obj.CombatGroup = 'base_attacker'
+			Msg("SpawnedAnimalThreat", obj)
+		end,
+		SpawnAsGroup = true,
+		SpawnClass = "Skarabei_Manhunting",
+		SurvivorSpawnDistMin = 75000,
+		TargetClass = "Building",
+		TargetDistMax = 150000,
+		TargetDistMin = 75000,
+		TargetFilter = function (obj) return not obj:IsVirtual() end,
+		TargetMaxIrritation = true,
+		TargetStartPosOnMissingTarget = true,
+		group = "Attacks_Insects_NEW",
+		id = "Single",
+		save_in = "Mod/rtw6tLg",
+	}),
+	PlaceObj('ModItemInvaderSpawnDef', {
+		Behaviours = {
+			PlaceObj('InvaderBehaviourRoam', {
+				'Duration', 0,
+				'RoamRadius', 15000,
+				'RoamMinDist', 4500,
+				'RoamMaxDist', 9000,
+			}),
+			PlaceObj('InvaderBehaviourIdle', {
+				'Duration', 240000,
+				'DurationMod', function (self, unit) return MoonInstance.AttackDelayMod end,
+			}),
+			PlaceObj('InvaderBehaviourAggressive', {
+				'Duration', 840000,
+				'SearchLabels', {
+					"MilitaryWonderTower",
+				},
+			}),
+			PlaceObj('InvaderBehaviourDespawn', {
+				'Wait', false,
+			}),
+		},
+		CheckConnectivity = true,
+		ClearArea = 256,
+		ClearRadius = 1000,
+		CountMod = function (self, target, progress) return self:CalculateInvadersCountMod(self, progress) end,
+		DistFromOthers = 1000,
+		PostSpawn = function (self, obj, target, context)
+			obj.CombatHostile = true
+			obj.CombatGroup = 'base_attacker'
+			Msg("SpawnedAnimalThreat", obj)
+		end,
+		ResolveTarget = function (self)
+			-- this target picking logic doesn't use any of the default target parameters!
+			-- pick a random survivor
+			local survivors = GetValidSurvivorsOnMap()
+			if #survivors == 0 then
+				return
+			end
+			local seed = InteractionRand(nil, "SpawnResolveTarget")
+			local survivor, idx, seed = table.rand(survivors, seed)
+			-- pick the closest N buildings
+			local N = 100
+			local buildings = {}
+			for _, bld in ipairs(survivor.player.labels.Buildings) do
+				if not bld:IsVirtual() then
+					buildings[#buildings + 1] = bld
+				end
+			end
+			table.sortby_dist(buildings, survivor)
+			table.iclear(buildings, N + 1)
+			-- pick M in the most overbuild area
+			local M = 10
+			table.stable_sort(buildings, function (b1, b2)
+				return GetIrritationAt(b1) > GetIrritationAt(b2)
+			end)
+			table.iclear(buildings, M + 1)
+			-- pick a random building
+			local building, idx, seed = table.rand(buildings, seed)
+			return building
+		end,
+		SpawnAsGroup = true,
+		SpawnClass = "Skarabei_Manhunting",
+		SurvivorSpawnDistMin = 75000,
+		TargetDistMax = 150000,
+		TargetDistMin = 75000,
+		TargetStartPosOnMissingTarget = true,
+		group = "Attacks_Insects_NEW",
+		id = "Mixed_TargetMilitaryWonder",
+		save_in = "Mod/rtw6tLg",
+	}),
+	PlaceObj('ModItemInvaderSpawnDef', {
+		Behaviours = {
+			PlaceObj('InvaderBehaviourRoam', {
+				'Duration', 0,
+				'RoamRadius', 15000,
+				'RoamMinDist', 4500,
+				'RoamMaxDist', 9000,
+			}),
+			PlaceObj('InvaderBehaviourIdle', {
+				'Duration', 240000,
+				'DurationMod', function (self, unit) return MoonInstance.AttackDelayMod end,
+			}),
+			PlaceObj('InvaderBehaviourAggressive', {
+				'Duration', 840000,
+			}),
+			PlaceObj('InvaderBehaviourDespawn', {
+				'Wait', false,
+			}),
+		},
+		CheckConnectivity = true,
+		ClearArea = 256,
+		ClearRadius = 1000,
+		CountMod = function (self, target, progress) return self:CalculateInvadersCountMod(self, progress) end,
+		DistFromOthers = 1000,
+		PostSpawn = function (self, obj, target, context)
+			obj.CombatHostile = true
+			obj.CombatGroup = 'base_attacker'
+			Msg("SpawnedAnimalThreat", obj)
+		end,
+		ResolveTarget = function (self)
+			-- this target picking logic doesn't use any of the default target parameters!
+			-- pick a random survivor
+			local survivors = GetValidSurvivorsOnMap()
+			if #survivors == 0 then
+				return
+			end
+			local seed = InteractionRand(nil, "SpawnResolveTarget")
+			local survivor, idx, seed = table.rand(survivors, seed)
+			-- pick the closest N buildings
+			local N = 100
+			local buildings = {}
+			for _, bld in ipairs(survivor.player.labels.Buildings) do
+				if not bld:IsVirtual() then
+					buildings[#buildings + 1] = bld
+				end
+			end
+			table.sortby_dist(buildings, survivor, true)
+			table.iclear(buildings, N + 1)
+			-- pick M in the most overbuild area
+			local M = 10
+			table.stable_sort(buildings, function (b1, b2)
+				return GetIrritationAt(b1) > GetIrritationAt(b2)
+			end)
+			table.iclear(buildings, M + 1)
+			-- pick a random building
+			local building, idx, seed = table.rand(buildings, seed)
+			return building
+		end,
+		SpawnAsGroup = true,
+		SpawnClass = "Skarabei_Manhunting",
+		SurvivorSpawnDistMin = 75000,
+		TargetDistMax = 150000,
+		TargetDistMin = 75000,
+		TargetStartPosOnMissingTarget = true,
+		group = "Attacks_Insects_NEW",
+		id = "Mixed",
 		save_in = "Mod/rtw6tLg",
 	}),
 	}),
@@ -15045,7 +15199,7 @@ PlaceObj('ModItemFolder', {
 			'DisplayName', T(494803257876, --[[ModItemRobotCompositeDef HeavyHostileRobot_LVL3 DisplayName]] "D-D3-5hr3dd3r"),
 			'DisplayNameShort', T(151002090816, --[[ModItemRobotCompositeDef HeavyHostileRobot_LVL3 DisplayNameShort]] "DD3"),
 			'DisplayNamePl', T(842264659283, --[[ModItemRobotCompositeDef HeavyHostileRobot_LVL3 DisplayNamePl]] "Drone Series D"),
-			'Description', T(731721510580, --[[ModItemRobotCompositeDef HeavyHostileRobot_LVL3 Description]] "The Consortium now guarantees a special Laser Pistol. When wielded, the Heavy can override the normal projectiles, and instead scatter the beam. This leads to less direct damage to enemy combatants, but lowers the targets chances to deflect an attack. Has <color TechSubtitleBlue>15% Piercing Damage</color><color TextEmphasis> Reduction</color>, <color TextButton>60% Blunt Damage</color><color TextEmphasis> Reduction</color>, <color TextNegative>400% Energy Damage</color><color TextEmphasis> Reduction</color>, <color TextPositive>30% Gas Damage</color><color TextEmphasis> Reduction</color>"),
+			'Description', T(731721510580, --[[ModItemRobotCompositeDef HeavyHostileRobot_LVL3 Description]] "The Consortium now guarantees a special Laser Pistol. When wielded, the Heavy can override the normal projectiles, and instead scatter the beam. This leads to less direct damage to enemy combatants, but lowers the targets chances to deflect an attack. Has <color TechSubtitleBlue>15% Piercing Damage</color><color TextEmphasis> Reduction</color>, <color TextButton>60% Blunt Damage</color><color TextEmphasis> Reduction</color>, <color TextNegative>40% Energy Damage</color><color TextEmphasis> Reduction</color>, <color TextPositive>30% Gas Damage</color><color TextEmphasis> Reduction</color>"),
 			'SalvageLootTable', "ILU_Robot_Human_T3",
 			'EventProgressValue', 900,
 			'SpawnDefWeight', 90,
@@ -15881,7 +16035,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 1400,
 			'turn_before_sharp_move', 0,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Gujo",
 			'EnrageChance', 5,
 			'AttackMemory', 10000,
 			'CombatRageTime', 10000,
@@ -16009,7 +16163,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 600,
 			'turn_before_sharp_move', 0,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Gujo",
 			'EnrageChance', 5,
 			'AttackMemory', 10000,
 			'CombatRageTime', 10000,
@@ -16138,7 +16292,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 200,
 			'turn_before_sharp_move', 0,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Gujo",
 			'EnrageChance', 5,
 			'AttackMemory', 10000,
 			'CombatRageTime', 10000,
@@ -16265,7 +16419,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 100,
 			'turn_before_sharp_move', 0,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Gujo",
 			'EnrageChance', 5,
 			'AttackMemory', 10000,
 			'CombatRageTime', 10000,
@@ -16386,7 +16540,7 @@ PlaceObj('ModItemFolder', {
 			'PainMask', "PainMask",
 			'EventProgressValue', 20,
 			'turn_before_sharp_move', 0,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Gujo",
 			'EnrageChance', 5,
 			'AttackMemory', 10000,
 			'CombatRageTime', 10000,
@@ -16509,7 +16663,7 @@ PlaceObj('ModItemFolder', {
 			'EventProgressValue', 100,
 			'SpawnDefWeight', 20,
 			'SightRange', 15000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Dogs",
 			'HitNegationChance', {
 				blunt = 5,
 				energy = 5,
@@ -16634,7 +16788,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 1,
 			'EventProgressValue', 1000,
 			'SightRange', 15000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Skarabei",
 			'HitNegationChance', {
 				blunt = 25,
 				energy = 60,
@@ -16720,6 +16874,7 @@ PlaceObj('ModItemFolder', {
 			'SleepEndAnim', "faint_To_Standing",
 			'SleepInterruptedAnim', "faint_To_Standing",
 			'ReproductionType', "two sexes",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -16740,7 +16895,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 1,
 			'EventProgressValue', 400,
 			'SightRange', 15000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Skarabei",
 			'HitNegationChance', {
 				blunt = 20,
 				energy = 45,
@@ -16826,6 +16981,7 @@ PlaceObj('ModItemFolder', {
 			'SleepEndAnim', "faint_To_Standing",
 			'SleepInterruptedAnim', "faint_To_Standing",
 			'ReproductionType', "two sexes",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -16846,7 +17002,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 1,
 			'EventProgressValue', 155,
 			'SightRange', 15000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Skarabei",
 			'HitNegationChance', {
 				blunt = 20,
 				energy = 35,
@@ -16929,6 +17085,7 @@ PlaceObj('ModItemFolder', {
 			'SleepEndAnim', "faint_To_Standing",
 			'SleepInterruptedAnim', "faint_To_Standing",
 			'ReproductionType', "two sexes",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -16953,7 +17110,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 2,
 			'EventProgressValue', 1620,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Glutch",
 			'HitNegationChance', {
 				blunt = 80,
 				energy = 30,
@@ -17030,6 +17187,7 @@ PlaceObj('ModItemFolder', {
 			'SleepInterruptedAnim', "sleep_Interupted",
 			'MinGrownScale', 70,
 			'MaxGrownScale', 100,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17055,7 +17213,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 2,
 			'EventProgressValue', 750,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Glutch",
 			'HitNegationChance', {
 				blunt = 5,
 				energy = 35,
@@ -17132,6 +17290,7 @@ PlaceObj('ModItemFolder', {
 			'SleepInterruptedAnim', "sleep_Interupted",
 			'MinGrownScale', 70,
 			'MaxGrownScale', 100,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 98,
 			'FrenzyEffects', {
@@ -17157,7 +17316,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 2,
 			'EventProgressValue', 390,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Glutch",
 			'HitNegationChance', {
 				blunt = 60,
 				energy = 20,
@@ -17232,6 +17391,7 @@ PlaceObj('ModItemFolder', {
 			'SleepInterruptedAnim', "sleep_Interupted",
 			'MinGrownScale', 70,
 			'MaxGrownScale', 100,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17257,7 +17417,7 @@ PlaceObj('ModItemFolder', {
 			'SpecialOrientation', 2,
 			'EventProgressValue', 175,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Glutch",
 			'HitNegationChance', {
 				blunt = 30,
 				energy = 20,
@@ -17330,6 +17490,7 @@ PlaceObj('ModItemFolder', {
 			'SleepInterruptedAnim', "sleep_Interupted",
 			'MinGrownScale', 70,
 			'MaxGrownScale', 100,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17351,7 +17512,7 @@ PlaceObj('ModItemFolder', {
 			'PainMask', "PainMask",
 			'EventProgressValue', 1377,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Deathfly",
 			'HitNegationChance', {
 				blunt = 20,
 				energy = 20,
@@ -17441,6 +17602,7 @@ PlaceObj('ModItemFolder', {
 			'FlightSimSplineErr', 1000,
 			'FlightSlopePenalty', 500,
 			'FlightMinObstacleHeight', 1050,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17463,7 +17625,7 @@ PlaceObj('ModItemFolder', {
 			'PainMask', "PainMask",
 			'EventProgressValue', 630,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Deathfly",
 			'HitNegationChance', {
 				blunt = 20,
 				energy = 20,
@@ -17552,6 +17714,7 @@ PlaceObj('ModItemFolder', {
 			'FlightSimSplineErr', 1000,
 			'FlightSlopePenalty', 500,
 			'FlightMinObstacleHeight', 1050,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17573,7 +17736,7 @@ PlaceObj('ModItemFolder', {
 			'PainMask', "PainMask",
 			'EventProgressValue', 250,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Deathfly",
 			'HitNegationChance', {
 				blunt = 15,
 				energy = 15,
@@ -17664,6 +17827,7 @@ PlaceObj('ModItemFolder', {
 			'FlightSimSplineErr', 1000,
 			'FlightSlopePenalty', 500,
 			'FlightMinObstacleHeight', 1050,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -17685,7 +17849,7 @@ PlaceObj('ModItemFolder', {
 			'PainMask', "PainMask",
 			'EventProgressValue', 80,
 			'SightRange', 10000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Deathfly",
 			'HitNegationChance', {
 				blunt = 0,
 				energy = 0,
@@ -17770,10 +17934,95 @@ PlaceObj('ModItemFolder', {
 			'FlightSimSplineErr', 1000,
 			'FlightSlopePenalty', 500,
 			'FlightMinObstacleHeight', 1050,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_1",
 			},
+		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Id', "Dragonfly",
+			'object_class', "DragonflyBase",
+			'SpeciesGroup', "insects",
+			'RoamMinDist', 5000,
+			'RoamMaxDist', 40000,
+			'RoamIntervalMin', 4000,
+			'RoamIntervalMax', 10000,
+			'composite_part_groups', {
+				"Dragonfly",
+			},
+			'PainMask', "PainMask",
+			'EventProgressValue', 30,
+			'SpawnTags', set( "Minion" ),
+			'SightRange', 10000,
+			'CombatGroup', "Insects",
+			'EnrageChance', 5,
+			'BloodColor', RGBA(119, 184, 211, 255),
+			'max_skinned_decals_low', -1,
+			'FieldResearchTech', "FieldHummingfly",
+			'ObservationDistanceMin', 17000,
+			'ObservationDistanceMax', 21000,
+			'SkipTesting', true,
+			'Icon', "UI/Icons/Resources/res_dragonfly",
+			'DisplayName', T(804776132681, --[[ModItemUnitAnimalCompositeDef Dragonfly DisplayName]] "Hummingfly"),
+			'DisplayNamePl', T(370391487021, --[[ModItemUnitAnimalCompositeDef Dragonfly DisplayNamePl]] "Hummingflies"),
+			'Description', T(345549403846, --[[ModItemUnitAnimalCompositeDef Dragonfly Description]] "Usually passive. Small chance to retaliate when attacked."),
+			'BaseMaxHealth', 10000,
+			'FoodResources', {
+				"FoodAnimalHerbivore",
+				"FoodAnimalCarnivore",
+				"Slop",
+			},
+			'DailyEatingAmount', 10000,
+			'Diet', "Omnivore",
+			'EatingDuration', 4000,
+			'ButcherResources', {
+				PlaceObj('ButcherResAmount', {
+					'resource', "RawMeatInsect",
+					'min_amount', 8000,
+				}),
+			},
+			'SelectionRadius', 1250,
+			'BodySize', "small",
+			'radius', 1000,
+			'attack_weapon', "DragonflyRanged",
+			'EatStartAnim', "eat_Start",
+			'EatIdleAnim', {
+				"eat_Idle",
+			},
+			'EatEndAnim', "eat_End",
+			'anim_idle', {
+				"idle",
+				"idle_Active",
+				"idle_Active2",
+			},
+			'anim_idle_nervous', {
+				"idle_Nervous",
+			},
+			'SleepStartAnim', "sleep_Start",
+			'SleepIdleAnim', "sleep_Idle",
+			'SleepEndAnim', "sleep_End",
+			'SleepInterruptedAnim', "sleep_Interupted",
+			'MinGrownScale', 70,
+			'MaxGrownScale', 90,
+			'FlightMinPitch', -2700,
+			'FlightMaxPitch', 2700,
+			'FlightMaxRoll', 3600,
+			'FlightYawRotToRoll', 150,
+			'FlightDecelDist', 6000,
+			'FlightSimHeightMax', 6000,
+			'FlightSimFrictionXY', 30,
+			'FlightSimAttract', 2000,
+			'FlightSimLift', 1000,
+			'FlightSimMaxLift', 5000,
+			'FlightSimWeight', 1000,
+			'FlightSimMinStep', 5000,
+			'FlightSimMaxStep', 20000,
+			'FlightSimDecelDist', 20000,
+			'FlightSimSplineErr', 1000,
+			'FlightSlopePenalty', 500,
+			'FlightMinObstacleHeight', 1050,
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "Tecatli",
@@ -17787,7 +18036,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 1400,
 			'SpawnDefWeight', 60,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Tecatli",
 			'CombatUseCover', true,
 			'HitNegationChance', {
 				blunt = 30,
@@ -17872,7 +18121,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 750,
 			'SpawnDefWeight', 60,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Tecatli",
 			'CombatUseCover', true,
 			'HitNegationChance', {
 				blunt = 45,
@@ -17957,7 +18206,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 450,
 			'SpawnDefWeight', 60,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Tecatli",
 			'HitNegationChance', {
 				blunt = 30,
 				energy = 30,
@@ -18043,7 +18292,7 @@ PlaceObj('ModItemFolder', {
 			},
 			'EventProgressValue', 150,
 			'SpawnDefWeight', 60,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Tecatli",
 			'HitNegationChance', {
 				blunt = 30,
 				energy = 15,
@@ -18227,7 +18476,7 @@ PlaceObj('ModItemFolder', {
 			'EventProgressValue', 80,
 			'SpawnDefWeight', 60,
 			'SightRange', 60000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Tecatli",
 			'HitNegationChance', {
 				blunt = 10,
 				energy = 10,
@@ -18625,7 +18874,7 @@ PlaceObj('ModItemFolder', {
 			'SpawnTags', set( "Boss" ),
 			'SightRange', 25000,
 			'HearingRange', 2500,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Scissorhands",
 			'CombatHostile', true,
 			'CombatRestrictPFBonus', 50000,
 			'CombatGiveUpNoHit', 30000,
@@ -18738,7 +18987,7 @@ PlaceObj('ModItemFolder', {
 			'SpawnTags', set( "Boss" ),
 			'SightRange', 25000,
 			'HearingRange', 2500,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Scissorhands",
 			'CombatHostile', true,
 			'CombatRestrictPFBonus', 50000,
 			'CombatGiveUpNoHit', 30000,
@@ -18846,7 +19095,7 @@ PlaceObj('ModItemFolder', {
 			'EventProgressValue', 3000,
 			'SpawnDefWeight', 30,
 			'SightRange', 50000,
-			'CombatGroup', "Insects",
+			'CombatGroup', "Juno",
 			'HitNegationChance', {
 				blunt = 60,
 				energy = 60,
@@ -18960,6 +19209,7 @@ PlaceObj('ModItemFolder', {
 			'GrowDuration', 1920000,
 			'MinGrownScale', 70,
 			'MaxGrownScale', 90,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyHealthPct', 99,
 			'FrenzyEffects', {
@@ -19232,7 +19482,7 @@ PlaceObj('ModItemFolder', {
 			'EventProgressValue', 250,
 			'SpawnDefWeight', 5,
 			'SpawnTags', set( "Boss" ),
-			'CombatGroup', "Insects",
+			'CombatGroup', "Juno",
 			'CombatHostile', true,
 			'AttackMemory', 45000,
 			'CombatGiveUpNoHit', 30000,
@@ -19331,6 +19581,7 @@ PlaceObj('ModItemFolder', {
 			'NewbornClass', "Juno_Brute",
 			'MinGrownScale', 70,
 			'MaxGrownScale', 90,
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "shrieker",
@@ -19339,6 +19590,7 @@ PlaceObj('ModItemFolder', {
 			'SpeciesGroup', "species_shrieker",
 			'EventProgressValue', 2000,
 			'SpawnDefWeight', 30,
+			'CombatGroup', "Shriekers",
 			'CombatHostile', false,
 			'CombatUseCover', true,
 			'HitNegationChance', {
@@ -19425,6 +19677,7 @@ PlaceObj('ModItemFolder', {
 			'SpeciesGroup', "species_shrieker",
 			'EventProgressValue', 1100,
 			'SpawnDefWeight', 30,
+			'CombatGroup', "Shriekers",
 			'CombatHostile', false,
 			'CombatUseCover', true,
 			'HitNegationChance', {
@@ -19509,6 +19762,7 @@ PlaceObj('ModItemFolder', {
 			'EventProgressValue', 750,
 			'SpawnDefWeight', 30,
 			'SpawnTags', set(),
+			'CombatGroup', "Shriekers",
 			'CombatHostile', false,
 			'CombatUseCover', true,
 			'HitNegationChance', {
@@ -19589,108 +19843,6 @@ PlaceObj('ModItemFolder', {
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "shrieker",
-			'Id', "Shrieker_T2",
-			'object_class', "ShriekerBase",
-			'SpeciesGroup', "species_shrieker",
-			'UnitTags', set( "AgitatedByPheromones", "Animal" ),
-			'RoamRadius', 10000,
-			'composite_part_groups', {
-				"Shrieker_Manhunting",
-			},
-			'PainMask', "PainMask",
-			'EventProgressValue', 45,
-			'SpawnDefWeight', 20,
-			'SpawnTags', set( "Boss" ),
-			'CombatGroup', "Insects",
-			'CombatHostile', true,
-			'HitNegationChance', {
-				piercing = 20,
-			},
-			'HitNegationChance_piercing', 20,
-			'CombatGiveUpNoHit', 30000,
-			'CombatFleeAccuracy', 0,
-			'BloodColor', RGBA(4, 60, 70, 255),
-			'max_skinned_decals', 3,
-			'FieldResearchTech', "FieldShrieker",
-			'ObservationDistanceMin', 500,
-			'ObservationDistanceMax', 1500,
-			'lead_priority', 15,
-			'Icon', "UI/Icons/Resources/res_shrieker",
-			'DisplayName', T(329148512487, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayName]] "Shrieker"),
-			'DisplayNamePl', T(259457015709, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayNamePl]] "Shriekers"),
-			'Description', T(873438453556, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 Description]] "This semi-intelligent nesting insect shoots spikes from its tail from wide distance."),
-			'fx_actor_base_class', "Shrieker",
-			'BaseMaxHealth', 50000,
-			'FoodResources', {
-				"FoodAnimalCarnivore",
-				"Slop",
-			},
-			'DailyEatingAmount', 1000,
-			'Diet', "Carnivore",
-			'EatingDuration', 10000,
-			'ButcherResources', {
-				PlaceObj('ButcherResAmount', {
-					'resource', "RawMeatInsect",
-					'min_amount', 15000,
-				}),
-			},
-			'SelectionRadius', 1100,
-			'ChanceToBeMale', 100,
-			'BodySize', "medium",
-			'ProduceResources', {
-				PlaceObj('ResAmount', {
-					'resource', "CarbonNanotubes",
-					'amount', 20000,
-				}),
-			},
-			'ProduceResInterval', 1920000,
-			'CmdProduceResources', function (animal)
-				if not animal:IsTamed() then return animal:UpdateProductionTime() end
-				return animal:DoProduceResourcesDiminishingReturns()
-			end,
-			'AnimalPerks', {
-				"StoneDigger",
-				"DraftableAnimal",
-			},
-			'collision_radius_mod', 1400,
-			'movement_adjust', 500,
-			'pfclass_tamed', 11,
-			'pfclass_tamed_lead', 14,
-			'EnrageChanceOtherAnimals', 100,
-			'attack_weapon_alt', "ShriekerMelee",
-			'CombatSkill', 3,
-			'EatStartAnim', "eat_Start",
-			'EatIdleAnim', {
-				"eat_Idle",
-			},
-			'EatEndAnim', "eat_End",
-			'SleepStartAnim', "sleep_Start",
-			'SleepIdleAnim', "sleep_Idle",
-			'SleepEndAnim', "sleep_End",
-			'SleepInterruptedAnim', "sleep_Interupted",
-			'Tameable', true,
-			'TamingFood', "RawMeatPoultry",
-			'TamingFoodAmount', 10000,
-			'TamingMinimumSkill', 5,
-			'TamingChance', 70,
-			'TamingAggressiveChance', 20,
-			'TamingDistance', 10000,
-			'TamedLifetimeMin', 138240000,
-			'TamedLifetimeMax', 230400000,
-			'CombatSkillInitial', range(5, 6),
-			'BondingChance', 5,
-			'ReproductionType', "two sexes",
-			'ReproductionGroup', "Shriekers",
-			'DailyPregnancyChance', 60,
-			'PregnancyDuration', 4800000,
-			'GrowDuration', 4800000,
-			'NewbornClass', "Shrieker_T3",
-			'MinGrownScale', 90,
-			'MaxGrownScale', 110,
-			'UnitNesting', true,
-		}),
-		PlaceObj('ModItemUnitAnimalCompositeDef', {
-			'Group', "shrieker",
 			'Id', "Shrieker_Manhunting_Mother",
 			'comment', "base unit, T1",
 			'object_class', "Shrieker_Manhunting",
@@ -19699,6 +19851,7 @@ PlaceObj('ModItemFolder', {
 			'pfclass', 3,
 			'EventProgressValue', 250,
 			'SpawnDefWeight', 5,
+			'CombatGroup', "Shriekers",
 			'HitNegationChance', {
 				piercing = 33,
 			},
@@ -19742,7 +19895,7 @@ PlaceObj('ModItemFolder', {
 			'IntimidationRange', 25000,
 			'TamedLifetimeMin', 184320000,
 			'TamedLifetimeMax', 322560000,
-			'NewbornClass', "Shrieker_T2",
+			'NewbornClass', "Shrieker_T3",
 			'MinGrownScale', 140,
 			'MaxGrownScale', 150,
 			'UnitAreaEffect', true,
@@ -19777,6 +19930,28 @@ PlaceObj('ModItemFolder', {
 			'composite_part_target', "Shrieker_Manhunting_Mother",
 			'DisplayName', T(592887288483, --[[ModItemUnitAnimalCompositeDef Shrieker_Mother DisplayName]] "Nesting shrieker broodmother"),
 			'DisplayNamePl', T(150549696800, --[[ModItemUnitAnimalCompositeDef Shrieker_Mother DisplayNamePl]] "Nesting shrieker broodmothers"),
+		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Group', "shrieker",
+			'Id', "Shrieker",
+			'comment', "base unit, T1",
+			'object_class', "Shrieker_Manhunting",
+			'SpeciesGroup', "species_shrieker",
+			'RoamIntervalMax', 80000,
+			'composite_part_groups', {
+				"Shrieker",
+			},
+			'CombatGroup', "Shriekers",
+			'lead_priority', 3,
+			'DisplayName', T(642604017665, --[[ModItemUnitAnimalCompositeDef Shrieker DisplayName]] "Nesting shrieker"),
+			'DisplayNamePl', T(331973526630, --[[ModItemUnitAnimalCompositeDef Shrieker DisplayNamePl]] "Nesting shriekers"),
+			'Description', T(390008654202, --[[ModItemUnitAnimalCompositeDef Shrieker Description]] "Highly aggressive territorial insect. Will attack everything near the nest. The nest entrance covers an underground hive that grows overtime and spawns more guardians."),
+			'EatingDuration', 4000,
+			'pfclass_tamed_lead', 13,
+			'NewbornClass', "Shrieker_Manhunting_Mother",
+			'MinGrownScale', 100,
+			'UnitNesting', true,
+			'CanBurrowInNest', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "ulfen",
@@ -19896,6 +20071,7 @@ PlaceObj('ModItemFolder', {
 			'MoveSpeedCold', 1000,
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "ulfen",
@@ -20035,6 +20211,7 @@ PlaceObj('ModItemFolder', {
 			'MoveSpeedCold', 1000,
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_1",
@@ -20179,6 +20356,7 @@ PlaceObj('ModItemFolder', {
 			'MoveSpeedCold', 1000,
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_2",
@@ -20331,6 +20509,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'UnitAreaEffect', true,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'AffectClass', "UnitAnimal",
 			'Effects', {
@@ -20499,6 +20678,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'UnitAreaEffect', true,
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'AffectRadius', 20000,
 			'AffectClass', "UnitAnimal",
@@ -20629,6 +20809,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Noth",
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "noth",
@@ -20748,6 +20929,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Noth",
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "noth",
@@ -20871,6 +21053,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Noth",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_1",
@@ -20998,6 +21181,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Noth",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_2",
@@ -21124,6 +21308,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Noth",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_3",
@@ -21248,6 +21433,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Draka",
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "draka",
@@ -21384,6 +21570,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Draka",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_1",
@@ -21525,6 +21712,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Draka",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_2",
@@ -21666,6 +21854,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Draka",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_3",
@@ -21812,6 +22001,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Draka",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_4",
@@ -21937,6 +22127,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMax', 0,
 			'GrazingChance', 3,
 			'HerdMergeClass', "Shogu",
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "shogu",
@@ -22068,6 +22259,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMax', 0,
 			'GrazingChance', 3,
 			'HerdMergeClass', "Shogu",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'AffectRadius', 5000,
 			'AffectClass', "UnitAnimal",
@@ -22214,6 +22406,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMax', 0,
 			'GrazingChance', 3,
 			'HerdMergeClass', "Shogu",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_2",
@@ -22358,6 +22551,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMax', 0,
 			'GrazingChance', 3,
 			'HerdMergeClass', "Shogu",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Shogu_Fly_Swarm",
@@ -22501,6 +22695,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMax', 0,
 			'GrazingChance', 3,
 			'HerdMergeClass', "Shogu",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'UnitReanimate', true,
 			'AffectRadius', 5000,
@@ -22631,6 +22826,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Camel",
+			'UnitNesting', true,
 		}),
 		PlaceObj('ModItemUnitAnimalCompositeDef', {
 			'Group', "camels",
@@ -22748,6 +22944,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Camel",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_1",
@@ -22880,6 +23077,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Camel",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_2",
@@ -23018,6 +23216,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Camel",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_3",
@@ -23155,6 +23354,7 @@ PlaceObj('ModItemFolder', {
 			'PlantsToEatMin', 40,
 			'PlantsToEatMax', 60,
 			'HerdMergeClass', "Camel",
+			'UnitNesting', true,
 			'UnitPerkFrenzy', true,
 			'FrenzyEffects', {
 				"Frenzy_Conscious_4",
@@ -23174,7 +23374,7 @@ PlaceObj('ModItemFolder', {
 			id = "species_shrieker",
 			intelligence = "sentient",
 			nest_class = "ShriekerNest",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Shriekers",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(419918653073, --[[ModItemUnitSpeciesGroup Default species_shrieker species_name]] "Shrieker"),
 		}),
@@ -23186,7 +23386,7 @@ PlaceObj('ModItemFolder', {
 			id = "species_scissorhand",
 			intelligence = "sentient",
 			nest_class = "ShriekerNest",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Scissorhands",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(417014407460, --[[ModItemUnitSpeciesGroup Default species_scissorhand species_name]] "Scissorhands"),
 		}),
@@ -23196,7 +23396,7 @@ PlaceObj('ModItemFolder', {
 			},
 			herd_size_modifier = 125,
 			id = "species_draka",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Drakkas",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(939050167083, --[[ModItemUnitSpeciesGroup Default species_draka species_name]] "Draka"),
 		}),
@@ -23245,7 +23445,7 @@ PlaceObj('ModItemFolder', {
 			},
 			herd_size_modifier = 70,
 			id = "species_gujo",
-			primary_combat_group = "ScavengerBirds",
+			primary_combat_group = "Gujo",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(484329550017, --[[ModItemUnitSpeciesGroup Default species_gujo species_name]] "Gujo"),
 		}),
@@ -23276,7 +23476,7 @@ PlaceObj('ModItemFolder', {
 			},
 			herd_size_modifier = 50,
 			id = "species_juno",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Juno",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(731946372013, --[[ModItemUnitSpeciesGroup Default species_juno species_name]] "Juno"),
 		}),
@@ -23285,7 +23485,7 @@ PlaceObj('ModItemFolder', {
 				"base_Skarabei_chain",
 			},
 			id = "species_skarabei",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Skarabei",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(143477487806, --[[ModItemUnitSpeciesGroup Default species_skarabei species_name]] "Skarabei"),
 		}),
@@ -23294,7 +23494,7 @@ PlaceObj('ModItemFolder', {
 				"base_Glutch_chain",
 			},
 			id = "species_glutch",
-			primary_combat_group = "Insects",
+			primary_combat_group = "Glutch",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(396603020221, --[[ModItemUnitSpeciesGroup Default species_glutch species_name]] "Glutch"),
 		}),
@@ -23303,6 +23503,7 @@ PlaceObj('ModItemFolder', {
 				"base_Dragonfly_chain",
 			},
 			id = "species_dragonfly",
+			primary_combat_group = "Deathfly",
 			save_in = "Mod/rtw6tLg",
 			species_name = T(353408387823, --[[ModItemUnitSpeciesGroup Default species_dragonfly species_name]] "Deathfly"),
 		}),
@@ -23330,25 +23531,20 @@ PlaceObj('ModItemFolder', {
 			units = {
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Shrieker_Hatchling",
-					'Tier', -1,
+					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Shrieker_Manhunting_Hatchling",
-					'Tier', -1,
+					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Shrieker",
-					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Shrieker_Manhunting",
-					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Shrieker_Manhunting_Mother",
-				}),
-				PlaceObj('UnitEvoInstance', {
-					'Unit', "Shrieker_T2",
 					'Tier', 2,
 				}),
 				PlaceObj('UnitEvoInstance', {
@@ -25119,7 +25315,7 @@ PlaceObj('ModItemFolder', {
 		}),
 		PlaceObj('ModItemTech', {
 			Activity = "FieldResearch",
-			Description = T(975185146158, --[[ModItemTech FieldCamelT3 Description]] "The Dromadda have now evolved and grabbed the ability to spit from Earth Camels.\nAmazingly their spit has the same consistency and acidity of the Hummingfly.\n\nThis combined with a general increase in intelligence means we can train and deploy these for defense!\n\nDeals <colro TextNegative>Energy</color> damage."),
+			Description = T(975185146158, --[[ModItemTech FieldCamelT3 Description]] "The Dromadda have now evolved and grabbed the ability to spit from Earth Camels.\nAmazingly their spit has the same consistency and acidity of the Hummingfly.\n\nThis combined with a general increase in intelligence means we can train and deploy these for defense!\n\nDeals <color TextNegative>Energy</color> damage."),
 			DisplayName = T(924189431384, --[[ModItemTech FieldCamelT3 DisplayName]] "Humped animal"),
 			DisplayNamePl = T(859058952645, --[[ModItemTech FieldCamelT3 DisplayNamePl]] "Humped animals"),
 			FieldResearchCategory = "Fauna",
@@ -25139,7 +25335,7 @@ PlaceObj('ModItemFolder', {
 		}),
 		PlaceObj('ModItemTech', {
 			Activity = "FieldResearch",
-			Description = T(995220278296, --[[ModItemTech FieldCamelT5 Description]] 'The royal purple and burly frame has caused the colony to start calling this species a "<em>Royal Llamels</em>".\nNow possessing high <color TextNegative>Energy</color> and <color TechSubtitleBlue>Piercing</color> resistances, this species can be used to trade fire with anything that assails us!\n\nDeals <colro TextNegative>Energy</color> damage.'),
+			Description = T(995220278296, --[[ModItemTech FieldCamelT5 Description]] 'The royal purple and burly frame has caused the colony to start calling this species a "<em>Royal Llamels</em>".\nNow possessing high <color TextNegative>Energy</color> and <color TechSubtitleBlue>Piercing</color> resistances, this species can be used to trade fire with anything that assails us!\n\nDeals <color TextNegative>Energy</color> damage.'),
 			DisplayName = T(346114070115, --[[ModItemTech FieldCamelT5 DisplayName]] "Humped animal"),
 			DisplayNamePl = T(321019568058, --[[ModItemTech FieldCamelT5 DisplayNamePl]] "Humped animals"),
 			FieldResearchCategory = "Fauna",
@@ -29302,6 +29498,92 @@ PlaceObj('ModItemFolder', {
 				'EditableColor2', RGBA(0, 0, 0, 255),
 				'EditableColor3', RGBA(121, 22, 45, 255),
 			}),
+		},
+	}),
+	PlaceObj('ModItemUnitAnimalCompositeDef', {
+		'Group', "shrieker",
+		'Id', "Shrieker_T2",
+		'object_class', "Shrieker_Manhunting",
+		'SpeciesGroup', "species_shrieker",
+		'EventProgressValue', 750,
+		'SpawnDefWeight', 30,
+		'SpawnTags', set(),
+		'CombatHostile', false,
+		'CombatUseCover', true,
+		'HitNegationChance', {
+			blunt = 10,
+			energy = 10,
+			gas = 10,
+			pacify = 40,
+			piercing = 50,
+		},
+		'HitNegationChance_blunt', 10,
+		'HitNegationChance_piercing', 50,
+		'HitNegationChance_energy', 10,
+		'HitNegationChance_gas', 10,
+		'HitNegationChance_pacify', 40,
+		'HumanThreat', true,
+		'RobotThreat', true,
+		'FieldResearchTech', "Field_Shrieker_T2",
+		'lead_priority', 6,
+		'DisplayName', T(210096238503, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayName]] "Entropic Shrieker"),
+		'DisplayNamePl', T(383358412796, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayNamePl]] "Entropic Shrieker"),
+		'DisplayNameUnknown', T(982950825877, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayNameUnknown]] "Unknown Shrieker Evolution"),
+		'DisplayNameUnknownPL', T(561769342615, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 DisplayNameUnknownPL]] "Unknown Shrieker Evolution"),
+		'Description', T(957198603241, --[[ModItemUnitAnimalCompositeDef Shrieker_T2 Description]] "Shrieker's who have evolved long barbed spikes. Resistant to piercing attacks, the barbs fully pierce and lodge in nearby terrain, lowering movement speed. Deals <color TextButton>Blunt</color> and <color TextSubtitleBlue>Piercing</color> damage."),
+		'BaseMaxHealth', 400000,
+		'DailyEatingAmount', 2000,
+		'ButcherResources', {
+			PlaceObj('ButcherResAmount', {
+				'resource', "RawMeatInsect",
+				'min_amount', 75000,
+			}),
+		},
+		'ChanceToBeMale', 50,
+		'ProduceResources', {
+			PlaceObj('ResAmount', {
+				'resource', "CarbonNanotubes",
+				'amount', 75000,
+			}),
+		},
+		'ProduceResInterval', 2400000,
+		'AnimalPerks', {
+			"StrongAnimal",
+			"BloodFrenzy",
+			"SmartPredator",
+			"StoneDigger",
+			"DraftableAnimal",
+		},
+		'attack_weapon', "shriker_range_move",
+		'TamingChance', 60,
+		'DailyPregnancyChance', 70,
+		'PregnancyDuration', 3840000,
+		'GrowDuration', 3840000,
+		'NewbornClass', "Shrieker_T4",
+		'UnitAreaEffect', true,
+		'UnitNesting', true,
+		'UnitPerkFrenzy', true,
+		'AffectRadius', 25000,
+		'AffectClass', "UnitAnimal",
+		'Effects', {
+			PlaceObj('AreaEffectHealthCondition', {
+				BodyPartGroup = "WholeBody",
+				HealthCond = "BroodMotherNearby",
+				HealthCondType = "Buff",
+			}),
+		},
+		'Disabled', function (self)
+			return self:IsDead() or self:IsUnconscious()
+		end,
+		'AffectFilter', function (self, target)
+			return target.CombatGroup == self.CombatGroup
+				and target:HasUnitTag("AgitatedByPheromones")
+				and not target:IsDead()
+				and not target:IsUnconscious()
+		end,
+		'FrenzyHealthPct', 99,
+		'FrenzyEffects', {
+			"Frenzy_Conscious_2",
 		},
 	}),
 	}),

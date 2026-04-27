@@ -1,6 +1,6 @@
 UndefineClass('Draka_T4')
 DefineClass.Draka_T4 = {
-	__parents = { "DrakaBase", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "DrakaBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -136,6 +136,7 @@ DefineClass.Draka_T4 = {
 	PlantsToEatMin = 40,
 	PlantsToEatMax = 60,
 	HerdMergeClass = "Draka",
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	FrenzyEffects = {
 		"Frenzy_Conscious_3",

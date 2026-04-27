@@ -1,11 +1,12 @@
-UndefineClass('Dragonfly_T4')
-DefineClass.Dragonfly_T4 = {
-	__parents = { "UnitNesting", "DragonflyBase", "UnitPerkFrenzy" },
+UndefineClass('Dragonfly')
+DefineClass.Dragonfly = {
+	__parents = { "UnitNesting", "DragonflyBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
+	__copy_group = "Dragonfly",
 	object_class = "DragonflyBase",
-	SpeciesGroup = "species_dragonfly",
+	SpeciesGroup = "insects",
 	RoamMinDist = 5000,
 	RoamMaxDist = 40000,
 	RoamIntervalMin = 4000,
@@ -14,37 +15,22 @@ DefineClass.Dragonfly_T4 = {
 		"Dragonfly",
 	},
 	PainMask = "PainMask",
-	EventProgressValue = 630,
+	EventProgressValue = 30,
+	SpawnTags = set( "Minion" ),
 	SightRange = 10000,
-	CombatGroup = "Deathfly",
-	HitNegationChance = {
-		blunt = 20,
-		energy = 20,
-		gas = 20,
-		pacify = 60,
-		piercing = 20,
-	},
-	HitNegationChance_blunt = 20,
-	HitNegationChance_piercing = 20,
-	HitNegationChance_energy = 20,
-	HitNegationChance_gas = 20,
-	HitNegationChance_pacify = 60,
-	HumanThreat = true,
-	RobotThreat = true,
+	CombatGroup = "Insects",
 	EnrageChance = 5,
 	BloodColor = 4286036179,
 	max_skinned_decals_low = -1,
-	FieldResearchTech = "Field_Dragonfly_T2",
+	FieldResearchTech = "FieldHummingfly",
 	ObservationDistanceMin = 17000,
 	ObservationDistanceMax = 21000,
 	SkipTesting = true,
 	Icon = "UI/Icons/Resources/res_dragonfly",
-	DisplayName = T(406188342891, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayName]] "Frenzied Fortified Bomber Deathfly"),
-	DisplayNamePl = T(923848022936, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNamePl]] "Frenzied Fortified Bomber Deathfly"),
-	DisplayNameUnknown = T(991372140381, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNameUnknown]] "Hummingfly Final Form?"),
-	DisplayNameUnknownPL = T(273592225259, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 DisplayNameUnknownPL]] "Hummingfly Final Form?"),
-	Description = T(565205596293, --[[ModItemUnitAnimalCompositeDef Dragonfly_T4 Description]] "These Dragonflys have improved defensive capabilities, including it's wings. Generally harder to bring down by any weaponry. Deals <color TextNegative>Energy</color> damage."),
-	BaseMaxHealth = 800000,
+	DisplayName = T(804776132681, --[[ModItemUnitAnimalCompositeDef Dragonfly DisplayName]] "Hummingfly"),
+	DisplayNamePl = T(370391487021, --[[ModItemUnitAnimalCompositeDef Dragonfly DisplayNamePl]] "Hummingflies"),
+	Description = T(345549403846, --[[ModItemUnitAnimalCompositeDef Dragonfly Description]] "Usually passive. Small chance to retaliate when attacked."),
+	BaseMaxHealth = 10000,
 	FoodResources = {
 		"FoodAnimalHerbivore",
 		"FoodAnimalCarnivore",
@@ -61,14 +47,8 @@ DefineClass.Dragonfly_T4 = {
 	},
 	SelectionRadius = 1250,
 	BodySize = "small",
-	CmdProduceResources = function (animal)
-		return animal:DoProduceResourcesDiminishingReturns()
-	end,
-	AnimalPerks = {
-		"AP_Frenzy",
-	},
 	radius = 1000,
-	attack_weapon = "Dragonfly_bomb",
+	attack_weapon = "DragonflyRanged",
 	EatStartAnim = "eat_Start",
 	EatIdleAnim = {
 		"eat_Idle",
@@ -106,10 +86,5 @@ DefineClass.Dragonfly_T4 = {
 	FlightSlopePenalty = 500,
 	FlightMinObstacleHeight = 1050,
 	UnitNesting = true,
-	UnitPerkFrenzy = true,
-	FrenzyHealthPct = 99,
-	FrenzyEffects = {
-		"Frenzy_Conscious_3",
-	},
 }
 

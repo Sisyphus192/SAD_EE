@@ -13,7 +13,7 @@ DefineClass.Tecatli_T4 = {
 	},
 	EventProgressValue = 750,
 	SpawnDefWeight = 60,
-	CombatGroup = "Insects",
+	CombatGroup = "Tecatli",
 	CombatUseCover = true,
 	HitNegationChance = {
 		blunt = 45,

@@ -1,6 +1,6 @@
 UndefineClass('Noth_T2')
 DefineClass.Noth_T2 = {
-	__parents = { "UlfenBase" },
+	__parents = { "UnitNesting", "UlfenBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -119,5 +119,6 @@ DefineClass.Noth_T2 = {
 	PlantsToEatMin = 40,
 	PlantsToEatMax = 60,
 	HerdMergeClass = "Noth",
+	UnitNesting = true,
 }
 

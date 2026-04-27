@@ -1,6 +1,6 @@
 UndefineClass('Dragonfly_T5')
 DefineClass.Dragonfly_T5 = {
-	__parents = { "DragonflyBase", "UnitPerkFrenzy" },
+	__parents = { "UnitNesting", "DragonflyBase", "UnitPerkFrenzy" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -16,7 +16,7 @@ DefineClass.Dragonfly_T5 = {
 	PainMask = "PainMask",
 	EventProgressValue = 1377,
 	SightRange = 10000,
-	CombatGroup = "Insects",
+	CombatGroup = "Deathfly",
 	HitNegationChance = {
 		blunt = 20,
 		energy = 20,
@@ -106,6 +106,7 @@ DefineClass.Dragonfly_T5 = {
 	FlightSimSplineErr = 1000,
 	FlightSlopePenalty = 500,
 	FlightMinObstacleHeight = 1050,
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	FrenzyHealthPct = 99,
 	FrenzyEffects = {

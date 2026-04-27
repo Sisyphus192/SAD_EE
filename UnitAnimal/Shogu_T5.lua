@@ -1,6 +1,6 @@
 UndefineClass('Shogu_T5')
 DefineClass.Shogu_T5 = {
-	__parents = { "ShoguBase", "UnitPerkFrenzy", "UnitReanimate" },
+	__parents = { "UnitNesting", "ShoguBase", "UnitPerkFrenzy", "UnitReanimate" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -138,6 +138,7 @@ DefineClass.Shogu_T5 = {
 	PlantsToEatMax = 0,
 	GrazingChance = 3,
 	HerdMergeClass = "Shogu",
+	UnitNesting = true,
 	UnitPerkFrenzy = true,
 	UnitReanimate = true,
 	AffectRadius = 5000,

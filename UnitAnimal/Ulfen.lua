@@ -1,6 +1,6 @@
 UndefineClass('Ulfen')
 DefineClass.Ulfen = {
-	__parents = { "UlfenBase" },
+	__parents = { "UnitNesting", "UlfenBase" },
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
@@ -119,5 +119,6 @@ DefineClass.Ulfen = {
 	MoveSpeedCold = 1000,
 	PlantsToEatMin = 40,
 	PlantsToEatMax = 60,
+	UnitNesting = true,
 }
 

@@ -9,6 +9,7 @@ DefineClass.Shrieker_T3 = {
 	EventProgressValue = 750,
 	SpawnDefWeight = 30,
 	SpawnTags = set(),
+	CombatGroup = "Shriekers",
 	CombatHostile = false,
 	CombatUseCover = true,
 	HitNegationChance = {
