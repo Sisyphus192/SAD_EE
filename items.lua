@@ -12652,11 +12652,11 @@ PlaceObj('ModItemFolder', {
 		AttackAngleTolerance = 1200,
 		AttackAnim = "attack_Bite",
 		AttackAnimAlt = "attack_Tail",
-		AttackCooldown = 3000,
-		AttackCooldownMaxSkill = 2000,
+		AttackCooldown = 2000,
 		AttackCooldownRand = 20,
 		AttackRange = 2400,
-		CritChanceMaxSkill = 30,
+		CritChance = 30,
+		CritChanceMaxSkill = 50,
 		CritHitEffect = {
 			PlaceObj('HealthConditionOption', {
 				effect = "Bite_Critical",
@@ -12675,12 +12675,11 @@ PlaceObj('ModItemFolder', {
 				weight = 1,
 			}),
 		},
-		DamageToBuildings = 10000,
+		DamageToBuildings = 20000,
 		DamageTypes = {
 			energy = true,
 			gas = true,
 		},
-		HitChance = 70,
 		HitChanceMaxSkill = 100,
 		HitEffect = {
 			PlaceObj('HealthConditionOption', {
@@ -12962,14 +12961,18 @@ PlaceObj('ModItemFolder', {
 		AttackAngleTolerance = 1200,
 		AttackAnim = "attack_Bite",
 		AttackAnimAlt = "attack_Tail",
-		AttackCooldown = 3000,
-		AttackCooldownMaxSkill = 2000,
+		AttackCooldown = 2000,
 		AttackCooldownRand = 20,
 		AttackRange = 2400,
-		CritChanceMaxSkill = 30,
+		CritChance = 30,
+		CritChanceMaxSkill = 50,
 		CritHitEffect = {
 			PlaceObj('HealthConditionOption', {
 				effect = "Tecatli_special_bite_crit",
+			}),
+			PlaceObj('HealthConditionOption', {
+				effect = "Bite_Critical",
+				weight = 20,
 			}),
 		},
 		DamageToBuildings = 30000,
@@ -12987,7 +12990,6 @@ PlaceObj('ModItemFolder', {
 				'health_condition', "Burn",
 			}),
 		},
-		HitChance = 70,
 		HitChanceMaxSkill = 100,
 		HitEffect = {
 			PlaceObj('HealthConditionOption', {
@@ -12995,6 +12997,10 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('HealthConditionOption', {
 				effect = "Burn_2",
+			}),
+			PlaceObj('HealthConditionOption', {
+				effect = "BrokenRib_Common",
+				weight = 3,
 			}),
 		},
 		MinAttackRange = 1500,

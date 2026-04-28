@@ -4,7 +4,6 @@ DefineClass.Dragonfly = {
 	__generated_by_class = "ModItemUnitAnimalCompositeDef",
 
 
-	__copy_group = "Dragonfly",
 	object_class = "DragonflyBase",
 	SpeciesGroup = "insects",
 	RoamMinDist = 5000,
