@@ -7522,41 +7522,11 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--print("New Attack Wave")
-					--[[instance.SpawnClass = minion
-					if boss1 then
-						instance.AdditionalClassList = {
-							{ boss1, AnimalDefs[boss1]:GetProperty("SpawnDefWeight") },
-							{ boss2, AnimalDefs[boss2]:GetProperty("SpawnDefWeight") }
-						}
-					]]
-					local seed = InteractionRand(nil, "AttackWave")
-					local rand = BraidRandomCreate(seed)
-					local minions = GetUnlockedMinions()
-					local bosses = GetUnlockedBosses()
-					bosses[#bosses+1]='Dog_T2'
-					local minion = table.rand(minions, rand())
-					--print("Main animal selected: ",minion)
-					local boss1 = table.rand(bosses, rand())
-					local boss2 = table.rand(bosses, rand())
-					local temp_list = {}
-					if boss1 then
-						--print('boss1 chosen: ',boss1)
-						--print('boss2 chosen: ',boss2)
-						temp_list[1]={ boss1, AnimalDefs[boss1]:GetProperty("SpawnDefWeight")}
-						temp_list[2]={ boss2, AnimalDefs[boss2]:GetProperty("SpawnDefWeight")}
-					else
-						local temp_list = {}
-					end
-					--print(bosses)
-					--print("Animal chosen: ",minion)
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList =check_count_and_upgrade(minion,temp_list)
+					spawnClassBest, addedClassList = Attack_instance_fill(false,true)
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
-					--print(spawnClassBest)
-					--print(addedClassList)
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
 					end
@@ -7584,15 +7554,11 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					local seed = InteractionRand(nil, "AttackWave")
-					local sc = table.rand(GetUnlockedMinions(), seed)
-					local spawnClassBest=''
-					local addedClassList={}
-					spawnClassBest, addedClassList =check_count_and_upgrade(sc,addedClassList,100)
+					local spawnClassBest = ''
+					local addedClassList = {}
+					spawnClassBest, addedClassList = Attack_instance_fill(false,false)
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
-					--print(spawnClassBest)
-					--print(addedClassList)
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
 					end
@@ -7626,15 +7592,11 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Skarabei"jjj]]
-					
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList =check_count_and_upgrade("Skarabei_Manhunting")
+					spawnClassBest, addedClassList = Attack_instance_fill("Skarabei_Manhunting",true)
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
-					--print(spawnClassBest)
-					--print(addedClassList)
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
 					end
@@ -7644,8 +7606,17 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
+					--[[ 
+					-- Testing the commenting of this
+					-- Manually setting the unit in the 
+					-- Attack_instance_fill inputs
+					-- Also sets that unit's chain as player attacked by
 					UnlockedInsectMinions["Skarabei_Manhunting"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Skarabei"])
+					local chain = Find_evo_chain('Skarabei_Manhunting')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true
+					--]]
 				end,
 				param_bindings = false,
 			}),
@@ -7680,10 +7651,9 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Dragonfly"]]
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList = check_count_and_upgrade("Dragonfly")
+					spawnClassBest, addedClassList = Attack_instance_fill("Dragonfly")
 					instance.SpawnClass = spawnClassBest
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
@@ -7694,8 +7664,17 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
+					--[[ 
+					-- Testing the commenting of this
+					-- Manually setting the unit in the 
+					-- Attack_instance_fill inputs
+					-- Also sets that unit's chain as player attacked by
 					UnlockedInsectMinions["Dragonfly"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Dragonfly"])
+					local chain = Find_evo_chain('Dragonfly')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true
+					--]]
 				end,
 				param_bindings = false,
 			}),
@@ -7739,15 +7718,10 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Shrieker_Manhunting"]]
 					local spawnClassBest = ''
 					local addedClassList = {}
-					
-					spawnClassBest, addedClassList =check_count_and_upgrade("Shrieker_Manhunting")
+					spawnClassBest, addedClassList = Attack_instance_fill("Shrieker_Manhunting")
 					instance.SpawnClass = spawnClassBest
-					instance.AdditionalClassList = {}
-					--print(spawnClassBest)
-					--print(addedClassList)
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
 					end
@@ -7757,10 +7731,13 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
-					UnlockedInsectMinions["Shrieker_Manhunting_Hatchling"] = true
+					--[[UnlockedInsectMinions["Shrieker_Manhunting_Hatchling"] = true
 					UnlockedInsectBosses["Shrieker_Manhunting"] = true
 					UnlockedInsectBosses["Shrieker_Manhunting_Mother"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Shrieker_Manhunting"])
+					local chain = Find_evo_chain('Shrieker_Manhunting')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true--]]
 				end,
 				param_bindings = false,
 			}),
@@ -7798,11 +7775,9 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Scissorhands"]]
-					
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList =check_count_and_upgrade("Scissorhands")
+					spawnClassBest, addedClassList =Attack_instance_fill("Scissorhands")
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
 					--print(spawnClassBest)
@@ -7816,9 +7791,12 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
-					UnlockedInsectMinions["Scissorhands_Hatchling"] = true
+					--[[UnlockedInsectMinions["Scissorhands_Hatchling"] = true
 					UnlockedInsectBosses["Scissorhands"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Scissorhands"])
+					local chain = Find_evo_chain('Scissorhands')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true--]]
 				end,
 				param_bindings = false,
 			}),
@@ -7856,16 +7834,11 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Juno"]]
-					
-					
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList =check_count_and_upgrade("Juno")
+					spawnClassBest, addedClassList = Attack_instance_fill("Juno",false)
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
-					--print(spawnClassBest)
-					--print(addedClassList)
 					for i=1,#addedClassList do
 						instance.AdditionalClassList[#instance.AdditionalClassList+1] ={addedClassList[i]['id'], addedClassList[i]['weight']}
 					end
@@ -7875,8 +7848,11 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
-					UnlockedInsectBosses["Juno"] = true
+					--[[UnlockedInsectBosses["Juno"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Juno"])
+					local chain = Find_evo_chain('Juno')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true--]]
 				end,
 				param_bindings = false,
 			}),
@@ -7914,10 +7890,9 @@ PlaceObj('ModItemFolder', {
 			PlaceObj('ActivateSpawnDef', {
 				CreateInstance = true,
 				FillInstance = function (self, instance)
-					--[[instance.SpawnClass = "Glutch_Manhunting"]]
 					local spawnClassBest = ''
 					local addedClassList = {}
-					spawnClassBest, addedClassList = check_count_and_upgrade("Glutch_Manhunting")
+					spawnClassBest, addedClassList = Attack_instance_fill("Glutch_Manhunting")
 					instance.SpawnClass = spawnClassBest
 					instance.AdditionalClassList = {}
 					--print(spawnClassBest)
@@ -7931,8 +7906,11 @@ PlaceObj('ModItemFolder', {
 			}),
 			PlaceObj('ExecuteCode', {
 				Code = function (self, obj)
-					UnlockedInsectBosses["Glutch_Manhunting"] = true
+					--[[UnlockedInsectBosses["Glutch_Manhunting"] = true
 					Msg("FirstAttackOfSpecies", AnimalDefs["Glutch_Manhunting"])
+					local chain = Find_evo_chain('Glutch_Manhunting')
+					local chain_id = chain.id
+					UnlockedAttackChains[chain_id]=true--]]
 				end,
 				param_bindings = false,
 			}),
@@ -23366,6 +23344,582 @@ PlaceObj('ModItemFolder', {
 				"Frenzy_Conscious_4",
 			},
 		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Group', "Evolutions",
+			'Id', "dog_T1",
+			'comment', "T2",
+			'object_class', "DogBase",
+			'SpeciesGroup', "dogs",
+			'RoamRadius', 15000,
+			'RoamIntervalMin', 40000,
+			'RoamIntervalMax', 120000,
+			'composite_part_target', "dog_T1",
+			'composite_part_groups', {
+				"Dog_GreatDane",
+			},
+			'PainMask', "PainMask",
+			'EventProgressValue', 100,
+			'SpawnDefWeight', 20,
+			'SightRange', 15000,
+			'CombatGroup', "Insects",
+			'HitNegationChance', {
+				blunt = 5,
+				energy = 5,
+				gas = 5,
+				pacify = 20,
+				piercing = 5,
+			},
+			'HitNegationChance_blunt', 5,
+			'HitNegationChance_piercing', 5,
+			'HitNegationChance_energy', 5,
+			'HitNegationChance_gas', 5,
+			'HitNegationChance_pacify', 20,
+			'EnrageChance', 5,
+			'AttackMemory', 45000,
+			'CombatGiveUpNoHit', 30000,
+			'CombatFleeAccuracy', 0,
+			'ButcherDuration', 5000,
+			'max_skinned_decals_low', -1,
+			'FieldResearchTech', "field_dog_T1",
+			'ObservationDistanceMin', 12000,
+			'ObservationDistanceMax', 18000,
+			'Icon', "UI/Icons/Resources/res_dog_great_dane",
+			'DisplayName', T(292995831281, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayName]] "Cold Dog"),
+			'DisplayNamePl', T(414297426957, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNamePl]] "Cold Dog"),
+			'DisplayNameUnknown', T(937975902891, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNameUnknown]] "Unknown Dog Evolution"),
+			'DisplayNameUnknownPL', T(111401399058, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+			'Description', T(717787070448, --[[ModItemUnitAnimalCompositeDef dog_T1 Description]] "A more aggressive and larger dog. This special species is usually only seen with other species. Unknown the implications or reasons... Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+			'FoodResources', {
+				"FoodAnimalCarnivore",
+				"Slop",
+			},
+			'DailyEatingAmount', 5000,
+			'Diet', "Carnivore",
+			'EatingDuration', 4000,
+			'ButcherResources', {
+				PlaceObj('ButcherResAmount', {
+					'resource', "RawMeat",
+					'min_amount', 10000,
+					'max_amount', 30000,
+				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "LeatherRaw",
+					'min_amount', 10000,
+				}),
+			},
+			'ChanceToBeMale', 50,
+			'BodySize', "small",
+			'CmdProduceResources', function (animal)
+				return animal:DoProduceResourcesDiminishingReturns()
+			end,
+			'AnimalPerks', {
+				"DraftableAnimal",
+				"SmartPredator",
+			},
+			'radius', 400,
+			'pfclass_tamed', 12,
+			'pfclass_tamed_lead', 12,
+			'EnrageChanceOtherAnimals', 50,
+			'IntimidationRange', 10000,
+			'EatStartAnim', "eat_Start",
+			'EatIdleAnim', {
+				"eat_Idle",
+			},
+			'EatEndAnim', "eat_End",
+			'anim_idle', {
+				"idle",
+				"idle_Active",
+			},
+			'anim_idle_nervous', {
+				"idle_Nervous",
+			},
+			'anim_idle_playful', {
+				"idle_Playfull",
+				"idle_Playfull2",
+			},
+			'SleepStartAnim', "sleep_Start",
+			'SleepIdleAnim', "sleep_Idle",
+			'SleepEndAnim', "sleep_End",
+			'Tameable', true,
+			'Petable', true,
+			'TamingFood', "DryMeat",
+			'TamingFoodAmount', 10000,
+			'TamingMinimumSkill', 6,
+			'TamingChance', 70,
+			'TamingAggressiveChance', 5,
+			'TamingDistance', 10000,
+			'TamedLifetimeMin', 138240000,
+			'TamedLifetimeMax', 230400000,
+			'CombatSkillInitial', range(5, 6),
+			'BondingChance', 20,
+			'ReproductionType', "two sexes",
+			'ReproductionGroup', "Dogs",
+			'DailyPregnancyChance', 55,
+			'PregnancyDuration', 4800000,
+			'GrowDuration', 4800000,
+			'NewbornClass', "dog_T3",
+			'MinGrownScale', 110,
+			'FieldVisibilityCold', 0,
+			'FieldVisibilityWarm', 0,
+			'MoveSpeedCold', 1000,
+			'PlantsToEatMin', 0,
+			'PlantsToEatMax', 0,
+			'GrazingChance', 3,
+			'HerdMergeClass', "Dog",
+			'UnitPerkFrenzy', true,
+			'FrenzyHealthPct', 99,
+			'FrenzyEffects', {
+				"Frenzy_Conscious_1",
+			},
+		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Group', "Evolutions",
+			'Id', "dog_T3",
+			'comment', "T3",
+			'object_class', "DogBase",
+			'SpeciesGroup', "dogs",
+			'RoamRadius', 15000,
+			'RoamIntervalMin', 40000,
+			'RoamIntervalMax', 120000,
+			'BypassTrapsChance', 20,
+			'composite_part_target', "dog_T3",
+			'composite_part_groups', {
+				"Dog_GreatDane",
+			},
+			'PainMask', "PainMask",
+			'EventProgressValue', 350,
+			'SightRange', 15000,
+			'CombatGroup', "Insects",
+			'HitNegationChance', {
+				blunt = 15,
+				energy = 15,
+				gas = 15,
+				pacify = 40,
+				piercing = 15,
+			},
+			'HitNegationChance_blunt', 15,
+			'HitNegationChance_piercing', 15,
+			'HitNegationChance_energy', 15,
+			'HitNegationChance_gas', 15,
+			'HitNegationChance_pacify', 40,
+			'EnrageChance', 5,
+			'AttackMemory', 45000,
+			'CombatGiveUpNoHit', 30000,
+			'CombatFleeAccuracy', 0,
+			'ButcherDuration', 5000,
+			'max_skinned_decals_low', -1,
+			'FieldResearchTech', "field_dog_T3",
+			'ObservationDistanceMin', 12000,
+			'ObservationDistanceMax', 18000,
+			'Icon', "UI/Icons/Resources/res_dog_great_dane",
+			'DisplayName', T(647785845635, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayName]] "Ice Wolf"),
+			'DisplayNamePl', T(777411002724, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNamePl]] "Ice Wolf"),
+			'DisplayNameUnknown', T(582851449580, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknown]] "Unknown Dog Evolution"),
+			'DisplayNameUnknownPL', T(971026493992, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+			'Description', T(106372402741, --[[ModItemUnitAnimalCompositeDef dog_T3 Description]] "Able to dodge and weave, avoiding small arms fire. Lives with other species, assisting in hunting, tracking, or killing their enemies. Which unfortunately is us. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+			'BaseMaxHealth', 200000,
+			'FoodResources', {
+				"FoodAnimalCarnivore",
+				"Slop",
+			},
+			'DailyEatingAmount', 5000,
+			'Diet', "Carnivore",
+			'EatingDuration', 4000,
+			'ButcherResources', {
+				PlaceObj('ButcherResAmount', {
+					'resource', "RawMeat",
+					'min_amount', 10000,
+					'max_amount', 30000,
+				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "LeatherRaw",
+					'min_amount', 10000,
+				}),
+			},
+			'ChanceToBeMale', 50,
+			'BodySize', "small",
+			'CmdProduceResources', function (animal)
+				return animal:DoProduceResourcesDiminishingReturns()
+			end,
+			'AnimalPerks', {
+				"DraftableAnimal",
+				"SmartPredator",
+				"AP_Commander",
+			},
+			'radius', 400,
+			'pfclass_tamed', 12,
+			'pfclass_tamed_lead', 12,
+			'EnrageChanceOtherAnimals', 50,
+			'IntimidationRange', 10000,
+			'EatStartAnim', "eat_Start",
+			'EatIdleAnim', {
+				"eat_Idle",
+			},
+			'EatEndAnim', "eat_End",
+			'anim_idle', {
+				"idle",
+				"idle_Active",
+			},
+			'anim_idle_nervous', {
+				"idle_Nervous",
+			},
+			'anim_idle_playful', {
+				"idle_Playfull",
+				"idle_Playfull2",
+			},
+			'SleepStartAnim', "sleep_Start",
+			'SleepIdleAnim', "sleep_Idle",
+			'SleepEndAnim', "sleep_End",
+			'Tameable', true,
+			'Petable', true,
+			'TamingFood', "DryMeat",
+			'TamingFoodAmount', 30000,
+			'TamingMinimumSkill', 7,
+			'TamingChance', 50,
+			'TamingAggressiveChance', 20,
+			'TamingDistance', 10000,
+			'TamedLifetimeMin', 138240000,
+			'TamedLifetimeMax', 230400000,
+			'CombatSkillInitial', range(5, 6),
+			'BondingChance', 20,
+			'ReproductionType', "two sexes",
+			'ReproductionGroup', "Dogs",
+			'DailyPregnancyChance', 65,
+			'PregnancyDuration', 2880000,
+			'GrowDuration', 2880000,
+			'NewbornClass', "dog_T4",
+			'MinGrownScale', 110,
+			'FieldVisibilityCold', 0,
+			'FieldVisibilityWarm', 0,
+			'MoveSpeedCold', 1000,
+			'PlantsToEatMin', 0,
+			'PlantsToEatMax', 0,
+			'GrazingChance', 3,
+			'HerdMergeClass', "Dog",
+			'UnitAreaEffect', true,
+			'UnitPerkFrenzy', true,
+			'AffectRadius', 10000,
+			'AffectClass', "UnitAnimal",
+			'Effects', {
+				PlaceObj('AreaEffectHealthCondition', {
+					BodyPart = "HeadBrain",
+					BodyPartGroup = "WholeHead",
+					HealthCond = "ILU_dog_near_weak",
+					HealthCondType = "Buff",
+				}),
+			},
+			'Disabled', function (self)
+				return self:IsDead() or self:IsUnconscious()
+			end,
+			'AffectFilter', function (self, target)
+				return target.CombatGroup == self.CombatGroup
+					and not target:IsDead()
+					and not target:IsUnconscious()
+			end,
+			'FrenzyHealthPct', 99,
+			'FrenzyEffects', {
+				"Frenzy_Conscious_2",
+			},
+		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Group', "Evolutions",
+			'Id', "dog_T4",
+			'comment', "T4",
+			'object_class', "DogBase",
+			'SpeciesGroup', "dogs",
+			'RoamRadius', 15000,
+			'RoamIntervalMin', 40000,
+			'RoamIntervalMax', 120000,
+			'BypassTrapsChance', 75,
+			'composite_part_target', "dog_T4",
+			'composite_part_groups', {
+				"Dog_GreatDane",
+			},
+			'PainMask', "PainMask",
+			'EventProgressValue', 850,
+			'SightRange', 15000,
+			'CombatGroup', "Insects",
+			'HitNegationChance', {
+				blunt = 25,
+				energy = 25,
+				gas = 25,
+				pacify = 60,
+				piercing = 25,
+			},
+			'HitNegationChance_blunt', 25,
+			'HitNegationChance_piercing', 25,
+			'HitNegationChance_energy', 25,
+			'HitNegationChance_gas', 25,
+			'HitNegationChance_pacify', 60,
+			'EnrageChance', 5,
+			'AttackMemory', 45000,
+			'CombatGiveUpNoHit', 30000,
+			'CombatFleeAccuracy', 0,
+			'ButcherDuration', 5000,
+			'max_skinned_decals_low', -1,
+			'FieldResearchTech', "field_dog_T3",
+			'ObservationDistanceMin', 12000,
+			'ObservationDistanceMax', 18000,
+			'ForcedApproachPlanning', true,
+			'Icon', "UI/Icons/Resources/res_dog_great_dane",
+			'DisplayName', T(564216556418, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayName]] "Glane"),
+			'DisplayNamePl', T(691817128716, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNamePl]] "Glanes"),
+			'DisplayNameUnknown', T(513515020593, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknown]] "Unknown Dog Evolution"),
+			'DisplayNameUnknownPL', T(436729618055, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
+			'Description', T(944763298399, --[[ModItemUnitAnimalCompositeDef dog_T4 Description]] "With a bite that causes localized hypothermia and a desire to help our other enemies... This once-friend requires prioritization.  Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+			'BaseMaxHealth', 400000,
+			'FoodResources', {
+				"FoodAnimalCarnivore",
+				"Slop",
+			},
+			'DailyEatingAmount', 5000,
+			'Diet', "Carnivore",
+			'EatingDuration', 4000,
+			'ButcherResources', {
+				PlaceObj('ButcherResAmount', {
+					'resource', "RawMeat",
+					'min_amount', 10000,
+					'max_amount', 30000,
+				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "LeatherRaw",
+					'min_amount', 10000,
+				}),
+			},
+			'ChanceToBeMale', 50,
+			'BodySize', "small",
+			'CmdProduceResources', function (animal)
+				return animal:DoProduceResourcesDiminishingReturns()
+			end,
+			'AnimalPerks', {
+				"DraftableAnimal",
+				"SmartPredator",
+				"AP_Commander",
+			},
+			'radius', 400,
+			'pfclass_tamed', 12,
+			'pfclass_tamed_lead', 12,
+			'EnrageChanceOtherAnimals', 50,
+			'IntimidationRange', 10000,
+			'EatStartAnim', "eat_Start",
+			'EatIdleAnim', {
+				"eat_Idle",
+			},
+			'EatEndAnim', "eat_End",
+			'anim_idle', {
+				"idle",
+				"idle_Active",
+			},
+			'anim_idle_nervous', {
+				"idle_Nervous",
+			},
+			'anim_idle_playful', {
+				"idle_Playfull",
+				"idle_Playfull2",
+			},
+			'SleepStartAnim', "sleep_Start",
+			'SleepIdleAnim', "sleep_Idle",
+			'SleepEndAnim', "sleep_End",
+			'Tameable', true,
+			'Petable', true,
+			'TamingFood', "DryMeat",
+			'TamingFoodAmount', 45000,
+			'TamingChance', 90,
+			'TamingAggressiveChance', 5,
+			'TamingDistance', 10000,
+			'TamedLifetimeMin', 138240000,
+			'TamedLifetimeMax', 230400000,
+			'CombatSkillInitial', range(5, 6),
+			'BondingChance', 20,
+			'ReproductionType', "two sexes",
+			'ReproductionGroup', "Dogs",
+			'DailyPregnancyChance', 75,
+			'PregnancyDuration', 1920000,
+			'GrowDuration', 1920000,
+			'NewbornClass', "dog_T5",
+			'MinGrownScale', 110,
+			'FieldVisibilityCold', 0,
+			'FieldVisibilityWarm', 0,
+			'MoveSpeedCold', 1000,
+			'PlantsToEatMin', 0,
+			'PlantsToEatMax', 0,
+			'GrazingChance', 3,
+			'HerdMergeClass', "Dog",
+			'UnitAreaEffect', true,
+			'UnitPerkFrenzy', true,
+			'AffectRadius', 15000,
+			'AffectClass', "UnitAnimal",
+			'Effects', {
+				PlaceObj('AreaEffectHealthCondition', {
+					BodyPart = "HeadBrain",
+					BodyPartGroup = "WholeHead",
+					HealthCond = "ILU_dog_near_weak",
+					HealthCondType = "Buff",
+				}),
+			},
+			'Disabled', function (self)
+				return self:IsDead() or self:IsUnconscious()
+			end,
+			'AffectFilter', function (self, target)
+				return target.CombatGroup == self.CombatGroup
+					and not target:IsDead()
+					and not target:IsUnconscious()
+			end,
+			'FrenzyHealthPct', 99,
+			'FrenzyEffects', {
+				"Frenzy_Conscious_3",
+			},
+		}),
+		PlaceObj('ModItemUnitAnimalCompositeDef', {
+			'Group', "Evolutions",
+			'Id', "dog_T5",
+			'comment', "T5",
+			'object_class', "DogBase",
+			'SpeciesGroup', "dogs",
+			'RoamRadius', 15000,
+			'RoamIntervalMin', 40000,
+			'RoamIntervalMax', 120000,
+			'BypassTrapsChance', 90,
+			'composite_part_target', "dog_T5",
+			'composite_part_groups', {
+				"Dog_GreatDane",
+			},
+			'PainMask', "PainMask",
+			'EventProgressValue', 1400,
+			'SightRange', 15000,
+			'CombatGroup', "Insects",
+			'CombatUseCover', true,
+			'HitNegationChance', {
+				blunt = 30,
+				energy = 30,
+				gas = 30,
+				pacify = 80,
+				piercing = 30,
+			},
+			'HitNegationChance_blunt', 30,
+			'HitNegationChance_piercing', 30,
+			'HitNegationChance_energy', 30,
+			'HitNegationChance_gas', 30,
+			'HitNegationChance_pacify', 80,
+			'EnrageChance', 5,
+			'AttackMemory', 45000,
+			'CombatGiveUpNoHit', 30000,
+			'CombatFleeAccuracy', 0,
+			'ButcherDuration', 5000,
+			'max_skinned_decals_low', -1,
+			'FieldResearchTech', "field_dog_T5",
+			'ObservationDistanceMin', 12000,
+			'ObservationDistanceMax', 18000,
+			'ForcedApproachPlanning', true,
+			'Icon', "UI/Icons/Resources/res_dog_great_dane",
+			'DisplayName', T(822133345273, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayName]] "Fenrir"),
+			'DisplayNamePl', T(526642104199, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNamePl]] "Fenrirs"),
+			'DisplayNameUnknown', T(185305520290, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknown]] "Dog's final form?"),
+			'DisplayNameUnknownPL', T(902597166447, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknownPL]] "Dog's final form?"),
+			'Description', T(744404741675, --[[ModItemUnitAnimalCompositeDef dog_T5 Description]] "Commander of the fauna's attacks against us. Prioritize killing to weaken the rest of the horde. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
+			'BaseMaxHealth', 800000,
+			'FoodResources', {
+				"FoodAnimalCarnivore",
+				"Slop",
+			},
+			'DailyEatingAmount', 5000,
+			'Diet', "Carnivore",
+			'EatingDuration', 4000,
+			'ButcherResources', {
+				PlaceObj('ButcherResAmount', {
+					'resource', "RawMeat",
+					'min_amount', 10000,
+					'max_amount', 30000,
+				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "LeatherRaw",
+					'min_amount', 10000,
+				}),
+			},
+			'ChanceToBeMale', 50,
+			'BodySize', "small",
+			'CmdProduceResources', function (animal)
+				return animal:DoProduceResourcesDiminishingReturns()
+			end,
+			'AnimalPerks', {
+				"DraftableAnimal",
+				"AP_Commander",
+			},
+			'radius', 400,
+			'pfclass_tamed', 12,
+			'pfclass_tamed_lead', 12,
+			'EnrageChanceOtherAnimals', 50,
+			'IntimidationRange', 10000,
+			'EatStartAnim', "eat_Start",
+			'EatIdleAnim', {
+				"eat_Idle",
+			},
+			'EatEndAnim', "eat_End",
+			'anim_idle', {
+				"idle",
+				"idle_Active",
+			},
+			'anim_idle_nervous', {
+				"idle_Nervous",
+			},
+			'anim_idle_playful', {
+				"idle_Playfull",
+				"idle_Playfull2",
+			},
+			'SleepStartAnim', "sleep_Start",
+			'SleepIdleAnim', "sleep_Idle",
+			'SleepEndAnim', "sleep_End",
+			'Tameable', true,
+			'Petable', true,
+			'TamingFood', "DryMeat",
+			'TamingFoodAmount', 60000,
+			'TamingMinimumSkill', 9,
+			'TamingChance', 25,
+			'TamingAggressiveChance', 80,
+			'TamingDistance', 30000,
+			'TamedLifetimeMin', 138240000,
+			'TamedLifetimeMax', 230400000,
+			'CombatSkillInitial', range(5, 6),
+			'BondingChance', 20,
+			'ReproductionType', "two sexes",
+			'ReproductionGroup', "Dogs",
+			'DailyPregnancyChance', 60,
+			'PregnancyDuration', 1920000,
+			'GrowDuration', 1920000,
+			'NewbornClass', "dog_T5",
+			'MinGrownScale', 110,
+			'FieldVisibilityCold', 0,
+			'FieldVisibilityWarm', 0,
+			'MoveSpeedCold', 1000,
+			'PlantsToEatMin', 0,
+			'PlantsToEatMax', 0,
+			'GrazingChance', 3,
+			'HerdMergeClass', "Dog",
+			'UnitAreaEffect', true,
+			'UnitPerkFrenzy', true,
+			'AffectRadius', 25000,
+			'AffectClass', "UnitAnimal",
+			'Effects', {
+				PlaceObj('AreaEffectHealthCondition', {
+					BodyPart = "HeadBrain",
+					BodyPartGroup = "WholeHead",
+					HealthCond = "ILU_dog_near_strong",
+					HealthCondType = "Buff",
+				}),
+			},
+			'Disabled', function (self)
+				return self:IsDead() or self:IsUnconscious()
+			end,
+			'AffectFilter', function (self, target)
+				return target.CombatGroup == self.CombatGroup
+					and not target:IsDead()
+					and not target:IsUnconscious()
+			end,
+			'FrenzyHealthPct', 99,
+			'FrenzyEffects', {
+				"Frenzy_Conscious_4",
+			},
+		}),
 		}),
 	PlaceObj('ModItemFolder', {
 		'name', "Species and Chains",
@@ -23685,6 +24239,10 @@ PlaceObj('ModItemFolder', {
 			units = {
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Dragonfly",
+					'Tier', 0,
+				}),
+				PlaceObj('UnitEvoInstance', {
+					'Unit', "Dragonfly",
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Dragonfly_T2",
@@ -23767,12 +24325,18 @@ PlaceObj('ModItemFolder', {
 			units = {
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Dog",
+					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "GreatDane",
+					'Tier', 0,
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Weirmaraner",
+					'Tier', 0,
+				}),
+				PlaceObj('UnitEvoInstance', {
+					'Unit', "dog_T1",
 				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Dog_T2",
@@ -23921,6 +24485,10 @@ PlaceObj('ModItemFolder', {
 			id = "base_Draka_chain",
 			save_in = "Mod/rtw6tLg",
 			units = {
+				PlaceObj('UnitEvoInstance', {
+					'Unit', "Draka",
+					'Tier', 0,
+				}),
 				PlaceObj('UnitEvoInstance', {
 					'Unit', "Draka",
 				}),
@@ -28279,582 +28847,6 @@ PlaceObj('ModItemFolder', {
 		'FrenzyEffects', {
 			"Blood_Frenzy",
 			"Frenzy_Conscious_2",
-		},
-	}),
-	PlaceObj('ModItemUnitAnimalCompositeDef', {
-		'Group', "Evolutions",
-		'Id', "dog_T5",
-		'comment', "T5",
-		'object_class', "DogBase",
-		'SpeciesGroup', "dogs",
-		'RoamRadius', 15000,
-		'RoamIntervalMin', 40000,
-		'RoamIntervalMax', 120000,
-		'BypassTrapsChance', 90,
-		'composite_part_target', "dog_T5",
-		'composite_part_groups', {
-			"Dog_GreatDane",
-		},
-		'PainMask', "PainMask",
-		'EventProgressValue', 1400,
-		'SightRange', 15000,
-		'CombatGroup', "Insects",
-		'CombatUseCover', true,
-		'HitNegationChance', {
-			blunt = 30,
-			energy = 30,
-			gas = 30,
-			pacify = 80,
-			piercing = 30,
-		},
-		'HitNegationChance_blunt', 30,
-		'HitNegationChance_piercing', 30,
-		'HitNegationChance_energy', 30,
-		'HitNegationChance_gas', 30,
-		'HitNegationChance_pacify', 80,
-		'EnrageChance', 5,
-		'AttackMemory', 45000,
-		'CombatGiveUpNoHit', 30000,
-		'CombatFleeAccuracy', 0,
-		'ButcherDuration', 5000,
-		'max_skinned_decals_low', -1,
-		'FieldResearchTech', "field_dog_T5",
-		'ObservationDistanceMin', 12000,
-		'ObservationDistanceMax', 18000,
-		'ForcedApproachPlanning', true,
-		'Icon', "UI/Icons/Resources/res_dog_great_dane",
-		'DisplayName', T(822133345273, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayName]] "Fenrir"),
-		'DisplayNamePl', T(526642104199, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNamePl]] "Fenrirs"),
-		'DisplayNameUnknown', T(185305520290, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknown]] "Dog's final form?"),
-		'DisplayNameUnknownPL', T(902597166447, --[[ModItemUnitAnimalCompositeDef dog_T5 DisplayNameUnknownPL]] "Dog's final form?"),
-		'Description', T(744404741675, --[[ModItemUnitAnimalCompositeDef dog_T5 Description]] "Commander of the fauna's attacks against us. Prioritize killing to weaken the rest of the horde. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
-		'BaseMaxHealth', 800000,
-		'FoodResources', {
-			"FoodAnimalCarnivore",
-			"Slop",
-		},
-		'DailyEatingAmount', 5000,
-		'Diet', "Carnivore",
-		'EatingDuration', 4000,
-		'ButcherResources', {
-			PlaceObj('ButcherResAmount', {
-				'resource', "RawMeat",
-				'min_amount', 10000,
-				'max_amount', 30000,
-			}),
-			PlaceObj('ButcherResAmount', {
-				'resource', "LeatherRaw",
-				'min_amount', 10000,
-			}),
-		},
-		'ChanceToBeMale', 50,
-		'BodySize', "small",
-		'CmdProduceResources', function (animal)
-			return animal:DoProduceResourcesDiminishingReturns()
-		end,
-		'AnimalPerks', {
-			"DraftableAnimal",
-			"AP_Commander",
-		},
-		'radius', 400,
-		'pfclass_tamed', 12,
-		'pfclass_tamed_lead', 12,
-		'EnrageChanceOtherAnimals', 50,
-		'IntimidationRange', 10000,
-		'EatStartAnim', "eat_Start",
-		'EatIdleAnim', {
-			"eat_Idle",
-		},
-		'EatEndAnim', "eat_End",
-		'anim_idle', {
-			"idle",
-			"idle_Active",
-		},
-		'anim_idle_nervous', {
-			"idle_Nervous",
-		},
-		'anim_idle_playful', {
-			"idle_Playfull",
-			"idle_Playfull2",
-		},
-		'SleepStartAnim', "sleep_Start",
-		'SleepIdleAnim', "sleep_Idle",
-		'SleepEndAnim', "sleep_End",
-		'Tameable', true,
-		'Petable', true,
-		'TamingFood', "DryMeat",
-		'TamingFoodAmount', 60000,
-		'TamingMinimumSkill', 9,
-		'TamingChance', 25,
-		'TamingAggressiveChance', 80,
-		'TamingDistance', 30000,
-		'TamedLifetimeMin', 138240000,
-		'TamedLifetimeMax', 230400000,
-		'CombatSkillInitial', range(5, 6),
-		'BondingChance', 20,
-		'ReproductionType', "two sexes",
-		'ReproductionGroup', "Dogs",
-		'DailyPregnancyChance', 60,
-		'PregnancyDuration', 1920000,
-		'GrowDuration', 1920000,
-		'NewbornClass', "dog_T5",
-		'MinGrownScale', 110,
-		'FieldVisibilityCold', 0,
-		'FieldVisibilityWarm', 0,
-		'MoveSpeedCold', 1000,
-		'PlantsToEatMin', 0,
-		'PlantsToEatMax', 0,
-		'GrazingChance', 3,
-		'HerdMergeClass', "Dog",
-		'UnitAreaEffect', true,
-		'UnitPerkFrenzy', true,
-		'AffectRadius', 25000,
-		'AffectClass', "UnitAnimal",
-		'Effects', {
-			PlaceObj('AreaEffectHealthCondition', {
-				BodyPart = "HeadBrain",
-				BodyPartGroup = "WholeHead",
-				HealthCond = "ILU_dog_near_strong",
-				HealthCondType = "Buff",
-			}),
-		},
-		'Disabled', function (self)
-			return self:IsDead() or self:IsUnconscious()
-		end,
-		'AffectFilter', function (self, target)
-			return target.CombatGroup == self.CombatGroup
-				and not target:IsDead()
-				and not target:IsUnconscious()
-		end,
-		'FrenzyHealthPct', 99,
-		'FrenzyEffects', {
-			"Frenzy_Conscious_4",
-		},
-	}),
-	PlaceObj('ModItemUnitAnimalCompositeDef', {
-		'Group', "Evolutions",
-		'Id', "dog_T4",
-		'comment', "T4",
-		'object_class', "DogBase",
-		'SpeciesGroup', "dogs",
-		'RoamRadius', 15000,
-		'RoamIntervalMin', 40000,
-		'RoamIntervalMax', 120000,
-		'BypassTrapsChance', 75,
-		'composite_part_target', "dog_T4",
-		'composite_part_groups', {
-			"Dog_GreatDane",
-		},
-		'PainMask', "PainMask",
-		'EventProgressValue', 850,
-		'SightRange', 15000,
-		'CombatGroup', "Insects",
-		'HitNegationChance', {
-			blunt = 25,
-			energy = 25,
-			gas = 25,
-			pacify = 60,
-			piercing = 25,
-		},
-		'HitNegationChance_blunt', 25,
-		'HitNegationChance_piercing', 25,
-		'HitNegationChance_energy', 25,
-		'HitNegationChance_gas', 25,
-		'HitNegationChance_pacify', 60,
-		'EnrageChance', 5,
-		'AttackMemory', 45000,
-		'CombatGiveUpNoHit', 30000,
-		'CombatFleeAccuracy', 0,
-		'ButcherDuration', 5000,
-		'max_skinned_decals_low', -1,
-		'FieldResearchTech', "field_dog_T3",
-		'ObservationDistanceMin', 12000,
-		'ObservationDistanceMax', 18000,
-		'ForcedApproachPlanning', true,
-		'Icon', "UI/Icons/Resources/res_dog_great_dane",
-		'DisplayName', T(564216556418, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayName]] "Glane"),
-		'DisplayNamePl', T(691817128716, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNamePl]] "Glanes"),
-		'DisplayNameUnknown', T(513515020593, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknown]] "Unknown Dog Evolution"),
-		'DisplayNameUnknownPL', T(436729618055, --[[ModItemUnitAnimalCompositeDef dog_T4 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-		'Description', T(944763298399, --[[ModItemUnitAnimalCompositeDef dog_T4 Description]] "With a bite that causes localized hypothermia and a desire to help our other enemies... This once-friend requires prioritization.  Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
-		'BaseMaxHealth', 400000,
-		'FoodResources', {
-			"FoodAnimalCarnivore",
-			"Slop",
-		},
-		'DailyEatingAmount', 5000,
-		'Diet', "Carnivore",
-		'EatingDuration', 4000,
-		'ButcherResources', {
-			PlaceObj('ButcherResAmount', {
-				'resource', "RawMeat",
-				'min_amount', 10000,
-				'max_amount', 30000,
-			}),
-			PlaceObj('ButcherResAmount', {
-				'resource', "LeatherRaw",
-				'min_amount', 10000,
-			}),
-		},
-		'ChanceToBeMale', 50,
-		'BodySize', "small",
-		'CmdProduceResources', function (animal)
-			return animal:DoProduceResourcesDiminishingReturns()
-		end,
-		'AnimalPerks', {
-			"DraftableAnimal",
-			"SmartPredator",
-			"AP_Commander",
-		},
-		'radius', 400,
-		'pfclass_tamed', 12,
-		'pfclass_tamed_lead', 12,
-		'EnrageChanceOtherAnimals', 50,
-		'IntimidationRange', 10000,
-		'EatStartAnim', "eat_Start",
-		'EatIdleAnim', {
-			"eat_Idle",
-		},
-		'EatEndAnim', "eat_End",
-		'anim_idle', {
-			"idle",
-			"idle_Active",
-		},
-		'anim_idle_nervous', {
-			"idle_Nervous",
-		},
-		'anim_idle_playful', {
-			"idle_Playfull",
-			"idle_Playfull2",
-		},
-		'SleepStartAnim', "sleep_Start",
-		'SleepIdleAnim', "sleep_Idle",
-		'SleepEndAnim', "sleep_End",
-		'Tameable', true,
-		'Petable', true,
-		'TamingFood', "DryMeat",
-		'TamingFoodAmount', 45000,
-		'TamingChance', 90,
-		'TamingAggressiveChance', 5,
-		'TamingDistance', 10000,
-		'TamedLifetimeMin', 138240000,
-		'TamedLifetimeMax', 230400000,
-		'CombatSkillInitial', range(5, 6),
-		'BondingChance', 20,
-		'ReproductionType', "two sexes",
-		'ReproductionGroup', "Dogs",
-		'DailyPregnancyChance', 75,
-		'PregnancyDuration', 1920000,
-		'GrowDuration', 1920000,
-		'NewbornClass', "dog_T5",
-		'MinGrownScale', 110,
-		'FieldVisibilityCold', 0,
-		'FieldVisibilityWarm', 0,
-		'MoveSpeedCold', 1000,
-		'PlantsToEatMin', 0,
-		'PlantsToEatMax', 0,
-		'GrazingChance', 3,
-		'HerdMergeClass', "Dog",
-		'UnitAreaEffect', true,
-		'UnitPerkFrenzy', true,
-		'AffectRadius', 15000,
-		'AffectClass', "UnitAnimal",
-		'Effects', {
-			PlaceObj('AreaEffectHealthCondition', {
-				BodyPart = "HeadBrain",
-				BodyPartGroup = "WholeHead",
-				HealthCond = "ILU_dog_near_weak",
-				HealthCondType = "Buff",
-			}),
-		},
-		'Disabled', function (self)
-			return self:IsDead() or self:IsUnconscious()
-		end,
-		'AffectFilter', function (self, target)
-			return target.CombatGroup == self.CombatGroup
-				and not target:IsDead()
-				and not target:IsUnconscious()
-		end,
-		'FrenzyHealthPct', 99,
-		'FrenzyEffects', {
-			"Frenzy_Conscious_3",
-		},
-	}),
-	PlaceObj('ModItemUnitAnimalCompositeDef', {
-		'Group', "Evolutions",
-		'Id', "dog_T3",
-		'comment', "T3",
-		'object_class', "DogBase",
-		'SpeciesGroup', "dogs",
-		'RoamRadius', 15000,
-		'RoamIntervalMin', 40000,
-		'RoamIntervalMax', 120000,
-		'BypassTrapsChance', 20,
-		'composite_part_target', "dog_T3",
-		'composite_part_groups', {
-			"Dog_GreatDane",
-		},
-		'PainMask', "PainMask",
-		'EventProgressValue', 350,
-		'SightRange', 15000,
-		'CombatGroup', "Insects",
-		'HitNegationChance', {
-			blunt = 15,
-			energy = 15,
-			gas = 15,
-			pacify = 40,
-			piercing = 15,
-		},
-		'HitNegationChance_blunt', 15,
-		'HitNegationChance_piercing', 15,
-		'HitNegationChance_energy', 15,
-		'HitNegationChance_gas', 15,
-		'HitNegationChance_pacify', 40,
-		'EnrageChance', 5,
-		'AttackMemory', 45000,
-		'CombatGiveUpNoHit', 30000,
-		'CombatFleeAccuracy', 0,
-		'ButcherDuration', 5000,
-		'max_skinned_decals_low', -1,
-		'FieldResearchTech', "field_dog_T3",
-		'ObservationDistanceMin', 12000,
-		'ObservationDistanceMax', 18000,
-		'Icon', "UI/Icons/Resources/res_dog_great_dane",
-		'DisplayName', T(647785845635, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayName]] "Ice Wolf"),
-		'DisplayNamePl', T(777411002724, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNamePl]] "Ice Wolf"),
-		'DisplayNameUnknown', T(582851449580, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknown]] "Unknown Dog Evolution"),
-		'DisplayNameUnknownPL', T(971026493992, --[[ModItemUnitAnimalCompositeDef dog_T3 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-		'Description', T(106372402741, --[[ModItemUnitAnimalCompositeDef dog_T3 Description]] "Able to dodge and weave, avoiding small arms fire. Lives with other species, assisting in hunting, tracking, or killing their enemies. Which unfortunately is us. Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
-		'BaseMaxHealth', 200000,
-		'FoodResources', {
-			"FoodAnimalCarnivore",
-			"Slop",
-		},
-		'DailyEatingAmount', 5000,
-		'Diet', "Carnivore",
-		'EatingDuration', 4000,
-		'ButcherResources', {
-			PlaceObj('ButcherResAmount', {
-				'resource', "RawMeat",
-				'min_amount', 10000,
-				'max_amount', 30000,
-			}),
-			PlaceObj('ButcherResAmount', {
-				'resource', "LeatherRaw",
-				'min_amount', 10000,
-			}),
-		},
-		'ChanceToBeMale', 50,
-		'BodySize', "small",
-		'CmdProduceResources', function (animal)
-			return animal:DoProduceResourcesDiminishingReturns()
-		end,
-		'AnimalPerks', {
-			"DraftableAnimal",
-			"SmartPredator",
-			"AP_Commander",
-		},
-		'radius', 400,
-		'pfclass_tamed', 12,
-		'pfclass_tamed_lead', 12,
-		'EnrageChanceOtherAnimals', 50,
-		'IntimidationRange', 10000,
-		'EatStartAnim', "eat_Start",
-		'EatIdleAnim', {
-			"eat_Idle",
-		},
-		'EatEndAnim', "eat_End",
-		'anim_idle', {
-			"idle",
-			"idle_Active",
-		},
-		'anim_idle_nervous', {
-			"idle_Nervous",
-		},
-		'anim_idle_playful', {
-			"idle_Playfull",
-			"idle_Playfull2",
-		},
-		'SleepStartAnim', "sleep_Start",
-		'SleepIdleAnim', "sleep_Idle",
-		'SleepEndAnim', "sleep_End",
-		'Tameable', true,
-		'Petable', true,
-		'TamingFood', "DryMeat",
-		'TamingFoodAmount', 30000,
-		'TamingMinimumSkill', 7,
-		'TamingChance', 50,
-		'TamingAggressiveChance', 20,
-		'TamingDistance', 10000,
-		'TamedLifetimeMin', 138240000,
-		'TamedLifetimeMax', 230400000,
-		'CombatSkillInitial', range(5, 6),
-		'BondingChance', 20,
-		'ReproductionType', "two sexes",
-		'ReproductionGroup', "Dogs",
-		'DailyPregnancyChance', 65,
-		'PregnancyDuration', 2880000,
-		'GrowDuration', 2880000,
-		'NewbornClass', "dog_T4",
-		'MinGrownScale', 110,
-		'FieldVisibilityCold', 0,
-		'FieldVisibilityWarm', 0,
-		'MoveSpeedCold', 1000,
-		'PlantsToEatMin', 0,
-		'PlantsToEatMax', 0,
-		'GrazingChance', 3,
-		'HerdMergeClass', "Dog",
-		'UnitAreaEffect', true,
-		'UnitPerkFrenzy', true,
-		'AffectRadius', 10000,
-		'AffectClass', "UnitAnimal",
-		'Effects', {
-			PlaceObj('AreaEffectHealthCondition', {
-				BodyPart = "HeadBrain",
-				BodyPartGroup = "WholeHead",
-				HealthCond = "ILU_dog_near_weak",
-				HealthCondType = "Buff",
-			}),
-		},
-		'Disabled', function (self)
-			return self:IsDead() or self:IsUnconscious()
-		end,
-		'AffectFilter', function (self, target)
-			return target.CombatGroup == self.CombatGroup
-				and not target:IsDead()
-				and not target:IsUnconscious()
-		end,
-		'FrenzyHealthPct', 99,
-		'FrenzyEffects', {
-			"Frenzy_Conscious_2",
-		},
-	}),
-	PlaceObj('ModItemUnitAnimalCompositeDef', {
-		'Group', "Evolutions",
-		'Id', "dog_T1",
-		'comment', "T2",
-		'object_class', "DogBase",
-		'SpeciesGroup', "dogs",
-		'RoamRadius', 15000,
-		'RoamIntervalMin', 40000,
-		'RoamIntervalMax', 120000,
-		'composite_part_target', "dog_T1",
-		'composite_part_groups', {
-			"Dog_GreatDane",
-		},
-		'PainMask', "PainMask",
-		'EventProgressValue', 100,
-		'SpawnDefWeight', 20,
-		'SightRange', 15000,
-		'CombatGroup', "Insects",
-		'HitNegationChance', {
-			blunt = 5,
-			energy = 5,
-			gas = 5,
-			pacify = 20,
-			piercing = 5,
-		},
-		'HitNegationChance_blunt', 5,
-		'HitNegationChance_piercing', 5,
-		'HitNegationChance_energy', 5,
-		'HitNegationChance_gas', 5,
-		'HitNegationChance_pacify', 20,
-		'EnrageChance', 5,
-		'AttackMemory', 45000,
-		'CombatGiveUpNoHit', 30000,
-		'CombatFleeAccuracy', 0,
-		'ButcherDuration', 5000,
-		'max_skinned_decals_low', -1,
-		'FieldResearchTech', "field_dog_T1",
-		'ObservationDistanceMin', 12000,
-		'ObservationDistanceMax', 18000,
-		'Icon', "UI/Icons/Resources/res_dog_great_dane",
-		'DisplayName', T(292995831281, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayName]] "Cold Dog"),
-		'DisplayNamePl', T(414297426957, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNamePl]] "Cold Dog"),
-		'DisplayNameUnknown', T(937975902891, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNameUnknown]] "Unknown Dog Evolution"),
-		'DisplayNameUnknownPL', T(111401399058, --[[ModItemUnitAnimalCompositeDef dog_T1 DisplayNameUnknownPL]] "Unknown Dog Evolution"),
-		'Description', T(717787070448, --[[ModItemUnitAnimalCompositeDef dog_T1 Description]] "A more aggressive and larger dog. This special species is usually only seen with other species. Unknown the implications or reasons... Deals <color TechSubtitleBlue>Piercing</color> and <color TextNegative>Energy</color> damage."),
-		'FoodResources', {
-			"FoodAnimalCarnivore",
-			"Slop",
-		},
-		'DailyEatingAmount', 5000,
-		'Diet', "Carnivore",
-		'EatingDuration', 4000,
-		'ButcherResources', {
-			PlaceObj('ButcherResAmount', {
-				'resource', "RawMeat",
-				'min_amount', 10000,
-				'max_amount', 30000,
-			}),
-			PlaceObj('ButcherResAmount', {
-				'resource', "LeatherRaw",
-				'min_amount', 10000,
-			}),
-		},
-		'ChanceToBeMale', 50,
-		'BodySize', "small",
-		'CmdProduceResources', function (animal)
-			return animal:DoProduceResourcesDiminishingReturns()
-		end,
-		'AnimalPerks', {
-			"DraftableAnimal",
-			"SmartPredator",
-		},
-		'radius', 400,
-		'pfclass_tamed', 12,
-		'pfclass_tamed_lead', 12,
-		'EnrageChanceOtherAnimals', 50,
-		'IntimidationRange', 10000,
-		'EatStartAnim', "eat_Start",
-		'EatIdleAnim', {
-			"eat_Idle",
-		},
-		'EatEndAnim', "eat_End",
-		'anim_idle', {
-			"idle",
-			"idle_Active",
-		},
-		'anim_idle_nervous', {
-			"idle_Nervous",
-		},
-		'anim_idle_playful', {
-			"idle_Playfull",
-			"idle_Playfull2",
-		},
-		'SleepStartAnim', "sleep_Start",
-		'SleepIdleAnim', "sleep_Idle",
-		'SleepEndAnim', "sleep_End",
-		'Tameable', true,
-		'Petable', true,
-		'TamingFood', "DryMeat",
-		'TamingFoodAmount', 10000,
-		'TamingMinimumSkill', 6,
-		'TamingChance', 70,
-		'TamingAggressiveChance', 5,
-		'TamingDistance', 10000,
-		'TamedLifetimeMin', 138240000,
-		'TamedLifetimeMax', 230400000,
-		'CombatSkillInitial', range(5, 6),
-		'BondingChance', 20,
-		'ReproductionType', "two sexes",
-		'ReproductionGroup', "Dogs",
-		'DailyPregnancyChance', 55,
-		'PregnancyDuration', 4800000,
-		'GrowDuration', 4800000,
-		'NewbornClass', "dog_T3",
-		'MinGrownScale', 110,
-		'FieldVisibilityCold', 0,
-		'FieldVisibilityWarm', 0,
-		'MoveSpeedCold', 1000,
-		'PlantsToEatMin', 0,
-		'PlantsToEatMax', 0,
-		'GrazingChance', 3,
-		'HerdMergeClass', "Dog",
-		'UnitPerkFrenzy', true,
-		'FrenzyHealthPct', 99,
-		'FrenzyEffects', {
-			"Frenzy_Conscious_1",
 		},
 	}),
 	PlaceObj('ModItemUnitAnimalCompositeDef', {

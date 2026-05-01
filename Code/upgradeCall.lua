@@ -22,6 +22,7 @@ MapVar('EE_debug', false)
 MapVar('Preg_evo_chance', 20)
 MapVar('EE_tier_pivot', {})
 MapVar('EE_evo_pivot', {})
+MapVar("UnlockedAttackChains", {})
 
 
 local function is_preg_loaded()
@@ -105,6 +106,20 @@ function SavegameFixups.EveryoneLives()
 			local survivor_obj = SpawnHumanFromDef(survivor_def,UIPlayer,pos)
 			exp.assigned_unit = false
 		end
+	end
+end
+
+-- Because we now use UnitChains to track what the player can be attacked by
+function SavegameFixups.MinionBossUnlockToChains()
+	local minions = GetUnlockedMinions()
+	local bosses = GetUnlockedBosses()
+	for _,minion in ipairs(minions) do
+		local chain = Find_evo_chain(minion)
+		UnlockedAttackChains[chain.id]=true
+	end
+	for _,boss in ipairs(bosses) do
+		local chain = Find_evo_chain(boss)
+		UnlockedAttackChains[chain.id]=true
 	end
 end
 
@@ -772,6 +787,63 @@ function ILU_update_armor_hcs()
 			end
 		end)
 	end
+end
+
+function Attack_instance_fill(base_minion,other_s_flag,min_tier,per_prog)
+	-- determine which attack chain will be primary/secondary/tertiary based on inputs
+	local base_chain
+	per_prog = per_prog or 100
+	if base_minion then
+		base_chain = Find_evo_chain(base_minion)
+		UnlockedAttackChains[base_chain.id]=true
+	end
+	local r = 6
+	-- hard code to not allow dogs to be used as the base
+	while (not base_chain or base_chain.id == 'base_Dog_chain') and r > 0 do
+		r = r - 1
+		base_chain = table.rand(UnlockedAttackChains, rand())
+	end
+	local second_chain
+	local third_chain
+	if other_s_flag then
+		r = 6
+		while not second_chain and r > 0 do
+			r = r - 1
+			second_chain = table.rand(UnlockedAttackChains, rand())
+			if second_chain == base_chain then
+				second_chain = false
+			end
+		end
+		r = 6
+		while not third_chain and r > 0 do
+			r = r - 1
+			third_chain = table.rand(UnlockedAttackChains, rand())
+			if third_chain == base_chain then
+				third_chain = false
+			end
+		end
+	end
+	--- Get the first unit of the chain, based on tier 0 or input var
+	min_tier = min_tier or 1
+	local base_unit = table.rand(base_chain:get_units_by_tier(min_tier))
+	local second_unit
+	local third_unit
+	if other_s_flag then
+		second_unit = table.rand(second_chain:get_units_by_tier(min_tier))
+		third_unit = table.rand(third_chain:get_units_by_tier(min_tier))
+	end
+	local temp_list = {}
+	print("Main Animal: ",base_unit)
+	if other_s_flag then
+		print('Added Animal 1: ',second_unit)
+		print('Added Animal 2: ',third_unit)
+		temp_list[1]={ second_unit, AnimalDefs[minion2]:GetProperty("SpawnDefWeight")}
+		temp_list[2]={ third_unit, AnimalDefs[minion3]:GetProperty("SpawnDefWeight")}
+	end
+	local spawnClassBest = ''
+	local addedClassList = {}
+	--local instance = {}
+	return check_count_and_upgrade(base_unit,temp_list,per_prog)
 end
 
 -- classdef UnitEvolution Unit Component + EP based upgrading
