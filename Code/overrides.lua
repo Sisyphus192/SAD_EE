@@ -14,12 +14,38 @@ function CombatGroupsSetItems()
 	return table.keys(groups, true)
 end
 
+function TerritorialNest:AddNestMember(member)
+	table.insert(self.nest_members, member)
+	if member.CombatGroup ~= self.CombatGroup then
+		member.CombatGroup = self.CombatGroup
+	end
+	-- mark guardian members as such (they stay close to the nest and protect it if attacked)
+	self:TrySetNestGuardian(member)
+	member:give_nest_effect()
+end
+
+function UnitNesting:give_nest_effect()
+	if not self.nest then return end
+	local nest = self.nest
+	local give = self:IsCloser(nest, nest.territorial_range)
+	if give then
+		if IsKindOf(self,"Robot") then
+			self:AddRobotCondition('FamiliarGroundRobo','mod')
+		else
+			self:AddHealthCondition(self.NestEffect or "", "nest")
+		end
+	elseif IsKindOf(self,"Robot") then
+		self:RemoveRobotCondition('FamiliarGroundRobo','mod')
+	else
+		self:RemoveHealthConditions(self.NestEffect or "", "nest")
+
+	end
+end
+
 -- Gujo (and Tecatli) override so they are more aggressive after 2 years of game time
 function GujoBase:IsAttackTarget(target)
-	--print("Checking if I should atttack:",target.class)
 	local human_group = Human.CombatGroup
-	--print("Do they appear human?: ",target.CombatGroup == human_group)
-	if target.CombatGroup == human_group and GameTime() < (const.YearDuration * 2) then
+	if target.CombatGroup == human_group and GameTime() < GujoAgressionTime then
 		--Gujo never attack Humans, unless enraged (by Human) or forced by storybit
 		if self:IsForcedAttackTarget(target) then
 			return true

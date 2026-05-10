@@ -74,6 +74,11 @@ DefineClass.Draka_T5 = {
 			'min_amount', 40000,
 			'max_amount', 60000,
 		}),
+		PlaceObj('ButcherResAmount', {
+			'resource', "EnergyCrystals",
+			'min_amount', 10000,
+			'max_amount', 20000,
+		}),
 	},
 	SelectionRadius = 2000,
 	ChanceToBeMale = 50,

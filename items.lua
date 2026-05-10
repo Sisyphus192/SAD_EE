@@ -5474,7 +5474,7 @@ PlaceObj('ModItemFolder', {
 			ExpirationTime = 400000,
 			HealthLoss = 10000,
 			ManipulationModifier = 30000,
-			ManipulationModifierOpt = 30000,
+			ManipulationModifierOpt = -30000,
 			MistreatmentChance = 15,
 			PainModifier = 10000,
 			TreatmentCond = {
@@ -5835,6 +5835,9 @@ PlaceObj('ModItemFolder', {
 				local spawn_def = SpawnDefs["BabySpawn"]
 				if spawn_def then
 					local instance = {}
+					if not UIPlayer.research_center:IsTechResearched(animal['FieldResearchTech']) then
+						CompleteResearch(animal['FieldResearchTech'])
+					end
 					instance.SpawnClass = find_newborn_class(owner)--owner.NewbornClass or owner.class
 					spawn_def = spawn_def:CreateInstance(instance)
 					spawn_def:ActivateSpawn(owner)
@@ -7631,7 +7634,7 @@ PlaceObj('ModItemFolder', {
 		OneTime = false,
 		Prerequisites = {
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return not UnlockedInsectMinions["Skarabei_Manhunting"] end,
+				Expression = function (self, obj) return not UnlockedAttackChains["base_SKarabei_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7693,7 +7696,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedInsectMinions["Skarabei_Manhunting"] and not UnlockedInsectMinions["Dragonfly"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Dragonfly_chain"] end,
 				param_bindings = false,
 			}),
 			PlaceObj('CheckTime', {
@@ -7756,7 +7759,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedInsectMinions["Skarabei_Manhunting"] and not UnlockedInsectMinions["Shrieker_Manhunting_Hatchling"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Shrieker_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7815,7 +7818,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedInsectMinions["Skarabei_Manhunting"] and not UnlockedInsectBosses["Scissorhands"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Scissorhands_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7871,7 +7874,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedInsectMinions["Skarabei_Manhunting"] and not UnlockedInsectBosses["Juno"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Juno_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7929,7 +7932,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedInsectMinions["Skarabei_Manhunting"] and not UnlockedInsectBosses["Glutch_Manhunting"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Glutch_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -21770,6 +21773,10 @@ PlaceObj('ModItemFolder', {
 					'min_amount', 40000,
 					'max_amount', 60000,
 				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "EnergyCrystals",
+					'max_amount', 5000,
+				}),
 			},
 			'SelectionRadius', 2000,
 			'ChanceToBeMale', 45,
@@ -21917,6 +21924,11 @@ PlaceObj('ModItemFolder', {
 					'resource', "RawMeat",
 					'min_amount', 40000,
 					'max_amount', 60000,
+				}),
+				PlaceObj('ButcherResAmount', {
+					'resource', "EnergyCrystals",
+					'min_amount', 10000,
+					'max_amount', 20000,
 				}),
 			},
 			'SelectionRadius', 2000,
@@ -24709,21 +24721,6 @@ PlaceObj('ModItemFolder', {
 		}),
 		}),
 	}),
-PlaceObj('ModItemTrait', {
-	HiddenTrait = true,
-	id = "ILU_reaction_holder",
-	msg_reactions = {
-		PlaceObj('MsgReaction', {
-			Event = "AnimalBorn",
-			Handler = function (self, animal)
-				if not UIPlayer.research_center:IsTechResearched(animal['FieldResearchTech']) then
-					CompleteResearch(animal['FieldResearchTech'])
-				end
-			end,
-		}),
-	},
-	save_in = "Mod/rtw6tLg",
-}),
 PlaceObj('ModItemFolder', {
 	'name', "Loot Defs",
 }, {
@@ -29585,4 +29582,72 @@ PlaceObj('ModItemFolder', {
 		},
 	}),
 	}),
+PlaceObj('ModItemStoryBit', {
+	Category = "Tick",
+	Enabled = true,
+	Enables = {
+		"EE_Gujo_Warn_2",
+	},
+	Image = "UI/Messages/Research/res_Gujo",
+	NotificationText = T(836704554748, --[[ModItemStoryBit EE_Gujo_Warn_1 NotificationText]] "The nearby Gujo's are starting to worry some of us....."),
+	NotificationTitle = T(430654186797, --[[ModItemStoryBit EE_Gujo_Warn_1 NotificationTitle]] "Gujo's acting strange"),
+	Prerequisites = {
+		PlaceObj('CheckExpression', {
+			Expression = function (self, obj)
+				local count = MapCount(true,'UnitAnimal',function(unit)
+				    if Find_evo_chain(unit.class) and Find_evo_chain(unit.class).id == 'base_Gujo_chain' then
+				        return true
+				    end
+				end) 
+				return count > 0
+			end,
+			param_bindings = false,
+		}),
+		PlaceObj('CheckTime', {
+			TimeMin = 1,
+			TimeScale = "years",
+			param_bindings = false,
+		}),
+	},
+	Text = T(308248409265, --[[ModItemStoryBit EE_Gujo_Warn_1 Text]] "I was going about my daily responsibilities, and I cut myself.\nThe wound wasn't too deep, and I quickly cleaned and dressed it.\n\nFor some reason, I had a sense I was being watched.\nAnd after looking around, I saw a Gujo staring at me.\nOccasionally lifting it's head up and sniffing the air.....\n\nI don't know what to make of it, but it has left me with a sense of unease....."),
+	Title = T(379928215195, --[[ModItemStoryBit EE_Gujo_Warn_1 Title]] "Odd Behavior Report: Gujo's"),
+	id = "EE_Gujo_Warn_1",
+	save_in = "Mod/rtw6tLg",
+}),
+PlaceObj('ModItemStoryBit', {
+	Category = "Tick",
+	Effects = {
+		PlaceObj('ExecuteCode', {
+			Code = function (self, obj)
+				GujosStartAggressive()
+			end,
+			param_bindings = false,
+		}),
+	},
+	Image = "UI/Messages/Research/res_Gujo",
+	NotificationText = T(871242508704, --[[ModItemStoryBit EE_Gujo_Warn_2 NotificationText]] "I was attacked by a Gujo!"),
+	NotificationTitle = T(171766164460, --[[ModItemStoryBit EE_Gujo_Warn_2 NotificationTitle]] "Gujo Aggression?!?!"),
+	Prerequisites = {
+		PlaceObj('CheckExpression', {
+			Expression = function (self, obj)
+				local count = MapCount(true,'UnitAnimal',function(unit)
+				    if Find_evo_chain(unit.class) and Find_evo_chain(unit.class).id == 'base_Gujo_chain' then
+				        return true
+				    end
+				end) 
+				return count > 0
+			end,
+			param_bindings = false,
+		}),
+		PlaceObj('CheckTime', {
+			TimeMin = 2,
+			TimeScale = "years",
+			param_bindings = false,
+		}),
+	},
+	Text = T(463080117609, --[[ModItemStoryBit EE_Gujo_Warn_2 Text]] "After the last skirmish, there were the usual repairs that needed to be done.\n\nAs I went about doing the needful, a Gujo started to wander close.\nI thought nothing of it, as they have been a familiar calming presence every since we arrived.\n\nBut this time.... this time that damn bird bit me on my arm!\nIt wasn't a strong bite, but it had enough force to draw blood.\n\nInitially I was shocked, but that quickly turned to anger.\nI was just about to punch that stupid thing back, when I saw the Gujo was in a shocked state!\nIt's eye's where widened and it's mouth was overflowing with spit.....\n\nSomething in the back of my mind told me not to break the Gujo out of it's stupor.....\nSo I left quickly with a looming sense of doom.\n\nAre Gujo's finally starting to realize... that we may just taste like chicken?!?!\n\n<color TextNegative>WARNING GUJO AGGRESSION EVENTS</color>\n<em>ALL GUJOS ARE EXPECTED TO BE AGGRESSIVE IN T-MINUS 7 DAYS</em>"),
+	Title = T(886402220591, --[[ModItemStoryBit EE_Gujo_Warn_2 Title]] "Damage Report: Gujo's"),
+	id = "EE_Gujo_Warn_2",
+	save_in = "Mod/rtw6tLg",
+}),
 }

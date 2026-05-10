@@ -23,6 +23,7 @@ MapVar('Preg_evo_chance', 20)
 MapVar('EE_tier_pivot', {})
 MapVar('EE_evo_pivot', {})
 MapVar("UnlockedAttackChains", {})
+MapVar("GujoAgressionTime", max_int)
 
 
 local function is_preg_loaded()
@@ -32,6 +33,18 @@ local function is_preg_loaded()
 		end
 	end
 	return false
+end
+
+function Debug_unlock_all_base_attackers()
+	UnlockedAttackChains['base_Shrieker_chain'] = true
+	UnlockedAttackChains['base_Scissorhand_chain'] = true
+	UnlockedAttackChains['base_Skarabei_chain'] = true
+	UnlockedAttackChains['base_Glutch_chain'] = true
+	UnlockedAttackChains['base_Dragonfly_chain'] = true
+	UnlockedAttackChains['base_Juno_chain'] = true
+	UnlockedAttackChains['base_Tecatli_chain'] = true
+	UnlockedAttackChains['base_Dog_chain'] = true
+	UnlockedAttackChains['base_Gujo_chain'] = true
 end
 
 function EE_set_mod_options(id)
@@ -109,18 +122,26 @@ function SavegameFixups.EveryoneLives()
 	end
 end
 
--- Because we now use UnitChains to track what the player can be attacked by
-function SavegameFixups.MinionBossUnlockToChains()
-	local minions = GetUnlockedMinions()
-	local bosses = GetUnlockedBosses()
+function Attack_mem_cleanup()
+	local minions = table.keys(UnlockedInsectMinions)
+	local bosses = table.keys(UnlockedInsectBosses)
 	for _,minion in ipairs(minions) do
 		local chain = Find_evo_chain(minion)
-		UnlockedAttackChains[chain.id]=true
+		if chain and chain.id then
+			UnlockedAttackChains[chain.id]=true
+		end
 	end
 	for _,boss in ipairs(bosses) do
 		local chain = Find_evo_chain(boss)
-		UnlockedAttackChains[chain.id]=true
+		if chain and chain.id then
+			UnlockedAttackChains[chain.id]=true
+		end
 	end
+end
+
+-- Because we now use UnitChains to track what the player can be attacked by
+function SavegameFixups.MinionBossUnlockToChains()
+	Attack_mem_cleanup()
 end
 
 function SavegameFixups.MapVarCleanup()
@@ -789,27 +810,40 @@ function ILU_update_armor_hcs()
 	end
 end
 
+function GujosStartAggressive()
+	GujoAgressionTime = GameTime() + (7*day_duration)
+end
+
 function Attack_instance_fill(base_minion,other_s_flag,min_tier,per_prog)
 	-- determine which attack chain will be primary/secondary/tertiary based on inputs
 	local base_chain
+	local base_c_def
 	per_prog = per_prog or 100
 	if base_minion then
-		base_chain = Find_evo_chain(base_minion)
-		UnlockedAttackChains[base_chain.id]=true
+		base_chain = Find_evo_chain(base_minion).id
+		UnlockedAttackChains[base_chain]=true
+		base_c_def = Presets.UnitClassChain.Default[base_chain]
 	end
 	local r = 6
 	-- hard code to not allow dogs to be used as the base
-	while (not base_chain or base_chain.id == 'base_Dog_chain') and r > 0 do
+	while (not base_chain or base_chain == 'base_Dog_chain') and r > 0 do
 		r = r - 1
-		base_chain = table.rand(UnlockedAttackChains, rand())
+		base_chain = table.rand(table.keys(UnlockedAttackChains))
+		base_c_def = Presets.UnitClassChain.Default[base_chain]
+		if base_chain == 'base_Dog_chain' then
+			base_chain = false
+		end
 	end
 	local second_chain
 	local third_chain
+	local second_c_def
+	local third_c_def
 	if other_s_flag then
 		r = 6
 		while not second_chain and r > 0 do
 			r = r - 1
-			second_chain = table.rand(UnlockedAttackChains, rand())
+			second_chain = table.rand(table.keys(UnlockedAttackChains))
+			second_c_def = Presets.UnitClassChain.Default[second_chain]
 			if second_chain == base_chain then
 				second_chain = false
 			end
@@ -817,7 +851,8 @@ function Attack_instance_fill(base_minion,other_s_flag,min_tier,per_prog)
 		r = 6
 		while not third_chain and r > 0 do
 			r = r - 1
-			third_chain = table.rand(UnlockedAttackChains, rand())
+			third_chain = table.rand(table.keys(UnlockedAttackChains))
+			third_c_def = Presets.UnitClassChain.Default[third_chain]
 			if third_chain == base_chain then
 				third_chain = false
 			end
@@ -825,24 +860,21 @@ function Attack_instance_fill(base_minion,other_s_flag,min_tier,per_prog)
 	end
 	--- Get the first unit of the chain, based on tier 0 or input var
 	min_tier = min_tier or 1
-	local base_unit = table.rand(base_chain:get_units_by_tier(min_tier))
+	local base_unit = table.rand(base_c_def:get_units_by_tier(min_tier))
 	local second_unit
 	local third_unit
 	if other_s_flag then
-		second_unit = table.rand(second_chain:get_units_by_tier(min_tier))
-		third_unit = table.rand(third_chain:get_units_by_tier(min_tier))
+		second_unit = table.rand(second_c_def:get_units_by_tier(min_tier))
+		third_unit = table.rand(third_c_def:get_units_by_tier(min_tier))
 	end
 	local temp_list = {}
-	print("Main Animal: ",base_unit)
+	--print("Main Animal: ",base_unit)
 	if other_s_flag then
-		print('Added Animal 1: ',second_unit)
-		print('Added Animal 2: ',third_unit)
-		temp_list[1]={ second_unit, AnimalDefs[minion2]:GetProperty("SpawnDefWeight")}
-		temp_list[2]={ third_unit, AnimalDefs[minion3]:GetProperty("SpawnDefWeight")}
+		--print('Added Animal 1: ',second_unit)
+		--print('Added Animal 2: ',third_unit)
+		temp_list[1]={ second_unit, AnimalDefs[second_unit]:GetProperty("SpawnDefWeight")}
+		temp_list[2]={ third_unit, AnimalDefs[third_unit]:GetProperty("SpawnDefWeight")}
 	end
-	local spawnClassBest = ''
-	local addedClassList = {}
-	--local instance = {}
 	return check_count_and_upgrade(base_unit,temp_list,per_prog)
 end
 
@@ -1130,5 +1162,5 @@ function EE_init_and_set_options(id)
 end
 
 OnMsg.ApplyModOptions = EE_init_and_set_options
---OnMsg.LoadGame = EE_check
+OnMsg.LoadGame = Attack_mem_cleanup
 OnMsg.GameStarted = EE_Instantiate
