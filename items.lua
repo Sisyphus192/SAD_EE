@@ -5835,12 +5835,14 @@ PlaceObj('ModItemFolder', {
 				local spawn_def = SpawnDefs["BabySpawn"]
 				if spawn_def then
 					local instance = {}
-					if not UIPlayer.research_center:IsTechResearched(animal['FieldResearchTech']) then
-						CompleteResearch(animal['FieldResearchTech'])
-					end
-					instance.SpawnClass = find_newborn_class(owner)--owner.NewbornClass or owner.class
+					local newborn = find_newborn_class(owner)
+					instance.SpawnClass = newborn
+					local newborn_field = g_Classes[newborn]['FieldResearchTech']
 					spawn_def = spawn_def:CreateInstance(instance)
 					spawn_def:ActivateSpawn(owner)
+					if newborn_field and not UIPlayer.research_center:IsTechResearched(newborn_field) then
+						CompleteResearch(animal['FieldResearchTech'])
+					end
 				end
 			end,
 			ReplaceOldest = false,

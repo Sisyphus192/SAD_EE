@@ -137,6 +137,48 @@ function Attack_mem_cleanup()
 			UnlockedAttackChains[chain.id]=true
 		end
 	end
+	if _G.Mods["ucCehPy"] and Scenario.id == 'ProjectXScenario' then
+		if not g_StoryBitStates["AnimalAttack_Initial_Junos"] then
+			UnlockedAttackChains[Find_evo_chain('Juno').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Skarab"] then
+			UnlockedAttackChains[Find_evo_chain('Skarabei').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_ManhuntingGlutch"] then
+			UnlockedAttackChains[Find_evo_chain('Glutch_Manhunting').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Dragonfly"] then
+			UnlockedAttackChains[Find_evo_chain('Dragonfly').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Tecatli"] then
+			UnlockedAttackChains[Find_evo_chain('Tecatli').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Scissor"] then
+			UnlockedAttackChains[Find_evo_chain('Scissorhands').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Shriek"] then
+			UnlockedAttackChains[Find_evo_chain('Shrieker').id]=true
+		end
+	else
+		if not g_StoryBitStates["AnimalAttack_Initial_Junos"] then
+			UnlockedAttackChains[Find_evo_chain('Juno').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Initial_Skarabei"] then
+			UnlockedAttackChains[Find_evo_chain('Skarabei').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Initial_ManhuntingGlutch"] then
+			UnlockedAttackChains[Find_evo_chain('Glutch_Manhunting').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Initial_Dragonflies"] then
+			UnlockedAttackChains[Find_evo_chain('Dragonfly').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Initial_Scissorhands"] then
+			UnlockedAttackChains[Find_evo_chain('Scissorhands').id]=true
+		end
+		if not g_StoryBitStates["AnimalAttack_Init_Shriekers"] then
+			UnlockedAttackChains[Find_evo_chain('Shrieker').id]=true
+		end
+	end
 end
 
 -- Because we now use UnitChains to track what the player can be attacked by
@@ -274,8 +316,6 @@ end
 function SavegameFixups.ILU_id_change_fix()
 	local to_decom = {
 		GujoT5="Gujo_T5",GujoT4="Gujo_T4",GujoT3="Gujo_T3",GujoT2="Gujo_T2",
-		--dog_T5="Dog_T5",dog_T4="Dog_T4",dog_T3="Dog_T4",
-		dog_T1="Dog_T2",
 		Heavily_Mutated_PEx_Skarabei_Brute="Scarab_T5",Mutated_PEx_Skarabei_Brute="Scarab_T4",PEx_Skarabei="Scarab_T2",PEx_Skarabei_Brute="Scarab_T3",
 		BadTrip_Bloated_Glutch_Stitcher="Glutch_T5",BadTrip_Bloated_Glutch="Glutch_T4",Bloated_Glutch="Glutch_T3",Glutch_Stitcher="Glutch_T2",
 		Fast_Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T5",Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T4",Frenzied_Bomber_Dragonfly="Dragongly_T3",Frenzied_Dragonfly="Dragongly_T2",
@@ -289,6 +329,8 @@ function SavegameFixups.ILU_id_change_fix()
 		local decom_check = to_decom[creature.class]
 		if decom_check then
 			creature:ChangeClass(decom_check)
+			--creature:ComposeBodyParts()
+			--creature:InitEntity()
 		end
 	end
 end
