@@ -7636,7 +7636,7 @@ PlaceObj('ModItemFolder', {
 		OneTime = false,
 		Prerequisites = {
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return not UnlockedAttackChains["base_SKarabei_chain"] end,
+				Expression = function (self, obj) return not UnlockedAttackChains["base_Skarabei_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7698,7 +7698,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Dragonfly_chain"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_Skarabei_chain"] and not UnlockedAttackChains["base_Dragonfly_chain"] end,
 				param_bindings = false,
 			}),
 			PlaceObj('CheckTime', {
@@ -7761,7 +7761,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Shrieker_chain"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_Skarabei_chain"] and not UnlockedAttackChains["base_Shrieker_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7820,7 +7820,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Scissorhands_chain"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_Skarabei_chain"] and not UnlockedAttackChains["base_Scissorhands_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7876,7 +7876,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Juno_chain"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_Skarabei_chain"] and not UnlockedAttackChains["base_Juno_chain"] end,
 				param_bindings = false,
 			}),
 		},
@@ -7934,7 +7934,7 @@ PlaceObj('ModItemFolder', {
 				param_bindings = false,
 			}),
 			PlaceObj('CheckExpression', {
-				Expression = function (self, obj) return UnlockedAttackChains["base_SKarabei_chain"] and not UnlockedAttackChains["base_Glutch_chain"] end,
+				Expression = function (self, obj) return UnlockedAttackChains["base_Skarabei_chain"] and not UnlockedAttackChains["base_Glutch_chain"] end,
 				param_bindings = false,
 			}),
 		},
