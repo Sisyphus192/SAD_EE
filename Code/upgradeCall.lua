@@ -1014,7 +1014,7 @@ function ILU_ActivateAttackDropshipSpawnDefs(robot_spawndef, main_unit, added_un
 	progress_mul = progress_mul or 100
 	local addedClassList = {}
 	local instance = {}
-	instance.spawnClass, addedClassList = check_count_and_upgrade(main_unit, added_units)
+	instance.SpawnClass, addedClassList = check_count_and_upgrade(main_unit, added_units)
 	instance.AdditionalClassList = {}
 	for i = 1, #addedClassList do
 		instance.AdditionalClassList[#instance.AdditionalClassList + 1] = { addedClassList[i]['id'], addedClassList[i]
