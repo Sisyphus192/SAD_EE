@@ -316,9 +316,9 @@ end
 function SavegameFixups.ILU_id_change_fix()
 	local to_decom = {
 		GujoT5="Gujo_T5",GujoT4="Gujo_T4",GujoT3="Gujo_T3",GujoT2="Gujo_T2",
-		Heavily_Mutated_PEx_Skarabei_Brute="Scarab_T5",Mutated_PEx_Skarabei_Brute="Scarab_T4",PEx_Skarabei="Scarab_T2",PEx_Skarabei_Brute="Scarab_T3",
+		Heavily_Mutated_PEx_Skarabei_Brute="Scarab_T5",Mutated_PEx_Skarabei_Brute="Scarab_T4",PEx_Skarabei="Skarabei_Manhunting_Brute",PEx_Skarabei_Brute="Scarab_T3",
 		BadTrip_Bloated_Glutch_Stitcher="Glutch_T5",BadTrip_Bloated_Glutch="Glutch_T4",Bloated_Glutch="Glutch_T3",Glutch_Stitcher="Glutch_T2",
-		Fast_Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T5",Frenzied_Fortified_Bomber_Dragonfly="Dragongly_T4",Frenzied_Bomber_Dragonfly="Dragongly_T3",Frenzied_Dragonfly="Dragongly_T2",
+		Fast_Frenzied_Fortified_Bomber_Dragonfly="Dragonfly_T5",Frenzied_Fortified_Bomber_Dragonfly="Dragonfly_T4",Frenzied_Bomber_Dragonfly="Dragonfly_T3",Frenzied_Dragonfly="Dragonfly_T2",
 		Spellsword_Tecatli="Tecatli_T5",Intelligent_Tecatli="Tecatli_T4",Heat_Reinforced_Tecatli="Tecatli_T3",Entombed_Tecatli="Tecatli_T2",VenomousRaptors="Tecatli_T1_venom",
 		Rage_Focused_Scissorhands="Scissorhands_T5",Rage_Fueled_Scissorhand_Duelist="Scissorhands_T4",Brutal_Duelist_Scissorhands="Scissorhands_T3",
 		Junoskar="Juno_T6",Too_Angry_Too_Die_Juno="Juno_T5",Hulk_Juno="Juno_T4",Angry_Juno="Juno_T3",
