@@ -1206,3 +1206,12 @@ end
 OnMsg.ApplyModOptions = EE_init_and_set_options
 OnMsg.LoadGame = Attack_mem_cleanup
 OnMsg.GameStarted = EE_Instantiate
+-- Seed/migrate UnlockedAttackChains on a fresh new game too. Attack_mem_cleanup
+-- was only wired to LoadGame, which never fires for a brand-new game, so a fresh
+-- game left UnlockedAttackChains empty; a no-Prerequisite AnimalAttack_Mixed could
+-- then reach Attack_instance_fill with no unlocked chain and index a nil chain def.
+-- GameStarted fires for both new and loaded games once Game/Scenario are ready
+-- (unlike NewGame, which races MapVar init, or EE_Instantiate, which also runs at
+-- main-menu ApplyModOptions where Scenario is nil). OnMsg appends, so this runs
+-- alongside EE_Instantiate; the extra run on load is idempotent.
+OnMsg.GameStarted = Attack_mem_cleanup
