@@ -378,7 +378,7 @@ function Coalesce_mass_animals()
 				end,units_check,total_EP_scrubbed)
 			end
 			if total_EP_scrubbed > 0 then
-				local percent = MulDivRound(total_EP_scrubbed*100,EventProgress)
+				local percent = MulDivRound(total_EP_scrubbed, 100, EventProgress)
 				Bkob_Log("Coalescing some EP from deleted units into a singel EE attack")
     			local spawn_def = SpawnDefs['Single']
 				local instance = {}
